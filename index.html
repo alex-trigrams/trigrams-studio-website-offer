@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The $200 website · TRIGRAMS Studio</title>
+<meta name="description" content="A single-page website, built with AI, live in 48 hours or it's free. $200 flat. From TRIGRAMS Studio, Perth WA." />
+
+<!-- Open Graph -->
+<meta property="og:title" content="The $200 website · TRIGRAMS Studio" />
+<meta property="og:description" content="A single-page website, built with AI, live in 48 hours or it's free. $200 flat. From TRIGRAMS Studio, Perth WA." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="assets/Logo.png" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="The $200 website · TRIGRAMS Studio" />
+<meta name="twitter:description" content="A single-page website, built with AI, live in 48 hours or it's free. $200 flat." />
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="assets/Logo.png" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Instrument+Serif:ital@1&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --ink: #141414;
+    --muted: #5f5f5f;
+    --faint: #9a9a9a;
+    --red: #C91C1C;
+    --red-dark: #A01515;
+    --rule: #ececec;
+    --bg: #ffffff;
+    --band: #f5f4f2;
+    --dark: #141414;
+    --card: #ffffff;
+
+    --display: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+    --body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --emph: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+
+    --maxw: 680px;
+    --maxw-wide: 1120px;
+    --nav-h: 62px;
+    --ease: cubic-bezier(.4, 0, .2, 1);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  .wrap-wide { width: 100%; max-width: var(--maxw-wide); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Typography ---------- */
+  h1, h2, h3 {
+    font-family: var(--display);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.07;
+    margin: 0;
+    text-wrap: balance;
+  }
+  h3 { font-size: 20px; font-weight: 700; letter-spacing: -0.015em; }
+
+  h1 em, h2 em {
+    font-family: var(--emph);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0.005em;
+    color: var(--red);
+  }
+
+  p { margin: 0 0 18px; text-wrap: pretty; }
+  p:last-child { margin-bottom: 0; }
+
+  a { color: var(--red); text-decoration: none; }
+  a:hover { color: var(--red-dark); }
+
+  .muted { color: var(--muted); }
+  .small { font-size: 15px; }
+
+  /* ---------- Section system ---------- */
+  .section { padding: 104px 0; position: relative; }
+  .section--band { background: var(--band); }
+  .section--dark { background: var(--dark); color: #fff; }
+  .section--dark .kicker { color: #ff7a68; }
+  .section--dark .muted { color: rgba(255,255,255,0.62); }
+
+  .kicker {
+    font-family: var(--body);
+    font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--red); margin: 0 0 20px;
+  }
+
+  .section-title { font-size: clamp(27px, 5.4vw, 42px); margin: 0 0 22px; }
+  .section--dark .section-title { color: #fff; }
+
+  /* Larger treatment — applied to key sections */
+  .kicker--lg { font-size: 14px; letter-spacing: 0.12em; margin: 0 0 24px; }
+  .section-title--lg { font-size: clamp(34px, 6.4vw, 54px); line-height: 1.05; margin: 0 0 30px; }
+
+  /* ---------- Hosting breakdown ---------- */
+  .hosting-price {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(56px, 14vw, 96px); line-height: 0.88; letter-spacing: -0.04em;
+    color: var(--red); margin: 0 0 6px;
+  }
+  .hosting-label {
+    font-size: 15px; font-weight: 600; color: var(--muted); letter-spacing: 0.04em;
+    text-transform: uppercase; margin: 0 0 36px;
+  }
+  .hosting-features {
+    list-style: none; margin: 0 0 28px; padding: 0;
+    display: grid; gap: 0; border-top: 1px solid var(--rule);
+  }
+  .hosting-features li {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 0; border-bottom: 1px solid var(--rule);
+    font-size: 17px;
+  }
+  .hosting-features li .hf-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--red); flex: none;
+  }
+  .hosting-free {
+    font-size: 15px; font-weight: 600; color: var(--ink);
+    background: #fff; border: 1px solid var(--rule); border-radius: 8px;
+    padding: 14px 18px; display: inline-block;
+  }
+  .hosting-free span { color: var(--red); }
+
+  /* ---------- Three-step ask ---------- */
+  .favour-steps { list-style: none; margin: 32px 0 0; padding: 0; display: grid; gap: 0; }
+  .favour-step {
+    display: grid; grid-template-columns: 52px 1fr; gap: 20px;
+    align-items: start; padding: 26px 0; border-top: 1px solid var(--rule);
+  }
+  .favour-step:last-child { border-bottom: 1px solid var(--rule); }
+  .favour-num {
+    font-family: var(--display); font-weight: 800; font-size: 13px;
+    letter-spacing: 0.1em; color: var(--red); padding-top: 3px;
+  }
+  .favour-body { font-size: 18px; line-height: 1.5; }
+
+  /* ---------- About photo ---------- */
+  .about-photo {
+    width: 132px; border-radius: 12px; object-fit: cover;
+    aspect-ratio: 4 / 5; display: block; flex: none;
+  }
+  @media (min-width: 760px) { .about-photo { width: 164px; } }
+
+  .lead { font-size: 19px; line-height: 1.55; }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: var(--body); font-weight: 600; font-size: 17px; line-height: 1;
+    background: var(--red); color: #fff; border: none; border-radius: 7px;
+    padding: 16px 24px; cursor: pointer;
+    transition: background 150ms var(--ease), transform 120ms var(--ease);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:hover { background: var(--red-dark); color: #fff; }
+  .btn:active { transform: scale(0.985); }
+  .btn-wide { width: 100%; }
+
+  .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+  .btn-ghost:hover { background: var(--ink); color: #fff; }
+  .section--dark .btn-ghost { color: #fff; border-color: rgba(255,255,255,0.5); }
+  .section--dark .btn-ghost:hover { background: #fff; color: var(--ink); }
+
+  .btn-sm { padding: 10px 16px; font-size: 14px; border-radius: 6px; }
+
+  /* ---------- Scroll progress + nav ---------- */
+  #progress {
+    position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 120;
+    background: transparent; pointer-events: none;
+  }
+  #progress .bar {
+    height: 100%; width: 100%; background: var(--red);
+    transform: scaleX(0); transform-origin: 0 50%;
+    transition: transform 80ms linear;
+  }
+
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 110;
+    display: flex; align-items: center;
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 200ms var(--ease), box-shadow 200ms var(--ease);
+  }
+  .nav.scrolled { border-bottom-color: var(--rule); box-shadow: 0 1px 14px rgba(20,20,20,0.04); }
+  .nav .wrap-wide { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .nav-brand { display: flex; align-items: center; gap: 10px; }
+  .nav-brand img { width: 28px; height: 28px; display: block; }
+  .nav-brand b { font-family: var(--display); font-weight: 800; font-size: 16px; letter-spacing: -0.02em; color: var(--ink); }
+  .nav-links { display: none; align-items: center; gap: 28px; }
+  .nav-links a {
+    font-size: 14px; font-weight: 500; color: var(--ink); letter-spacing: -0.01em;
+    position: relative; padding: 4px 0;
+  }
+  .nav-links a::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1.5px;
+    background: var(--red); transform: scaleX(0); transform-origin: 0 50%;
+    transition: transform 180ms var(--ease);
+  }
+  .nav-links a:hover { color: var(--red); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-cta { display: flex; align-items: center; gap: 10px; }
+  @media (min-width: 820px) {
+    .nav-links { display: flex; }
+  }
+
+  /* ---------- HERO (full screen) ---------- */
+  .hero {
+    min-height: 100svh;
+    display: flex; align-items: center;
+    padding: calc(var(--nav-h) + 24px) 0 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero .wrap { width: 100%; }
+
+  .hero-logo { display: block; width: 48px; height: 48px; margin-bottom: 30px; }
+
+  .hero h1 { font-size: clamp(31px, 5.2vw, 50px); line-height: 1.1; margin: 22px 0 22px; max-width: 13ch; }
+  .hero .sub { font-size: clamp(18px, 2.4vw, 22px); color: var(--muted); line-height: 1.5; margin-bottom: 32px; max-width: 32ch; }
+
+  .price-row { display: flex; align-items: baseline; gap: 16px; margin-bottom: 36px; flex-wrap: wrap; }
+  .price {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(52px, 13vw, 80px); line-height: 0.9; letter-spacing: -0.04em; color: var(--red);
+  }
+  .price-note { font-size: 15px; color: var(--muted); max-width: 22ch; line-height: 1.4; }
+
+  .scroll-hint {
+    position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 7px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint);
+  }
+  .scroll-hint .mouse { width: 22px; height: 34px; border: 1.5px solid var(--faint); border-radius: 12px; position: relative; }
+  .scroll-hint .mouse::after {
+    content: ""; position: absolute; left: 50%; top: 6px; width: 3px; height: 6px; border-radius: 2px;
+    background: var(--faint); transform: translateX(-50%); animation: wheel 1.6s var(--ease) infinite;
+  }
+  @keyframes wheel { 0% { opacity: 0; transform: translate(-50%, 0); } 40% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, 8px); } }
+
+  /* ---------- Badge / pill ---------- */
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.01em; color: var(--red);
+    background: #fff; border: 1px solid var(--red); border-radius: 999px; padding: 7px 14px;
+  }
+  .badge .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--red); display: inline-block; }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+  /* ---------- Client logo marquee ---------- */
+  .logos-head {
+    font-family: var(--body); font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted); text-align: center; margin: 0 0 32px;
+  }
+  .logo-marquee {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  }
+  .marquee-track {
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    width: max-content;
+    animation: marquee-scroll 30s linear infinite;
+  }
+  .logo-marquee:hover .marquee-track { animation-play-state: paused; }
+  .logo-item { display: flex; align-items: center; flex: none; }
+  /* Image logos */
+  .logo-item img {
+    height: 36px; width: auto; max-width: 120px;
+    opacity: 0.38; filter: grayscale(100%);
+    mix-blend-mode: multiply; /* dissolves white logo backgrounds */
+    transition: opacity 220ms var(--ease), filter 220ms var(--ease);
+  }
+  .logo-item:hover img { opacity: 0.85; filter: grayscale(0%); }
+  /* Text fallback (used until image is available) */
+  .logo-text {
+    font-family: var(--display); font-weight: 700; font-size: 17px; letter-spacing: -0.01em;
+    color: var(--ink); opacity: 0.35; white-space: nowrap;
+    transition: opacity 220ms var(--ease);
+    user-select: none;
+  }
+  .logo-item:hover .logo-text { opacity: 0.8; }
+  @keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
+
+  /* ---------- Previous work ---------- */
+  .work-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 18px; margin-bottom: 44px; }
+  .work-head .left { max-width: 30ch; }
+  .work-grid { display: grid; grid-template-columns: 1fr; gap: 26px; }
+  @media (min-width: 720px) { .work-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+
+  .site-card {
+    background: var(--card); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden;
+    box-shadow: 0 2px 10px rgba(20,20,20,0.04);
+    transition: transform 220ms var(--ease), box-shadow 220ms var(--ease);
+    display: flex; flex-direction: column;
+  }
+  .site-card:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(20,20,20,0.10); }
+  .site-bar { display: flex; align-items: center; gap: 8px; padding: 11px 13px; border-bottom: 1px solid var(--rule); background: #fafafa; }
+  .site-bar .dots { display: flex; gap: 5px; }
+  .site-bar .dots i { width: 9px; height: 9px; border-radius: 50%; background: #dcdcdc; display: block; }
+  .site-bar .url {
+    flex: 1; font-size: 11px; color: var(--muted); background: #fff; border: 1px solid var(--rule);
+    border-radius: 5px; padding: 4px 9px; text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  }
+  .site-shot { width: 100%; aspect-ratio: 4 / 3; display: block; object-fit: cover; background: #f2f1ef; }
+  .site-meta { padding: 16px 18px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .site-meta .name { font-family: var(--display); font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
+  .site-meta .name span { display: block; font-family: var(--body); font-weight: 400; font-size: 13px; color: var(--muted); letter-spacing: 0; margin-top: 2px; }
+  .site-meta .visit { font-size: 13px; font-weight: 600; white-space: nowrap; }
+
+  /* ---------- Process ---------- */
+  .process-grid { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 48px; }
+  @media (min-width: 760px) { .process-grid { grid-template-columns: repeat(3, 1fr); gap: 0; } }
+  .phase { padding: 28px 0; border-top: 1px solid rgba(255,255,255,0.14); }
+  @media (min-width: 760px) {
+    .phase { padding: 0 32px; border-top: none; border-left: 1px solid rgba(255,255,255,0.14); }
+    .phase:first-child { padding-left: 0; border-left: none; }
+  }
+  .phase .hour { font-family: var(--display); font-weight: 800; font-size: 14px; letter-spacing: 0.04em; color: #ff7a68; margin-bottom: 14px; }
+  .phase h3 { color: #fff; margin-bottom: 10px; }
+  .phase p { color: rgba(255,255,255,0.66); font-size: 15px; margin: 0; }
+
+  .turnaround { display: flex; align-items: baseline; gap: 18px; margin-top: 56px; flex-wrap: wrap; }
+  .turnaround .big { font-family: var(--display); font-weight: 800; font-size: clamp(64px, 16vw, 120px); line-height: 0.82; letter-spacing: -0.04em; color: #fff; }
+  .turnaround .cap { font-size: 17px; color: rgba(255,255,255,0.72); max-width: 26ch; }
+  .turnaround .cap strong { color: #fff; }
+
+  /* ---------- Numbered needs (01–04) ---------- */
+  ol.needs { list-style: none; counter-reset: n; margin: 0; padding: 0; }
+  ol.needs li {
+    counter-increment: n; display: grid; grid-template-columns: 56px 1fr; gap: 18px;
+    align-items: baseline; padding: 22px 0; border-top: 1px solid var(--rule);
+  }
+  ol.needs li:last-child { border-bottom: 1px solid var(--rule); }
+  ol.needs li::before {
+    content: "0" counter(n); font-family: var(--display); font-weight: 800; font-size: 22px;
+    color: var(--red); letter-spacing: -0.02em; line-height: 1;
+  }
+
+  /* ---------- Checks ---------- */
+  ul.checks { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 16px; }
+  ul.checks li { display: grid; grid-template-columns: 26px 1fr; gap: 12px; align-items: start; }
+  ul.checks li .ck { width: 22px; height: 22px; margin-top: 2px; flex: none; color: var(--red); }
+  ul.checks li .ck svg { display: block; width: 100%; height: 100%; }
+
+  .price-inline { color: var(--red); font-weight: 700; }
+
+  /* ---------- About ---------- */
+  .about { display: grid; grid-template-columns: 132px 1fr; gap: 26px; align-items: start; margin-top: 6px; }
+  .about-text h3 { margin-bottom: 10px; font-size: 22px; }
+  .about-text p { font-size: 16px; }
+  .about-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .about-chips .chip { font-size: 13px; font-weight: 600; color: var(--muted); border: 1px solid var(--rule); border-radius: 999px; padding: 6px 12px; }
+  @media (max-width: 459px) { .about { grid-template-columns: 1fr; gap: 18px; } }
+  @media (min-width: 760px) { .about { grid-template-columns: 184px 1fr; gap: 40px; } }
+
+  /* ---------- Form ---------- */
+  .form-grid { display: grid; gap: 18px; margin-top: 28px; }
+  .field { display: grid; gap: 8px; }
+  .field label { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .field label .req { color: var(--red); }
+  .field input, .field textarea {
+    font-family: var(--body); font-size: 16px; color: var(--ink); background: var(--card);
+    border: 1px solid #ddd; border-radius: 8px; padding: 13px 14px; width: 100%;
+    transition: border-color 150ms var(--ease), box-shadow 150ms var(--ease);
+  }
+  .field textarea { resize: vertical; min-height: 92px; }
+  .field input:focus, .field textarea:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(201,28,28,0.12); }
+  .field input::placeholder, .field textarea::placeholder { color: var(--faint); }
+  .field.invalid input, .field.invalid textarea { border-color: var(--red); }
+  .field .err { font-size: 13px; color: var(--red); display: none; }
+  .field.invalid .err { display: block; }
+
+  .form-note { font-size: 14px; color: var(--muted); margin-top: 14px; }
+  .form-alt { display: flex; align-items: center; gap: 14px; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--rule); }
+  .form-alt-or { font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); flex: none; }
+
+  .success { display: none; text-align: center; padding: 52px 28px; background: var(--card); border: 1px solid var(--rule); border-radius: 14px; }
+  .success .tick { width: 54px; height: 54px; margin: 0 auto 18px; border-radius: 50%; background: var(--red); color: #fff; display: flex; align-items: center; justify-content: center; }
+  .success h2 { margin-bottom: 12px; }
+  .success p { color: var(--muted); max-width: 34ch; margin-left: auto; margin-right: auto; }
+
+  /* ---------- Footer ---------- */
+  footer { background: var(--dark); color: #fff; padding: 56px 0; }
+  footer .wrap-wide { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; justify-content: space-between; }
+  footer .fbrand { display: flex; align-items: center; gap: 12px; }
+  footer .fbrand img { width: 34px; height: 34px; display: block; }
+  footer .fbrand b { font-family: var(--display); font-weight: 800; font-size: 18px; letter-spacing: -0.02em; }
+  footer .ftxt { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+  footer .ftxt a { color: rgba(255,255,255,0.85); }
+  footer .ftxt a:hover { color: #fff; }
+
+  /* ---------- Scroll reveal ---------- */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 700ms var(--ease), transform 700ms var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal.d1 { transition-delay: 80ms; }
+  .reveal.d2 { transition-delay: 160ms; }
+  .reveal.d3 { transition-delay: 240ms; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .scroll-hint .mouse::after { animation: none; }
+  }
+
+  /* ---------- Desktop layout improvements ---------- */
+  @media (min-width: 900px) {
+    body { font-size: 18px; }
+    .section { padding: 128px 0; }
+    .section-title { font-size: clamp(32px, 4vw, 48px); margin: 0 0 28px; }
+    .hero h1 { font-size: clamp(40px, 5.8vw, 62px); }
+    .hero .sub { font-size: 22px; }
+    .kicker { margin: 0 0 24px; }
+    /* Two-column layout for text + aside on roomy sections */
+    .section--split .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    /* Wider content column on very large screens */
+    .wrap { max-width: 740px; }
+  }
+  @media (min-width: 1200px) {
+    .section { padding: 152px 0; }
+    .wrap { max-width: 760px; }
+  }
+  @media (max-width: 759px) {
+    .section { padding: 68px 0; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Scroll progress bar -->
+  <div id="progress" aria-hidden="true"><div class="bar"></div></div>
+
+  <!-- Sticky nav -->
+  <nav class="nav" id="nav">
+    <div class="wrap-wide">
+      <a class="nav-brand" href="#top">
+        <img src="assets/Logo.png" alt="TRIGRAMS Studio" />
+        <b>TRIGRAMS Studio</b>
+      </a>
+      <div class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#process">Process</a>
+        <a href="#about">About</a>
+        <a href="#what">What you get</a>
+      </div>
+      <div class="nav-cta">
+        <a href="#start" class="btn btn-sm">Get started →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================= HERO ============================= -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <img class="hero-logo" src="assets/Logo.png" alt="TRIGRAMS Studio" />
+      <span class="badge"><span class="dot"></span>TRIGRAMS Studio · Perth WA</span>
+      <h1>The $200 website. <em>Live in 48 hours</em> or it's free.</h1>
+      <p class="sub">Built with AI. One page, done properly, while you keep running your business.</p>
+      <div class="price-row">
+        <span class="price">$200</span>
+        <span class="price-note">flat. no quote, no scope creep, no "stages."</span>
+      </div>
+      <div class="cta-row">
+        <a href="#start" class="btn">Get mine started →</a>
+        <a href="https://calendly.com/alex-trigrams/30min" target="_blank" rel="noopener" class="btn btn-ghost">Book a call →</a>
+      </div>
+    </div>
+    <div class="scroll-hint" aria-hidden="true"><span class="mouse"></span>Scroll</div>
+  </section>
+
+  <!-- ============================= CLIENT LOGOS ============================= -->
+  <section class="section section--band" style="padding-top: 56px; padding-bottom: 56px;">
+    <div class="reveal">
+      <p class="logos-head">Brands I've worked with</p>
+      <!--
+        TO ADD LOGO IMAGES:
+        Replace each <span class="logo-text">Name</span> with:
+        <img src="assets/logos/name.png" alt="Name" />
+        Files go in: assets/logos/
+        Keep both sets (A and B) in sync for the seamless loop.
+      -->
+      <div class="logo-marquee" aria-label="Brands I've built content for">
+        <div class="marquee-track">
+          <!-- Set A -->
+          <div class="logo-item"><img src="assets/logos/timely-coffee.png" alt="Timely Coffee" /></div>
+          <div class="logo-item"><img src="assets/logos/nlpsc.png" alt="NLPSC" /></div>
+          <div class="logo-item"><img src="assets/logos/updietitian.png" alt="UP Dietitian" /></div>
+          <div class="logo-item"><img src="assets/logos/cbh_logo.png" alt="CBH" /></div>
+          <div class="logo-item"><img src="assets/logos/everydaybread-logo.jpg" alt="Everyday Bread" /></div>
+          <div class="logo-item"><img src="assets/logos/mattandmates.jpg" alt="Matt &amp; Mates" /></div>
+          <div class="logo-item"><img src="assets/logos/yacwa.png" alt="YACWA" /></div>
+          <div class="logo-item"><img src="assets/logos/ppg_logo.png" alt="PPG" /></div>
+          <div class="logo-item"><img src="assets/logos/wasp_logo.png" alt="WASP" /></div>
+          <div class="logo-item"><span class="logo-text">Waterford</span></div>
+          <!-- Set B — exact duplicate for seamless loop -->
+          <div class="logo-item" aria-hidden="true"><img src="assets/logos/timely-coffee.png" alt="" /></div>
+          <div class="logo-item" aria-hidden="true"><img src="assets/logos/nlpsc.png" alt="" /></div>
+          <div class="logo-item" aria-hidden="true"><img src="assets/logos/updietitian.png" alt="" /></div>
+          <div class="logo-item" aria-hidden="true"><img src="assets/logos/cbh_logo.png" alt="" /></div>
+          <div class="logo-item" aria-hidden="true"><img src="assets/logos/everydaybread-logo.jpg" alt="" /></div>
+          <div class="logo-item" aria-hidden="true"><img src="assets/logos/mattandmates.jpg" alt="" /></div>
+          <div class="logo-item" aria-hidden="true"><img src="assets/logos/yacwa.png" alt="" /></div>
+          <div class="logo-item" aria-hidden="true"><img src="assets/logos/ppg_logo.png" alt="" /></div>
+          <div class="logo-item" aria-hidden="true"><img src="assets/logos/wasp_logo.png" alt="" /></div>
+          <div class="logo-item" aria-hidden="true"><span class="logo-text" aria-hidden="true">Waterford</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= WHAT YOU GET ============================= -->
+  <section class="section" id="what">
+    <div class="wrap reveal">
+      <p class="kicker kicker--lg">What you get</p>
+      <h2 class="section-title section-title--lg">One page. One job: turn the people who find you into people who call you.</h2>
+      <p>Your offer up top. Pricing if you want it. One clear action — call, book, or buy.</p>
+      <p>Built for phones, because that's where your customers are looking.</p>
+      <p class="muted small">AI-built. What used to take a designer 3 weeks and $2,000 takes me a day. Same result. You skip the cost.</p>
+    </div>
+  </section>
+
+  <!-- ============================= PREVIOUS WORK ============================= -->
+  <section class="section section--band" id="work">
+    <div class="wrap-wide reveal">
+      <div class="work-head">
+        <div class="left">
+          <p class="kicker kicker--lg">Previous work</p>
+          <h2 class="section-title section-title--lg">Pages I've shipped with <em>Claude Code</em>.</h2>
+        </div>
+        <p class="muted small" style="max-width: 34ch;">Real sites, real businesses. Same one-page, phone-first approach you'd get.</p>
+      </div>
+      <div class="work-grid">
+        <article class="site-card">
+          <div class="site-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">updietitian.com</span></div>
+          <img class="site-shot" src="assets/upd.jpg" alt="UP Dietitian website screenshot" />
+          <div class="site-meta">
+            <span class="name">UP Dietitian<span>Dietitian landing page, built as a 1-stop hub for info on their business</span></span>
+            <a class="visit" href="https://www.updietitian.com" target="_blank" rel="noopener">Visit →</a>
+          </div>
+        </article>
+        <article class="site-card">
+          <div class="site-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">mxfathlete.com</span></div>
+          <img class="site-shot" src="assets/mxf.jpg" alt="MXF Athlete website screenshot" />
+          <div class="site-meta">
+            <span class="name">MXF Athlete<span>Coaching landing page</span></span>
+            <a class="visit" href="https://www.mxfathlete.com" target="_blank" rel="noopener">Visit →</a>
+          </div>
+        </article>
+        <article class="site-card">
+          <div class="site-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">nlpsc.com</span></div>
+          <img class="site-shot" src="assets/nlpsc.jpg" alt="NLPSC website screenshot" />
+          <div class="site-meta">
+            <span class="name">NLPSC<span>S&amp;C gym landing page to boost enquiries and bookings while keeping pricing simple</span></span>
+            <a class="visit" href="https://www.nlpsc.com" target="_blank" rel="noopener">Visit →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= GUARANTEE (dark band) ============================= -->
+  <section class="section section--dark">
+    <div class="wrap reveal">
+      <p class="kicker kicker--lg">The guarantee</p>
+      <h2 class="section-title section-title--lg">Live within 48 hours, or you pay <em>nothing</em>.</h2>
+      <p class="muted" style="font-size: 18px; margin-top: 18px;">Not "I'll try." If it's not live in 2 days, the <strong style="color:#fff;">$200 stays in your pocket</strong> and you keep the site anyway.</p>
+    </div>
+  </section>
+
+  <!-- ============================= PROCESS ============================= -->
+  <section class="section section--dark" id="process" style="padding-top: 0;">
+    <div class="wrap reveal">
+      <p class="kicker">The process</p>
+      <h2 class="section-title">From your basics to live, in <em>two days</em>.</h2>
+      <p class="muted" style="font-size: 18px; margin-top: 16px; max-width: 40ch;">No drawn-out discovery calls. No three-week timelines. You hand over a few things, I build, you go live.</p>
+
+      <div class="process-grid">
+        <div class="phase">
+          <div class="hour">Hour 0</div>
+          <h3>You send the basics</h3>
+          <p>The four answers and whatever photos you've got. Five minutes on your end, and the clock starts.</p>
+        </div>
+        <div class="phase">
+          <div class="hour">Hours 1–24</div>
+          <h3>I build it</h3>
+          <p>I draft the page with AI, write the copy, and shape it around the one action you want. I send a link to look at, usually within the day. No long email thread.</p>
+        </div>
+        <div class="phase">
+          <div class="hour">Hours 24–48</div>
+          <h3>Live and yours</h3>
+          <p>One round of tweaks, then it goes online. Domain connected, fast on phones, ready to send to customers.</p>
+        </div>
+      </div>
+
+      <div class="turnaround">
+        <span class="big">48h</span>
+        <span class="cap">start to live, guaranteed. <strong>Most are done sooner</strong>, usually the same day I get your basics.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= WHAT I NEED FROM YOU ============================= -->
+  <section class="section">
+    <div class="wrap reveal">
+      <p class="kicker">What I need from you</p>
+      <h2 class="section-title">Five minutes and these. No long forms.</h2>
+      <ol class="needs" style="margin-top: 32px;">
+        <li><span>Your logo and any photos you've got (phone shots are fine).</span></li>
+        <li><span>What you sell and what it costs.</span></li>
+        <li><span>Where you want people to go: call, book, message, or buy.</span></li>
+        <li><span>One line on why people pick you over the bloke down the road.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================= HOSTING ============================= -->
+  <section class="section section--band">
+    <div class="wrap reveal">
+      <p class="kicker kicker--lg">Hosting</p>
+      <h2 class="section-title section-title--lg">Keep it live, fast, and online.</h2>
+      <div class="hosting-price">$25</div>
+      <p class="hosting-label">per month · no lock-in</p>
+      <ul class="hosting-features">
+        <li><span class="hf-dot"></span>Hosting on fast, reliable infrastructure</li>
+        <li><span class="hf-dot"></span>Your domain connected and configured</li>
+        <li><span class="hf-dot"></span>Speed-optimised for phones</li>
+        <li><span class="hf-dot"></span>Cancel anytime — no contract, no exit fees</li>
+      </ul>
+      <span class="hosting-free">First month <span>on me</span> — see it working before you spend a cent.</span>
+    </div>
+  </section>
+
+  <!-- ============================= ALL I ASK BACK ============================= -->
+  <section class="section">
+    <div class="wrap reveal">
+      <p class="kicker kicker--lg">All I ask back</p>
+      <h2 class="section-title section-title--lg">If you're happy with it, three small things.</h2>
+      <p class="muted">The site's yours either way. These three favours are what keep the price this low.</p>
+      <ol class="favour-steps">
+        <li class="favour-step">
+          <span class="favour-num">01</span>
+          <span class="favour-body">A quick 30-second phone video saying what you thought.</span>
+        </li>
+        <li class="favour-step">
+          <span class="favour-num">02</span>
+          <span class="favour-body">A line I can quote on the site, plus your logo.</span>
+        </li>
+        <li class="favour-step">
+          <span class="favour-num">03</span>
+          <span class="favour-body">One intro to another business owner who'd want the same thing.</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================= WHY SO CHEAP ============================= -->
+  <section class="section section--band">
+    <div class="wrap reveal">
+      <p class="kicker kicker--lg">Why so cheap?</p>
+      <h2 class="section-title section-title--lg">Because this is how I meet people I want to <em>work with</em>.</h2>
+      <p>Most businesses I build for have bigger problems than a website. A booking process that loses people. Follow-up that never happens. Hours lost to admin that AI could wipe out in a morning. I'd rather prove I'm good with a $200 job than pitch you cold.</p>
+      <p class="muted small">If the site's all you need, great — you got a bargain. If there's more I can take off your plate, we'll talk.</p>
+    </div>
+  </section>
+
+  <!-- ============================= ABOUT ============================= -->
+  <section class="section" id="about">
+    <div class="wrap reveal">
+      <p class="kicker kicker--lg">Who you're dealing with</p>
+      <div class="about">
+        <img class="about-photo" src="assets/about-me-photo.jpg" alt="Alex Oliver, TRIGRAMS Studio" />
+        <div class="about-text">
+          <h3>Hi, I'm Alex.</h3>
+          <p>I run TRIGRAMS Studio out of Perth. Video, content, and AI marketing for small businesses who'd rather be out doing the actual job than wrestling with a website.</p>
+          <p class="muted small">Most owners I meet want the same thing: one good page, fast, that turns the people who find them into people who call. The work's mine, I reply quick, and you keep it either way.</p>
+          <div class="about-chips">
+            <span class="chip">Perth, WA</span>
+            <span class="chip">Replies in hours</span>
+            <span class="chip">One-man studio</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= FORM ============================= -->
+  <section class="section section--band" id="start">
+    <div class="wrap reveal">
+      <div id="form-shell">
+        <p class="kicker kicker--lg">Start here</p>
+        <h2 class="section-title section-title--lg">Want one?</h2>
+        <p class="muted" style="margin-top: 12px;">Send me the 4 answers and the clock starts.</p>
+
+        <form id="lead-form" class="form-grid" novalidate>
+          <div class="field" data-field>
+            <label for="f-name">Name <span class="req">*</span></label>
+            <input id="f-name" name="name" type="text" required autocomplete="name" placeholder="Your name" />
+            <span class="err">Pop your name in here.</span>
+          </div>
+          <div class="field" data-field>
+            <label for="f-email">Email <span class="req">*</span></label>
+            <input id="f-email" name="email" type="email" required autocomplete="email" placeholder="you@business.com.au" />
+            <span class="err">A valid email so I can reply.</span>
+          </div>
+          <div class="field" data-field>
+            <label for="f-business">Business name <span class="req">*</span></label>
+            <input id="f-business" name="business" type="text" required placeholder="What you trade as" />
+            <span class="err">What's the business called?</span>
+          </div>
+          <div class="field" data-field>
+            <label for="f-sell">What do you sell, and what does it cost?</label>
+            <textarea id="f-sell" name="sell" placeholder="e.g. mobile mechanic, $120 call-out"></textarea>
+          </div>
+          <div class="field" data-field>
+            <label for="f-go">Where should people go: call, book, message, or buy?</label>
+            <input id="f-go" name="go" type="text" placeholder="e.g. call me, or book on my calendar" />
+          </div>
+          <div class="field" data-field>
+            <label for="f-why">Why do people pick you over the competition?</label>
+            <textarea id="f-why" name="why" placeholder="One honest line is plenty"></textarea>
+          </div>
+          <button type="submit" id="submit-btn" class="btn btn-wide">Send it →</button>
+          <p class="form-note">I'll reply within a few hours. Photos and logo can come after.</p>
+        </form>
+
+        <div class="form-alt">
+          <span class="form-alt-or">or</span>
+          <p class="muted small" style="margin: 0;">Rather talk it through first? <a href="https://calendly.com/alex-trigrams/30min" target="_blank" rel="noopener">Book a 30-minute call →</a></p>
+        </div>
+      </div>
+
+      <div class="success" id="form-success">
+        <div class="tick">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h2>Got it.</h2>
+        <p>I'll be in touch shortly. The 48-hour clock starts when I have your basics.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= FOOTER ============================= -->
+  <footer>
+    <div class="wrap-wide">
+      <div class="fbrand">
+        <img src="assets/Logo.png" alt="TRIGRAMS Studio" />
+        <b>TRIGRAMS Studio</b>
+      </div>
+      <p class="ftxt">Perth, WA · <a href="mailto:hello@trigrams.studio">hello@trigrams.studio</a></p>
+    </div>
+  </footer>
+
+<script>
+  /* ---------- Smooth scroll for in-page anchors ---------- */
+  document.querySelectorAll('a[href^="#"]').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      var id = el.getAttribute('href').slice(1);
+      var target = id ? document.getElementById(id) : null;
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.replaceState(null, '', '#' + id);
+      }
+    });
+  });
+
+  /* ---------- Scroll progress bar + nav shadow ---------- */
+  (function () {
+    var bar = document.querySelector('#progress .bar');
+    var nav = document.getElementById('nav');
+    function onScroll() {
+      var h = document.documentElement;
+      var max = h.scrollHeight - h.clientHeight;
+      var p = max > 0 ? h.scrollTop / max : 0;
+      if (bar) bar.style.transform = 'scaleX(' + p + ')';
+      if (nav) nav.classList.toggle('scrolled', h.scrollTop > 8);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+
+  /* ---------- Scroll reveal ---------- */
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+
+  /* ---------- Form validation + Formspree submission ---------- */
+  (function () {
+    var form = document.getElementById('lead-form');
+    if (!form) return;
+    var shell = document.getElementById('form-shell');
+    var success = document.getElementById('form-success');
+    var submitBtn = document.getElementById('submit-btn');
+
+    // Replace YOUR_FORM_ID with your Formspree form ID (e.g. xpwzgkrb)
+    // Sign up free at formspree.io, create a form, copy the ID from the endpoint URL
+    var FORMSPREE_ENDPOINT = 'https://formspree.io/f/meewzagj';
+
+    function validateField(field) {
+      var input = field.querySelector('input, textarea');
+      if (!input || !input.hasAttribute('required')) return true;
+      var val = input.value.trim();
+      var ok = val.length > 0;
+      if (ok && input.type === 'email') ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+      field.classList.toggle('invalid', !ok);
+      return ok;
+    }
+
+    form.querySelectorAll('[data-field]').forEach(function (field) {
+      var input = field.querySelector('input, textarea');
+      if (!input) return;
+      input.addEventListener('input', function () { if (field.classList.contains('invalid')) validateField(field); });
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var allOk = true, firstBad = null;
+      form.querySelectorAll('[data-field]').forEach(function (field) {
+        var ok = validateField(field);
+        if (!ok && !firstBad) firstBad = field;
+        if (!ok) allOk = false;
+      });
+      if (!allOk) {
+        if (firstBad) {
+          var input = firstBad.querySelector('input, textarea');
+          if (input) input.focus({ preventScroll: true });
+          firstBad.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      })
+        .then(function (res) {
+          if (res.ok) {
+            shell.style.display = 'none';
+            success.style.display = 'block';
+            success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          } else {
+            throw new Error('server');
+          }
+        })
+        .catch(function () {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send it →';
+          alert('Something went wrong. Try again or email hello@trigrams.studio directly.');
+        });
+    });
+  })();
+</script>
+</body>
+</html>
