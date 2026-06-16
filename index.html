@@ -229,16 +229,130 @@
   .hero {
     min-height: 100svh;
     display: flex; align-items: center;
-    padding: calc(var(--nav-h) + 24px) 0 56px;
+    padding: calc(var(--nav-h) + 24px) 0 72px;
     position: relative;
     overflow: hidden;
   }
-  .hero .wrap { width: 100%; }
+  .hero .wrap { width: 100%; max-width: var(--maxw-wide); }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: center;
+  }
 
   .hero-logo { display: block; width: 48px; height: 48px; margin-bottom: 30px; }
 
   .hero h1 { font-size: clamp(31px, 5.2vw, 50px); line-height: 1.1; margin: 22px 0 22px; max-width: 13ch; }
   .hero .sub { font-size: clamp(18px, 2.4vw, 22px); color: var(--muted); line-height: 1.5; margin-bottom: 32px; max-width: 32ch; }
+
+  /* ---------- Phone frame ---------- */
+  .hero-phone {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .phone-frame {
+    position: relative;
+    width: clamp(200px, 38vw, 270px);
+    background: #1c1c1e;
+    border-radius: 44px;
+    padding: 14px 10px;
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,0.07),
+      0 0 0 1.5px #0a0a0a,
+      0 40px 100px rgba(0,0,0,0.28),
+      0 8px 24px rgba(0,0,0,0.18);
+  }
+
+  /* Volume buttons (left side pseudo-element) */
+  .phone-frame::before {
+    content: '';
+    position: absolute;
+    left: -3.5px; top: 22%;
+    width: 3.5px; height: 32px;
+    background: #2e2e30;
+    border-radius: 2px 0 0 2px;
+    box-shadow: 0 44px 0 #2e2e30, 0 88px 0 #2e2e30;
+  }
+
+  /* Power button (right side pseudo-element) */
+  .phone-frame::after {
+    content: '';
+    position: absolute;
+    right: -3.5px; top: 30%;
+    width: 3.5px; height: 64px;
+    background: #2e2e30;
+    border-radius: 0 2px 2px 0;
+  }
+
+  .phone-island {
+    position: absolute;
+    top: 12px; left: 50%;
+    transform: translateX(-50%);
+    width: 32%; height: 28px;
+    background: #0a0a0a;
+    border-radius: 16px;
+    z-index: 3;
+  }
+
+  .phone-screen {
+    width: 100%;
+    aspect-ratio: 9/16;
+    border-radius: 34px;
+    overflow: hidden;
+    background: #000;
+    position: relative;
+  }
+
+  .phone-screen video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Play overlay */
+  .play-overlay {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.38);
+    cursor: pointer;
+    transition: background 200ms var(--ease);
+    z-index: 2;
+  }
+  .play-overlay:hover { background: rgba(0,0,0,0.28); }
+  .play-overlay.hidden { display: none; }
+
+  .play-btn {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.95);
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 140ms var(--ease);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+    flex: none;
+  }
+  .play-btn:hover { transform: scale(1.07); }
+  .play-btn svg { width: 26px; height: 26px; fill: var(--ink); margin-left: 3px; }
+
+  .play-label {
+    color: #fff; font-size: 12px; font-weight: 600;
+    margin: 14px 0 0; letter-spacing: 0.04em; text-transform: uppercase;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+  }
+
+  /* Two-column hero on wider screens */
+  @media (min-width: 900px) {
+    .hero-inner {
+      grid-template-columns: 1fr auto;
+      gap: 72px;
+    }
+    .hero h1 { max-width: 12ch; }
+  }
 
   .price-row { display: flex; align-items: baseline; gap: 16px; margin-bottom: 36px; flex-wrap: wrap; }
   .price {
@@ -479,17 +593,38 @@
   <!-- ============================= HERO ============================= -->
   <section class="hero" id="top">
     <div class="wrap">
-      <img class="hero-logo" src="assets/Logo.png" alt="TRIGRAMS Studio" />
-      <span class="badge"><span class="dot"></span>TRIGRAMS Studio · Perth WA</span>
-      <h1>The $200 website. <em>Live in 48 hours</em> or it's free.</h1>
-      <p class="sub">Built with AI. One page, done properly, while you keep running your business.</p>
-      <div class="price-row">
-        <span class="price">$200</span>
-        <span class="price-note">flat. no quote, no scope creep, no "stages."</span>
-      </div>
-      <div class="cta-row">
-        <a href="#start" class="btn">Get mine started →</a>
-        <a href="https://calendly.com/alex-trigrams/30min" target="_blank" rel="noopener" class="btn btn-ghost">Book a call →</a>
+      <div class="hero-inner">
+        <!-- Left: copy -->
+        <div class="hero-text">
+          <img class="hero-logo" src="assets/Logo.png" alt="TRIGRAMS Studio" />
+          <span class="badge"><span class="dot"></span>TRIGRAMS Studio · Perth WA</span>
+          <h1>The $200 website. <em>Live in 48 hours</em> or it's free.</h1>
+          <p class="sub">Built with AI. One page, done properly, while you keep running your business.</p>
+          <div class="price-row">
+            <span class="price">$200</span>
+            <span class="price-note">flat. no quote, no scope creep, no "stages."</span>
+          </div>
+          <div class="cta-row">
+            <a href="#start" class="btn">Get mine started →</a>
+            <a href="https://calendly.com/alex-trigrams/30min" target="_blank" rel="noopener" class="btn btn-ghost">Book a call →</a>
+          </div>
+        </div>
+
+        <!-- Right: phone mockup with VSL -->
+        <div class="hero-phone">
+          <div class="phone-frame">
+            <div class="phone-island"></div>
+            <div class="phone-screen">
+              <video id="vsl-video" src="assets/vsl.mp4" playsinline preload="metadata"></video>
+              <div class="play-overlay" id="vsl-overlay">
+                <button class="play-btn" aria-label="Play video">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/></svg>
+                </button>
+                <p class="play-label">Watch the overview</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="scroll-hint" aria-hidden="true"><span class="mouse"></span>Scroll</div>
@@ -816,6 +951,27 @@
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
     els.forEach(function (el) { io.observe(el); });
+  })();
+
+  /* ---------- VSL play button ---------- */
+  (function () {
+    var overlay = document.getElementById('vsl-overlay');
+    var video = document.getElementById('vsl-video');
+    if (!overlay || !video) return;
+    overlay.addEventListener('click', function () {
+      overlay.classList.add('hidden');
+      video.play();
+    });
+    video.addEventListener('ended', function () {
+      overlay.classList.remove('hidden');
+      video.currentTime = 0;
+    });
+    video.addEventListener('pause', function () {
+      if (!video.ended) overlay.classList.remove('hidden');
+    });
+    video.addEventListener('play', function () {
+      overlay.classList.add('hidden');
+    });
   })();
 
   /* ---------- Form validation + Formspree submission ---------- */
