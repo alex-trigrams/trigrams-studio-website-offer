@@ -161,13 +161,21 @@ function renderExamples() {
     var shot = ex.shot
       ? '<img src="' + ex.shot + '" alt="' + ex.name + ' full page screenshot">'
       : '<div class="example-placeholder"><span>Full-page preview coming soon</span></div>';
+    var chrome = '' +
+      '<div class="example-chrome" aria-hidden="true">' +
+        '<span class="example-chrome-dots"><i></i><i></i><i></i></span>' +
+        '<span class="example-chrome-url">' + hostOf(ex.url) + '</span>' +
+      '</div>';
     return '' +
       '<div class="liquid-glass example-card stagger-item">' +
-        '<div class="example-shot">' + shot + '</div>' +
+        chrome +
+        '<a href="' + ex.url + '" target="_blank" rel="noopener" class="example-shot" aria-label="Open ' + ex.name + ' in a new tab">' + shot +
+          '<span class="example-shot-hint">Open live site' +
+            '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></span>' +
+        '</a>' +
         '<a href="' + ex.url + '" target="_blank" rel="noopener" class="example-meta">' +
           '<span class="example-meta-top"><span class="example-name">' + ex.name + '</span>' +
             '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:rgba(239,238,234,0.55);"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></span>' +
-          '<span class="example-host">' + hostOf(ex.url) + '</span>' +
         '</a>' +
       '</div>';
   }).join('');
@@ -203,11 +211,55 @@ function initExamplesCarousel() {
     nextBtn.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
   }
 
-  prevBtn.addEventListener('click', function () { track.scrollBy({ left: -cardStep(), behavior: 'smooth' }); });
-  nextBtn.addEventListener('click', function () { track.scrollBy({ left: cardStep(), behavior: 'smooth' }); });
+  prevBtn.addEventListener('click', function () { pauseAuto(); track.scrollBy({ left: -cardStep(), behavior: 'smooth' }); });
+  nextBtn.addEventListener('click', function () { pauseAuto(); track.scrollBy({ left: cardStep(), behavior: 'smooth' }); });
   dots.forEach(function (dot) {
-    dot.addEventListener('click', function () { track.scrollTo({ left: cardStep() * parseInt(dot.dataset.idx, 10), behavior: 'smooth' }); });
+    dot.addEventListener('click', function () { pauseAuto(); track.scrollTo({ left: cardStep() * parseInt(dot.dataset.idx, 10), behavior: 'smooth' }); });
   });
+
+  /* Slow auto-advance: next card every 6s, loop back to the start.
+     Pauses while hovered/touched and after any manual control, and
+     stays off entirely for reduced-motion visitors. */
+  var AUTO_MS = 6000;
+  var autoTimer = null;
+  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function autoAdvance() {
+    var atEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+    if (atEnd) track.scrollTo({ left: 0, behavior: 'smooth' });
+    else track.scrollBy({ left: cardStep(), behavior: 'smooth' });
+  }
+  function startAuto() {
+    if (reducedMotion || autoTimer) return;
+    autoTimer = setInterval(autoAdvance, AUTO_MS);
+  }
+  function stopAuto() {
+    clearInterval(autoTimer);
+    autoTimer = null;
+  }
+  var resumeTimer;
+  function pauseAuto() {
+    stopAuto();
+    clearTimeout(resumeTimer);
+    resumeTimer = setTimeout(startAuto, AUTO_MS * 2);
+  }
+
+  var carousel = track.closest('.examples-carousel') || track;
+  carousel.addEventListener('mouseenter', stopAuto);
+  carousel.addEventListener('mouseleave', function () { pauseAuto(); });
+  track.addEventListener('touchstart', pauseAuto, { passive: true });
+  track.addEventListener('wheel', pauseAuto, { passive: true });
+
+  /* Only cycle while the section is on screen */
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) startAuto(); else stopAuto();
+      });
+    }, { threshold: 0.3 }).observe(carousel);
+  } else {
+    startAuto();
+  }
 
   var scrollTick;
   track.addEventListener('scroll', function () {
