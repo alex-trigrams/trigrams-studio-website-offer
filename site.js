@@ -56,25 +56,25 @@ var CASE_STUDIES = [
 
 var SERVICE_STEPS = [
   {
-    n: '01', name: 'Website', price: 'From $300', timeline: 'Live in 48 hours',
+    n: '01', name: 'Website', icon: 'ts-website', price: 'From $300', timeline: 'Live in 48 hours',
     desc: 'A clean, functional site built fast with AI. Clear offer, clear pricing, a contact form that actually works. Hosted at $25/month.',
     note: 'This is the door. It’s not the business.',
     trigger: 'The question that starts step two: “what happens when someone fills in the contact form?”'
   },
   {
-    n: '02', name: 'Lead follow-up system', price: '$500–800', timeline: 'Built once',
+    n: '02', name: 'Lead follow-up system', icon: 'ts-email', price: '$500–800', timeline: 'Built once',
     desc: 'A 3–5 email sequence that triggers the moment someone enquires, built in MailerLite or ConvertKit. Most small businesses get a lead and do nothing with it — this fixes that permanently.',
     note: 'Built once. Runs forever. No extra work on your end.',
     trigger: 'Once it’s live and working, managing it makes obvious sense.'
   },
   {
-    n: '03', name: 'Monthly retainer', price: '$150–200/mo', timeline: 'Ongoing',
+    n: '03', name: 'Monthly retainer', icon: 'ts-sync', price: '$150–200/mo', timeline: 'Ongoing',
     desc: 'Once the system is live, I manage and optimise it: open-rate reports, copy tweaks, keeping the automation healthy.',
     note: 'Low cost, high peace of mind. No retainer for activity — only for results.',
     trigger: 'Once there’s trust and a clear goal, a campaign sprint follows naturally.'
   },
   {
-    n: '04', name: 'Campaign sprint', price: '$1,500–2,500', timeline: '6–8 weeks',
+    n: '04', name: 'Campaign sprint', icon: 'ts-launch', price: '$1,500–2,500', timeline: '6–8 weeks',
     desc: 'A focused push with one clear objective: lead gen, re-engagement, or a seasonal promo. I build the structure, write the copy with AI, and run it.',
     note: 'Defined start, defined end, clear outcome. This is where the real revenue shift happens.',
     trigger: null
@@ -89,7 +89,7 @@ function renderLadder() {
       '<div class="liquid-glass ladder-step stagger-item' + (i === 0 ? ' open' : '') + '">' +
         '<button type="button" class="ladder-head" aria-expanded="' + (i === 0 ? 'true' : 'false') + '">' +
           '<span class="ladder-num">' + step.n + '</span>' +
-          '<span class="ladder-head-main"><span class="ladder-name">' + step.name + '</span><span class="ladder-timeline">' + step.timeline + '</span></span>' +
+          '<span class="ladder-head-main"><span class="ladder-name"><img class="ts-icon" src="assets/icons/' + step.icon + '.svg" alt="">' + step.name + '</span><span class="ladder-timeline">' + step.timeline + '</span></span>' +
           '<span class="ladder-price">' + step.price + '</span>' +
           '<svg class="ladder-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>' +
         '</button>' +
@@ -240,7 +240,7 @@ function renderCaseStudies() {
             '<a href="' + cs.url + '" target="_blank" rel="noopener" title="Open the live site" class="cs-visit">Visit ' +
               '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a>' +
           '</div>' +
-          '<div class="cs-turnaround">' + cs.turnaround + '</div>' +
+          '<div class="cs-turnaround"><img class="ts-icon" src="assets/icons/ts-turnaround.svg" alt="">' + cs.turnaround + '</div>' +
           '<div style="display:flex;flex-direction:column;gap:12px;">' +
             '<div class="cs-baseline"><span class="cs-baseline-label">Before</span><span class="cs-baseline-val">' + cs.before + '</span></div>' +
             '<div class="cs-baseline"><span class="cs-baseline-label">Now</span><span class="cs-baseline-val cs-baseline-val--now">' + cs.now + '</span></div>' +
@@ -270,9 +270,9 @@ function renderBuildDemo() {
     '</div>' +
     '<div class="build-body">' +
       '<div class="build-sidebar">' +
-        '<div class="build-sidebar-label">The build</div>' +
+        '<div class="build-sidebar-label"><img class="ts-icon" src="assets/icons/ts-build.svg" alt="">The build</div>' +
         '<div class="build-steps" id="build-steps"></div>' +
-        '<div class="build-sidebar-label" style="margin-top:20px;">Your assets</div>' +
+        '<div class="build-sidebar-label" style="margin-top:20px;"><img class="ts-icon" src="assets/icons/ts-files.svg" alt="">Your assets</div>' +
         '<div class="build-assets" id="build-assets"></div>' +
       '</div>' +
       '<div class="build-preview" id="build-preview">' +
