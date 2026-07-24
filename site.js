@@ -624,6 +624,120 @@ renderLadder();
   });
 })();
 
+/* Portal links (Client Login + Free Resource) + analytics events.
+   One place for all pages — links are injected into the nav and footer,
+   and interactions are reported to Vercel Web Analytics as custom events. */
+(function () {
+  var CLIENT_URL = 'https://www.client.trigrams.studio';
+  var RESOURCE_URL = 'https://onboarding.trigrams.studio';
+
+  // Vercel Analytics queue guard — safe to call before the script loads.
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  function track(name, data) {
+    try { window.va('event', { name: name, data: data || {} }); } catch (e) {}
+  }
+  var PAGE = location.pathname.replace(/\/index\.html$/, '/') || '/';
+
+  /* --- Inject Client Login + Free Resource into the nav --- */
+  var navLinks = document.getElementById('nav-links');
+  if (navLinks && !navLinks.querySelector('[data-portal="resource"]')) {
+    var res = document.createElement('a');
+    res.href = RESOURCE_URL;
+    res.textContent = 'Free Resource';
+    res.setAttribute('data-portal', 'resource');
+    res.rel = 'noopener';
+    navLinks.appendChild(res);
+
+    // On mobile the dropdown is the only place the login fits.
+    var loginMobile = document.createElement('a');
+    loginMobile.href = CLIENT_URL;
+    loginMobile.textContent = 'Client Login';
+    loginMobile.setAttribute('data-portal', 'client');
+    loginMobile.rel = 'noopener';
+    navLinks.appendChild(loginMobile);
+  }
+  var navActions = document.querySelector('.nav-actions');
+  if (navActions && !navActions.querySelector('[data-portal="client"]')) {
+    var login = document.createElement('a');
+    login.href = CLIENT_URL;
+    login.textContent = 'Client Login';
+    login.className = 'nav-login';
+    login.setAttribute('data-portal', 'client');
+    login.rel = 'noopener';
+    navActions.insertBefore(login, navActions.firstChild);
+  }
+
+  /* --- Inject both into the footer "Talk" column --- */
+  var footerCols = document.querySelectorAll('.footer-links');
+  if (footerCols.length) {
+    var talk = footerCols[footerCols.length - 1];
+    if (!talk.querySelector('[data-portal]')) {
+      var fRes = document.createElement('a');
+      fRes.href = RESOURCE_URL; fRes.textContent = 'Free Resource';
+      fRes.setAttribute('data-portal', 'resource'); fRes.rel = 'noopener';
+      var fLogin = document.createElement('a');
+      fLogin.href = CLIENT_URL; fLogin.textContent = 'Client Login';
+      fLogin.setAttribute('data-portal', 'client'); fLogin.rel = 'noopener';
+      talk.appendChild(fRes);
+      talk.appendChild(fLogin);
+    }
+  }
+
+  /* --- Track clicks to the portals (delegated, catches all copies) --- */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[data-portal]');
+    if (!a) return;
+    track('Portal Click', {
+      portal: a.getAttribute('data-portal') === 'client' ? 'Client Login' : 'Free Resource',
+      from: PAGE
+    });
+  });
+
+  /* --- Track key CTA / button clicks --- */
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest && e.target.closest('a, button');
+    if (!el || el.hasAttribute('data-portal')) return;
+    var href = el.getAttribute('href') || '';
+    var label = (el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60);
+    var kind = null;
+    if (href.indexOf('calendly.com') !== -1 || el.classList.contains('cal-float')) kind = 'Book a call';
+    else if (el.id === 'enquiry-submit' || href.indexOf('enquiry.html') !== -1) kind = 'Enquiry';
+    else if (el.classList.contains('nav-cta') || el.classList.contains('liquid-glass') || /start your build|get started/i.test(label)) kind = 'CTA';
+    if (kind) track('CTA Click', { kind: kind, label: label, from: PAGE });
+  });
+
+  /* --- Scroll depth: 25 / 50 / 75 / 100% (once each per page) --- */
+  var marks = [25, 50, 75, 100];
+  var hit = {};
+  function onScrollDepth() {
+    var doc = document.documentElement;
+    var scrollable = doc.scrollHeight - window.innerHeight;
+    if (scrollable <= 0) return;
+    var pct = Math.round(((window.scrollY) / scrollable) * 100);
+    marks.forEach(function (m) {
+      if (pct >= m && !hit[m]) { hit[m] = true; track('Scroll Depth', { depth: m + '%', page: PAGE }); }
+    });
+    if (Object.keys(hit).length === marks.length) window.removeEventListener('scroll', onScrollDepth);
+  }
+  window.addEventListener('scroll', onScrollDepth, { passive: true });
+
+  /* --- Section views: fire once when a section scrolls into view --- */
+  var sections = document.querySelectorAll('section[id]');
+  if (sections.length && 'IntersectionObserver' in window) {
+    var seen = {};
+    var so = new IntersectionObserver(function (entries) {
+      entries.forEach(function (ent) {
+        if (!ent.isIntersecting) return;
+        var id = ent.target.id;
+        if (seen[id]) return;
+        seen[id] = true;
+        track('Section View', { section: id, page: PAGE });
+      });
+    }, { threshold: 0.4 });
+    sections.forEach(function (s) { so.observe(s); });
+  }
+})();
+
 /* Newsletter popup — shows once per week, never after subscribing */
 (function () {
   var KEY_DONE = 'tg_news_done';

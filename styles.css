@@ -108,6 +108,12 @@ header.site-nav {
 
 .nav-actions { display: flex; align-items: center; gap: 10px; flex: none; }
 .nav-cta { border-radius: 999px; padding: 11px 22px; font-family: var(--font-body); font-size: 14px; font-weight: 500; color: var(--bone); cursor: pointer; display: inline-block; white-space: nowrap; }
+.nav-login {
+  font-family: var(--font-body); font-size: 14px; font-weight: 500; color: rgba(239,238,234,0.75);
+  white-space: nowrap; transition: color 0.2s; display: none;
+}
+.nav-login:hover { color: var(--bone); }
+@media (min-width: 860px) { .nav-login { display: inline-block; } }
 
 .nav-toggle {
   display: inline-flex; align-items: center; justify-content: center; flex: none;
