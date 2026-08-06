@@ -54,9 +54,42 @@ var CASE_STUDIES = [
   }
 ];
 
+/* Video work. `src` is a short silent preview for the carousel; `full` is the
+   complete ad with sound, loaded only when a card is opened. `kind` splits the
+   paid-ad creative from the broader brand work. */
+var REELS = [
+  { id: 'nlpsc-conditioning',       client: 'NLPSC',            label: 'Conditioning ad',        kind: 'ad',    accent: '#0F1E32' },
+  { id: 'nlpsc-december',           client: 'NLPSC',            label: 'December ad',            kind: 'ad',    accent: '#0F1E32' },
+  { id: 'sportiesfc-v1',            client: 'SportiesFC',       label: 'Video ad, cut one',      kind: 'ad',    accent: '#1A2E1A' },
+  { id: 'sportiesfc-v2',            client: 'SportiesFC',       label: 'Video ad, cut two',      kind: 'ad',    accent: '#1A2E1A' },
+  { id: 'sportiesfc-v3',            client: 'SportiesFC',       label: 'Video ad, cut three',    kind: 'ad',    accent: '#1A2E1A' },
+  { id: 'timely-reel-1-coffee',     client: 'Timely Coffee',    label: 'Coffee you can be proud of', kind: 'brand', accent: '#3B2210' },
+  { id: 'timely-reel-2-roasting',   client: 'Timely Coffee',    label: 'Roasting 101',           kind: 'brand', accent: '#3B2210' },
+  { id: 'timely-reel-3-qc',         client: 'Timely Coffee',    label: 'QC taste tests',         kind: 'brand', accent: '#3B2210' },
+  { id: 'timely-reel-4-packing',    client: 'Timely Coffee',    label: 'Packing orders',         kind: 'brand', accent: '#3B2210' },
+  { id: 'timely-coffee-window',     client: 'Timely Coffee',    label: 'The coffee window',      kind: 'brand', accent: '#3B2210' },
+  { id: 'timely-finishing-touches', client: 'Timely Coffee',    label: 'Finishing touches',      kind: 'brand', accent: '#3B2210' },
+  { id: 'timely-pour-over',         client: 'Timely Coffee',    label: 'Pour over',              kind: 'brand', accent: '#3B2210' },
+  { id: 'drawon-founder-interview', client: 'Drawon',           label: 'Founder interview',      kind: 'brand', accent: '#1E1A2E' },
+  { id: 'abbey-loading-principle',  client: 'Abbey',            label: 'The loading principle',  kind: 'brand', accent: '#1A1A2E' },
+  { id: 'studio-187',               client: 'Studio 187 Tattoo',label: 'Studio film',            kind: 'brand', accent: '#1E1E1E' },
+  { id: 'trigg-training',           client: 'Trigg Training',   label: 'Montage',                kind: 'brand', accent: '#1A2A1E' },
+  { id: 'allan-intro',              client: 'Allan Wryneck',    label: 'Intro',                  kind: 'brand', accent: '#1E2A18' },
+  { id: 'allan-wryneck',            client: 'Allan Wryneck',    label: 'Feature',                kind: 'brand', accent: '#1E2A18' },
+  { id: 'announcement',             client: 'TRIGRAMS Studio',  label: 'Announcement',           kind: 'brand', accent: '#1A1A1A' }
+];
+
+/* Stills from the same shoots. Thumbnails drive the strip and the grid; the
+   full-size file only loads when a photo is opened in the lightbox. */
+var STILLS = [
+  { client: 'Timely Coffee', dir: 'timely', files: ['dsc02265.jpg','dsc02293.jpg','dsc02297.jpg','dsc02307.jpg','dsc02332.jpg','dsc02366.jpg','dsc02485.jpg','dsc03704-2.jpg'] },
+  { client: 'UP Dietitian', dir: 'up-dietitian', files: ['upd-1.jpg','upd-51.jpg','upd-82.jpg','upd-109.jpg','upd-57.jpg','up-3.jpg','upd-28.jpg','upd-31.jpg','upd-52.jpg','upd-55.jpg','upd-56.jpg','upd-71.jpg','upd-86.jpg','upd-87.jpg','upd-94.jpg','upd-96.jpg','upd-101.jpg','upd-104.jpg','upd-107.jpg','upd-113.jpg','up-12.jpg','up-15.jpg','up-31.jpg'] },
+  { client: 'Waterford', dir: 'waterford', files: ['waterford-38.jpg','waterford-39.jpg','waterford-41.jpg','waterford-42.jpg','waterford-43.jpg','waterford-44.jpg','waterford-45.jpg'] }
+];
+
 var SERVICE_STEPS = [
   {
-    n: '01', name: 'Website', icon: 'ts-website', price: 'From $300', timeline: 'Live in 48 hours',
+    n: '01', name: 'Website', icon: 'ts-website', price: 'From $500 + GST', timeline: 'Live in 14 days',
     desc: 'A clean, functional site built fast with AI. Clear offer, clear pricing, a contact form that actually works. Hosted at $25/month.',
     note: 'This is the door. It’s not the business.',
     trigger: 'The question that starts step two: “what happens when someone fills in the contact form?”'
@@ -304,11 +337,11 @@ function renderCaseStudies() {
 }
 
 var PROCESS_STEPS = [
-  { label: 'Initial contact', time: 'Hour 0', assets: [], pill: 'New enquiry', stage: 'chat' },
-  { label: 'Files & goals in', time: 'Hour 2', assets: ['Logo', 'Brand colours', 'Photos & goals'], pill: 'Assets received', stage: 'mood' },
-  { label: 'Draft built', time: 'Hour 24', assets: ['Logo', 'Brand colours', 'Photos & goals'], pill: 'Draft ready', stage: 'content' },
-  { label: 'Your review', time: 'Hour 24–40', assets: ['Logo', 'Brand colours', 'Photos & goals'], pill: 'In review', stage: 'content', review: true },
-  { label: 'Live', time: 'By hour 48', assets: ['Logo', 'Brand colours', 'Photos & goals'], pill: 'Live', stage: 'content', badge: true, live: true }
+  { label: 'Initial contact', time: 'Day 0', assets: [], pill: 'New enquiry', stage: 'chat' },
+  { label: 'Files & goals in', time: 'Day 1', assets: ['Logo', 'Brand colours', 'Photos & goals'], pill: 'Assets received', stage: 'mood' },
+  { label: 'Draft built', time: 'Day 5', assets: ['Logo', 'Brand colours', 'Photos & goals'], pill: 'Draft ready', stage: 'content' },
+  { label: 'Your review', time: 'Day 6–10', assets: ['Logo', 'Brand colours', 'Photos & goals'], pill: 'In review', stage: 'content', review: true },
+  { label: 'Live', time: 'By day 14', assets: ['Logo', 'Brand colours', 'Photos & goals'], pill: 'Live', stage: 'content', badge: true, live: true }
 ];
 
 function renderBuildDemo() {
@@ -318,7 +351,7 @@ function renderBuildDemo() {
   root.innerHTML = '' +
     '<div class="build-titlebar">' +
       '<div class="build-dots"><span style="background:#ff5f57;"></span><span style="background:#febc2e;"></span><span style="background:#28c840;"></span></div>' +
-      '<span class="build-titlebar-label">updietitian.com, the 48-hour build</span>' +
+      '<span class="build-titlebar-label">updietitian.com, the 14-day build</span>' +
     '</div>' +
     '<div class="build-body">' +
       '<div class="build-sidebar">' +
@@ -338,7 +371,7 @@ function renderBuildDemo() {
           '<div class="build-stage build-stage--chat" id="stage-chat">' +
             '<div class="chat-bubble chat-bubble--client" style="--d:0.15s;">Hi — I’m a dietitian in Perth. I need a website that takes bookings.</div>' +
             '<div class="chat-bubble chat-bubble--studio" style="--d:0.9s;">Can do. Send your logo, photos and prices — whatever you’ve got.</div>' +
-            '<div class="chat-bubble chat-bubble--studio" style="--d:1.6s;">The 48 hours starts when you hit send.</div>' +
+            '<div class="chat-bubble chat-bubble--studio" style="--d:1.6s;">The 14 days starts when you hit send.</div>' +
           '</div>' +
 
           '<div class="build-stage build-stage--mood" id="stage-mood">' +
@@ -379,7 +412,7 @@ function renderBuildDemo() {
           '<img src="assets/logo-mark-transparent.png" alt="" style="width:20px;height:20px;flex:none;">' +
           '<div>' +
             '<div style="font-family:var(--font-body);font-size:12px;font-weight:600;color:#EFEEEA;">Site is live</div>' +
-            '<div style="font-family:var(--font-body);font-size:11px;color:rgba(239,238,234,0.5);">48 hours, brief to live</div>' +
+            '<div style="font-family:var(--font-body);font-size:11px;color:rgba(239,238,234,0.5);">14 days, brief to live</div>' +
           '</div>' +
         '</div>' +
       '</div>' +
@@ -443,12 +476,455 @@ function renderBuildDemo() {
   root.addEventListener('mouseleave', start);
 }
 
+/* ─── REEL CAROUSEL ──────────────────────────────────────────────────────────
+   Phone-framed 9:16 cards. The card plays a short silent preview on hover
+   (desktop) or when tapped into view (touch); opening a card loads the full
+   ad with sound in a lightbox. Nothing but the poster loads until asked. */
+
+function reelCardHTML(reel, hidden) {
+  return '' +
+    '<button type="button" class="reel-card" data-reel="' + reel.id + '"' + (hidden ? ' aria-hidden="true" tabindex="-1"' : '') +
+      ' style="--accent:' + reel.accent + ';" aria-label="Play ' + reel.client + ' — ' + reel.label + '">' +
+      '<span class="reel-notch" aria-hidden="true"></span>' +
+      '<video class="reel-video" preload="none" muted loop playsinline poster="assets/reels/' + reel.id + '-poster.jpg" src="assets/reels/' + reel.id + '.mp4"></video>' +
+      '<span class="reel-vignette" aria-hidden="true"></span>' +
+      '<span class="reel-play" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg></span>' +
+      '<span class="reel-meta"><span class="reel-client">' + reel.client + '</span><span class="reel-label">' + reel.label + '</span></span>' +
+    '</button>';
+}
+
+/* One shared lightbox for every carousel on the page. */
+function reelLightbox() {
+  var el = document.getElementById('reel-lightbox');
+  if (el) return el;
+  el = document.createElement('div');
+  el.id = 'reel-lightbox';
+  el.className = 'reel-lightbox';
+  el.innerHTML = '' +
+    '<div class="reel-lightbox-backdrop"></div>' +
+    '<div class="reel-lightbox-inner">' +
+      '<video class="reel-lightbox-video" controls playsinline preload="auto"></video>' +
+      '<div class="reel-lightbox-cap"></div>' +
+    '</div>' +
+    '<button type="button" class="reel-lightbox-close" aria-label="Close video">' +
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
+    '</button>';
+  document.body.appendChild(el);
+
+  var vid = el.querySelector('.reel-lightbox-video');
+  function close() {
+    el.classList.remove('is-open');
+    vid.pause();
+    vid.removeAttribute('src');
+    vid.load();
+    document.body.style.overflow = '';
+  }
+  el.querySelector('.reel-lightbox-close').addEventListener('click', close);
+  el.querySelector('.reel-lightbox-backdrop').addEventListener('click', close);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && el.classList.contains('is-open')) close();
+  });
+  return el;
+}
+
+function openReel(reel) {
+  var el = reelLightbox();
+  var vid = el.querySelector('.reel-lightbox-video');
+  vid.poster = 'assets/reels/' + reel.id + '-poster.jpg';
+  vid.src = 'assets/reels/full/' + reel.id + '.mp4';
+  el.querySelector('.reel-lightbox-cap').innerHTML =
+    '<strong>' + reel.client + '</strong><span>' + reel.label + '</span>';
+  el.classList.add('is-open');
+  document.body.style.overflow = 'hidden';
+  vid.play().catch(function () {});
+}
+
+/* Wires hover-preview + click-to-open onto every card inside a container. */
+function initReelCards(root) {
+  var byId = {};
+  REELS.forEach(function (r) { byId[r.id] = r; });
+  var canHover = window.matchMedia && window.matchMedia('(hover: hover)').matches;
+
+  root.querySelectorAll('.reel-card').forEach(function (card) {
+    var vid = card.querySelector('.reel-video');
+    var reel = byId[card.dataset.reel];
+
+    function play() {
+      if (!vid.getAttribute('src')) return;
+      vid.play().then(function () { card.classList.add('is-playing'); }).catch(function () {});
+    }
+    function stop() {
+      vid.pause();
+      vid.currentTime = 0;
+      card.classList.remove('is-playing');
+    }
+
+    if (canHover) {
+      card.addEventListener('mouseenter', play);
+      card.addEventListener('mouseleave', stop);
+    }
+    card.addEventListener('click', function () { openReel(reel); });
+  });
+
+  /* On touch, previews play only while the card is actually on screen —
+     otherwise 19 videos fight for bandwidth the moment the page loads. */
+  if (!canHover && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var v = entry.target.querySelector('.reel-video');
+        if (entry.isIntersecting) {
+          v.play().then(function () { entry.target.classList.add('is-playing'); }).catch(function () {});
+        } else {
+          v.pause();
+          entry.target.classList.remove('is-playing');
+        }
+      });
+    }, { threshold: 0.6 });
+    root.querySelectorAll('.reel-card').forEach(function (c) { io.observe(c); });
+  }
+}
+
+/* Tiered carousel: two rows drifting at different speeds so they never align.
+   `data-reels` picks the subset — "ad", "brand" or omitted for everything.
+   `data-rows="1"` renders a single row (used on the Meta ads page). */
+function renderReelCarousels() {
+  var mounts = document.querySelectorAll('[data-reels]');
+  if (!mounts.length) return;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  mounts.forEach(function (mount) {
+    var kind = mount.dataset.reels;
+    var list = kind === 'all' ? REELS : REELS.filter(function (r) { return r.kind === kind; });
+    if (!list.length) return;
+    var singleRow = mount.dataset.rows === '1' || list.length <= 6;
+
+    var rows;
+    if (singleRow) {
+      rows = [list];
+    } else {
+      var mid = Math.ceil(list.length / 2);
+      rows = [list.slice(0, mid), list.slice(mid)];
+    }
+
+    mount.innerHTML = rows.map(function (row, i) {
+      var cards = row.map(function (r) { return reelCardHTML(r, false); }).join('') +
+                  row.map(function (r) { return reelCardHTML(r, true); }).join('');
+      return '<div class="reel-row" data-row="' + i + '"><div class="reel-row-track">' + cards + '</div></div>';
+    }).join('') +
+    '<div class="reel-hint"><button type="button" class="carousel-btn" data-reel-nav="-1" aria-label="Scroll left">' +
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>' +
+      '<span>Drag to browse &middot; tap a card for the full ad</span>' +
+      '<button type="button" class="carousel-btn" data-reel-nav="1" aria-label="Scroll right">' +
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div>';
+
+    initReelCards(mount);
+
+    var rowEls = mount.querySelectorAll('.reel-row');
+    mount.querySelectorAll('[data-reel-nav]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var dir = parseInt(btn.dataset.reelNav, 10);
+        rowEls.forEach(function (r) { r.scrollBy({ left: dir * 320, behavior: 'smooth' }); });
+      });
+    });
+
+    if (reduced) return;
+
+    /* Continuous drift. Each row loops by resetting once it passes the
+       halfway point, which is where the duplicated set begins. */
+    var paused = false;
+    var speeds = [0.35, 0.2];
+    var started = [true, false];
+    setTimeout(function () { started[1] = true; }, 1000);
+
+    mount.addEventListener('mouseenter', function () { paused = true; });
+    mount.addEventListener('mouseleave', function () { paused = false; });
+    mount.addEventListener('touchstart', function () { paused = true; }, { passive: true });
+
+    var onScreen = true;
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { onScreen = e.isIntersecting; });
+      }, { threshold: 0.05 }).observe(mount);
+    }
+
+    (function tick() {
+      if (!paused && onScreen) {
+        rowEls.forEach(function (row, i) {
+          if (!started[i]) return;
+          row.scrollLeft += speeds[i] || 0.3;
+          if (row.scrollLeft >= row.scrollWidth / 2) row.scrollLeft -= row.scrollWidth / 2;
+        });
+      }
+      requestAnimationFrame(tick);
+    })();
+  });
+}
+
+/* ─── STILLS: strip → grid modal → lightbox ─────────────────────────────── */
+
+function allStills() {
+  var out = [];
+  STILLS.forEach(function (g) {
+    g.files.forEach(function (f) {
+      out.push({ client: g.client, full: 'assets/stills/' + g.dir + '/' + f, thumb: 'assets/stills/' + g.dir + '/thumb/' + f });
+    });
+  });
+  return out;
+}
+
+function renderStills() {
+  var mount = document.getElementById('stills-strip');
+  if (!mount) return;
+  var all = allStills();
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Preview strip: an even spread across clients rather than the first N. */
+  var strip = [];
+  STILLS.forEach(function (g) {
+    var step = Math.max(1, Math.floor(g.files.length / 4));
+    for (var i = 0; i < g.files.length && strip.length < 14; i += step) {
+      strip.push({ client: g.client, thumb: 'assets/stills/' + g.dir + '/thumb/' + g.files[i], full: 'assets/stills/' + g.dir + '/' + g.files[i] });
+    }
+  });
+
+  var tile = function (p, hidden) {
+    return '<button type="button" class="still-tile" data-full="' + p.full + '"' + (hidden ? ' aria-hidden="true" tabindex="-1"' : '') +
+      ' aria-label="Open photo from the ' + p.client + ' shoot">' +
+      '<img src="' + p.thumb + '" alt="" loading="lazy"><span class="still-tile-client">' + p.client + '</span></button>';
+  };
+  mount.innerHTML = '<div class="stills-track">' +
+    strip.map(function (p) { return tile(p, false); }).join('') +
+    strip.map(function (p) { return tile(p, true); }).join('') + '</div>';
+
+  var track = mount.querySelector('.stills-track');
+  var paused = false;
+  mount.addEventListener('mouseenter', function () { paused = true; });
+  mount.addEventListener('mouseleave', function () { paused = false; });
+  mount.addEventListener('touchstart', function () { paused = true; }, { passive: true });
+
+  if (!reduced) {
+    (function tick() {
+      if (!paused) {
+        mount.scrollLeft += 0.3;
+        if (mount.scrollLeft >= track.scrollWidth / 2) mount.scrollLeft -= track.scrollWidth / 2;
+      }
+      requestAnimationFrame(tick);
+    })();
+  }
+
+  mount.querySelectorAll('.still-tile').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var idx = all.findIndex(function (p) { return p.full === btn.dataset.full; });
+      openStillsGrid(idx < 0 ? 0 : idx);
+    });
+  });
+
+  var openAll = document.getElementById('stills-open');
+  if (openAll) {
+    openAll.textContent = 'View all ' + all.length + ' photos';
+    openAll.addEventListener('click', function () { openStillsGrid(-1); });
+  }
+}
+
+/* Full-screen grid with client filters, plus a lightbox over the top. */
+function openStillsGrid(lightboxIndex) {
+  var all = allStills();
+  var modal = document.getElementById('stills-modal');
+
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'stills-modal';
+    modal.className = 'stills-modal';
+    modal.innerHTML = '' +
+      '<div class="stills-modal-head">' +
+        '<div class="stills-modal-title"><strong>Stills from set</strong><span id="stills-count"></span></div>' +
+        '<div class="stills-filters" id="stills-filters"></div>' +
+        '<button type="button" class="stills-close" aria-label="Close gallery">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
+        '</button>' +
+      '</div>' +
+      '<div class="stills-scroll"><div class="stills-grid" id="stills-grid"></div></div>' +
+      '<div class="stills-light" id="stills-light">' +
+        '<button type="button" class="stills-light-prev" aria-label="Previous photo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>' +
+        '<img alt="">' +
+        '<button type="button" class="stills-light-next" aria-label="Next photo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>' +
+        '<div class="stills-light-count"></div>' +
+      '</div>';
+    document.body.appendChild(modal);
+
+    var filtersEl = modal.querySelector('#stills-filters');
+    var clients = ['All'].concat(STILLS.map(function (g) { return g.client; }));
+    filtersEl.innerHTML = clients.map(function (c, i) {
+      return '<button type="button" class="stills-filter' + (i === 0 ? ' is-active' : '') + '" data-client="' + c + '">' + c + '</button>';
+    }).join('');
+
+    modal.querySelector('.stills-close').addEventListener('click', function () { closeStillsGrid(); });
+    filtersEl.querySelectorAll('.stills-filter').forEach(function (b) {
+      b.addEventListener('click', function () {
+        filtersEl.querySelectorAll('.stills-filter').forEach(function (x) { x.classList.remove('is-active'); });
+        b.classList.add('is-active');
+        paintStillsGrid(b.dataset.client);
+      });
+    });
+
+    var light = modal.querySelector('#stills-light');
+    light.querySelector('.stills-light-prev').addEventListener('click', function (e) { e.stopPropagation(); stepStill(-1); });
+    light.querySelector('.stills-light-next').addEventListener('click', function (e) { e.stopPropagation(); stepStill(1); });
+    light.addEventListener('click', function (e) { if (e.target === light || e.target.tagName === 'IMG') light.classList.remove('is-open'); });
+
+    document.addEventListener('keydown', function (e) {
+      if (!modal.classList.contains('is-open')) return;
+      var lightOpen = light.classList.contains('is-open');
+      if (e.key === 'Escape') { lightOpen ? light.classList.remove('is-open') : closeStillsGrid(); }
+      if (lightOpen && e.key === 'ArrowLeft') stepStill(-1);
+      if (lightOpen && e.key === 'ArrowRight') stepStill(1);
+    });
+  }
+
+  modal.classList.add('is-open');
+  document.body.style.overflow = 'hidden';
+  paintStillsGrid('All');
+  if (lightboxIndex >= 0) openStillLight(lightboxIndex);
+}
+
+function closeStillsGrid() {
+  var modal = document.getElementById('stills-modal');
+  if (!modal) return;
+  modal.classList.remove('is-open');
+  modal.querySelector('#stills-light').classList.remove('is-open');
+  document.body.style.overflow = '';
+}
+
+function paintStillsGrid(client) {
+  var modal = document.getElementById('stills-modal');
+  var all = allStills();
+  var list = client === 'All' ? all : all.filter(function (p) { return p.client === client; });
+  modal.querySelector('#stills-count').textContent = list.length + ' photos';
+  modal.querySelector('#stills-grid').innerHTML = list.map(function (p) {
+    return '<button type="button" class="stills-cell" data-full="' + p.full + '"><img src="' + p.thumb + '" alt="" loading="lazy"></button>';
+  }).join('');
+  modal.querySelectorAll('.stills-cell').forEach(function (cell) {
+    cell.addEventListener('click', function () {
+      openStillLight(all.findIndex(function (p) { return p.full === cell.dataset.full; }));
+    });
+  });
+}
+
+function openStillLight(index) {
+  var modal = document.getElementById('stills-modal');
+  if (!modal) return;
+  var all = allStills();
+  if (index < 0 || index >= all.length) return;
+  var light = modal.querySelector('#stills-light');
+  light.dataset.index = index;
+  light.querySelector('img').src = all[index].full;
+  light.querySelector('.stills-light-count').textContent = (index + 1) + ' / ' + all.length;
+  light.classList.add('is-open');
+}
+
+function stepStill(dir) {
+  var light = document.querySelector('#stills-light');
+  if (!light) return;
+  var next = parseInt(light.dataset.index, 10) + dir;
+  var total = allStills().length;
+  openStillLight((next + total) % total);
+}
+
+/* Published case-study deck: snap carousel with dots. */
+function initDeck() {
+  var track = document.getElementById('deck-track');
+  var dotsEl = document.getElementById('deck-dots');
+  if (!track || !dotsEl) return;
+  var slides = track.children.length;
+
+  dotsEl.innerHTML = Array.from({ length: slides }).map(function (_, i) {
+    return '<button type="button" class="carousel-dot' + (i === 0 ? ' is-active' : '') + '" data-idx="' + i + '" aria-label="Slide ' + (i + 1) + '"></button>';
+  }).join('');
+  var dots = dotsEl.querySelectorAll('.carousel-dot');
+
+  function step() {
+    var first = track.children[0];
+    return first.getBoundingClientRect().width + parseFloat(window.getComputedStyle(track).gap || 16);
+  }
+  function update() {
+    var idx = Math.min(slides - 1, Math.max(0, Math.round(track.scrollLeft / step())));
+    dots.forEach(function (d, i) { d.classList.toggle('is-active', i === idx); });
+    document.getElementById('deck-prev').disabled = track.scrollLeft <= 4;
+    document.getElementById('deck-next').disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+  }
+
+  document.getElementById('deck-prev').addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+  document.getElementById('deck-next').addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
+  dots.forEach(function (d) {
+    d.addEventListener('click', function () { track.scrollTo({ left: step() * parseInt(d.dataset.idx, 10), behavior: 'smooth' }); });
+  });
+
+  var t;
+  track.addEventListener('scroll', function () { clearTimeout(t); t = setTimeout(update, 60); }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+}
+
 renderBuildDemo();
+renderReelCarousels();
+initDeck();
+renderStills();
 renderMarquee();
 renderExamples();
 initExamplesCarousel();
 renderCaseStudies();
 renderLadder();
+
+/* Enquiry service picker: preselects from ?service=, reveals the fields that
+   match, and sets the Formspree subject so the inbox sorts itself. Fields in
+   hidden blocks are disabled so they never post as empty noise. */
+(function () {
+  var picker = document.getElementById('svc-picker');
+  if (!picker) return;
+
+  var SLUGS = {
+    'website': 'Website',
+    'meta-ads': 'Meta ads',
+    'ads': 'Meta ads',
+    'video': 'Video',
+    'videography': 'Video',
+    'creative-direction': 'Creative direction',
+    'not-sure': 'Not sure'
+  };
+  var SUBJECTS = {
+    'Website': 'Website enquiry — trigrams.studio',
+    'Meta ads': 'Meta ads enquiry — trigrams.studio',
+    'Video': 'Video enquiry — trigrams.studio',
+    'Creative direction': 'Creative direction waitlist — trigrams.studio',
+    'Not sure': 'New enquiry — trigrams.studio'
+  };
+
+  var radios = picker.querySelectorAll('input[name="service"]');
+  var extras = document.querySelectorAll('.svc-extra');
+  var subject = document.getElementById('enquiry-subject');
+  var submit = document.getElementById('enquiry-submit');
+
+  function apply(value) {
+    extras.forEach(function (block) {
+      var on = block.dataset.for === value;
+      block.classList.toggle('is-open', on);
+      block.querySelectorAll('input, textarea').forEach(function (f) { f.disabled = !on; });
+    });
+    if (subject) subject.value = SUBJECTS[value] || SUBJECTS['Not sure'];
+    if (submit) submit.textContent = value === 'Creative direction' ? 'Join the waitlist' : 'Send enquiry';
+  }
+
+  radios.forEach(function (r) {
+    r.addEventListener('change', function () { if (r.checked) apply(r.value); });
+  });
+
+  var wanted = SLUGS[(new URLSearchParams(location.search).get('service') || '').toLowerCase()];
+  if (wanted) {
+    radios.forEach(function (r) { r.checked = (r.value === wanted); });
+  }
+  var current = document.querySelector('input[name="service"]:checked');
+  apply(current ? current.value : 'Website');
+})();
 
 /* Entrance */
 (function () {
@@ -529,6 +1005,123 @@ renderLadder();
       if (window.innerWidth >= 860) closeMenu();
     });
   }
+})();
+
+/* Theme toggle. The theme itself is applied before first paint by the inline
+   snippet in <head> — this only builds the control and handles switching.
+
+   Pixel icons have a hardcoded light fill, so CSS can't recolour them and a
+   filter would invert their chrome chip too. Dark variants get swapped in. */
+(function () {
+  var KEY = 'ts-theme';
+  var root = document.documentElement;
+
+  function swapIcons(theme) {
+    document.querySelectorAll('.ts-icon').forEach(function (img) {
+      var src = img.getAttribute('src') || '';
+      if (src.indexOf('/icons/') === -1) return;
+      var wantDark = theme === 'light';
+      var isDark = src.indexOf('/icons/dark/') !== -1;
+      if (wantDark && !isDark) img.setAttribute('src', src.replace('/icons/', '/icons/dark/'));
+      if (!wantDark && isDark) img.setAttribute('src', src.replace('/icons/dark/', '/icons/'));
+    });
+  }
+
+  function apply(theme, persist) {
+    root.setAttribute('data-theme', theme);
+    swapIcons(theme);
+    if (persist) { try { localStorage.setItem(KEY, theme); } catch (e) {} }
+    var btns = document.querySelectorAll('.theme-toggle button');
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.theme === theme ? 'true' : 'false'); });
+  }
+
+  var current = root.getAttribute('data-theme') || 'dark';
+  swapIcons(current);
+
+  var sun = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>';
+  var moon = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>';
+
+  var wrap = document.createElement('div');
+  wrap.className = 'theme-toggle';
+  wrap.setAttribute('role', 'group');
+  wrap.setAttribute('aria-label', 'Colour theme');
+  wrap.innerHTML =
+    '<button type="button" data-theme="dark" aria-label="Dark theme" title="Dark">' + moon + '</button>' +
+    '<button type="button" data-theme="light" aria-label="Light theme" title="Light">' + sun + '</button>';
+  document.body.appendChild(wrap);
+
+  wrap.querySelectorAll('button').forEach(function (b) {
+    b.addEventListener('click', function () { apply(b.dataset.theme, true); });
+  });
+  apply(current, false);
+
+  /* Follow the OS only while the visitor hasn't made an explicit choice. */
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: light)');
+    var onChange = function (e) {
+      var saved = null;
+      try { saved = localStorage.getItem(KEY); } catch (err) {}
+      if (!saved) apply(e.matches ? 'light' : 'dark', false);
+    };
+    if (mq.addEventListener) mq.addEventListener('change', onChange);
+  }
+})();
+
+/* Scroll progress under the nav. */
+(function () {
+  var bar = document.createElement('div');
+  bar.className = 'scroll-progress';
+  document.body.appendChild(bar);
+  var ticking = false;
+  function update() {
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+    bar.style.transform = 'scaleX(' + pct + ')';
+    ticking = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+
+/* Nav "More" dropdown. Opens on hover where hovering exists, and on click
+   everywhere — click also drives keyboard use, so it works without a mouse. */
+(function () {
+  var wrap = document.getElementById('nav-more');
+  var btn = document.getElementById('nav-more-btn');
+  if (!wrap || !btn) return;
+  var canHover = window.matchMedia && window.matchMedia('(hover: hover) and (min-width: 860px)').matches;
+
+  function open() { wrap.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true'); }
+  function close() { wrap.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); }
+
+  if (canHover) {
+    /* Pointer opens and closes it. Click must not also toggle here, or moving
+       the mouse onto the button opens it and the click immediately shuts it. */
+    wrap.addEventListener('mouseenter', open);
+    wrap.addEventListener('mouseleave', close);
+    /* Keyboard path: tabbing to the button opens the menu. */
+    btn.addEventListener('focus', open);
+    btn.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); });
+  } else {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      wrap.classList.contains('is-open') ? close() : open();
+    });
+  }
+
+  document.addEventListener('click', function (e) {
+    if (!wrap.contains(e.target)) close();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && wrap.classList.contains('is-open')) { close(); btn.focus(); }
+  });
+  /* Close when focus leaves the group entirely, so tabbing past it tidies up. */
+  wrap.addEventListener('focusout', function () {
+    setTimeout(function () { if (!wrap.contains(document.activeElement)) close(); }, 0);
+  });
 })();
 
 /* Menu bar clock */
@@ -628,7 +1221,7 @@ renderLadder();
    One place for all pages — links are injected into the nav and footer,
    and interactions are reported to Vercel Web Analytics as custom events. */
 (function () {
-  var CLIENT_URL = 'https://www.client.trigrams.studio';
+  var CLIENT_URL = 'https://client.trigrams.studio/admin';
   var RESOURCE_URL = 'https://onboarding.trigrams.studio';
 
   // Vercel Analytics queue guard — safe to call before the script loads.
@@ -638,33 +1231,16 @@ renderLadder();
   }
   var PAGE = location.pathname.replace(/\/index\.html$/, '/') || '/';
 
-  /* --- Inject Client Login + Free Resource into the nav --- */
-  var navLinks = document.getElementById('nav-links');
-  if (navLinks && !navLinks.querySelector('[data-portal="resource"]')) {
+  /* --- Free Resource sits in the "More" dropdown. Client Login is footer-only,
+         so the top bar stays down to three links plus the CTA. --- */
+  var moreMenu = document.getElementById('nav-more-menu');
+  if (moreMenu && !moreMenu.querySelector('[data-portal="resource"]')) {
     var res = document.createElement('a');
     res.href = RESOURCE_URL;
     res.textContent = 'Free Resource';
     res.setAttribute('data-portal', 'resource');
     res.rel = 'noopener';
-    navLinks.appendChild(res);
-
-    // On mobile the dropdown is the only place the login fits.
-    var loginMobile = document.createElement('a');
-    loginMobile.href = CLIENT_URL;
-    loginMobile.textContent = 'Client Login';
-    loginMobile.setAttribute('data-portal', 'client');
-    loginMobile.rel = 'noopener';
-    navLinks.appendChild(loginMobile);
-  }
-  var navActions = document.querySelector('.nav-actions');
-  if (navActions && !navActions.querySelector('[data-portal="client"]')) {
-    var login = document.createElement('a');
-    login.href = CLIENT_URL;
-    login.textContent = 'Client Login';
-    login.className = 'nav-login';
-    login.setAttribute('data-portal', 'client');
-    login.rel = 'noopener';
-    navActions.insertBefore(login, navActions.firstChild);
+    moreMenu.appendChild(res);
   }
 
   /* --- Inject both into the footer "Talk" column --- */

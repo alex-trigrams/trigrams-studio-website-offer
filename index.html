@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TRIGRAMS Studio — AI marketing systems for WA small businesses</title>
-<meta name="description" content="One partner for your whole marketing engine: a $300 website live in 48 hours, an automated lead follow-up sequence, monthly optimisation, and campaign sprints when you're ready to grow." />
+<title>TRIGRAMS Studio · marketing systems for small businesses</title>
+<meta name="description" content="Websites, lead follow-up, Meta ads and creative direction for small businesses. 54 leads in 30 days at $6.28 each for NLPSC. Websites from $500 + GST, live in 14 days." />
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 <link rel="icon" type="image/png" href="assets/Logo.png" sizes="any" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<script>(function(){try{var t=localStorage.getItem("ts-theme");if(!t)t=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();</script>
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -17,7 +18,7 @@
 <div class="grain-page" aria-hidden="true"></div>
 
 <div class="bg-video-wrap" aria-hidden="true">
-  <video autoplay loop muted playsinline src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260508_064122_c4750c0e-7476-4b44-94a2-a85a65c63bf2.mp4"></video>
+  <video autoplay loop muted playsinline preload="metadata" poster="assets/bg-hero-poster.jpg" src="assets/bg-hero.mp4"></video>
   <div class="bg-dim"></div>
   <div class="bg-fade"></div>
 </div>
@@ -31,15 +32,21 @@
     <video autoplay loop muted playsinline src="assets/logo-rotate.mp4"></video>
   </a>
   <nav class="nav-links" id="nav-links">
-    <a href="clients.html">Clients</a>
-    <a href="case-studies.html">Case studies</a>
-    <a href="how-it-works.html">How it works</a>
+    <a href="services.html">Services</a>
+    <a href="case-studies.html">Case Studies</a>
     <a href="about.html">About</a>
-    <a href="index.html#blog">Blog</a>
-    <a href="enquiry.html">Contact</a>
+    <div class="nav-more" id="nav-more">
+      <button type="button" class="nav-more-btn" id="nav-more-btn" aria-expanded="false" aria-haspopup="true" aria-controls="nav-more-menu">More<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+      <div class="nav-more-menu" id="nav-more-menu">
+        <a href="how-it-works.html">How It Works</a>
+        <a href="clients.html">Clients</a>
+        <a href="index.html#blog">Blog</a>
+      </div>
+    </div>
   </nav>
+
   <div class="nav-actions">
-    <a href="enquiry.html" class="liquid-glass nav-cta">Start your build</a>
+    <a href="enquiry.html" class="liquid-glass nav-cta">Get a quote</a>
     <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
       <svg class="icon-open" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       <svg class="icon-close" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -48,12 +55,14 @@
 </header>
 </div>
 <section class="hero" id="top">
-  <h1 data-fade="1">Your website, built with AI, changed in <em>minutes</em>.</h1>
-  <p class="hero-sub" data-fade="2">Catches leads and follows up while you work. Changes take minutes, not weeks.</p>
+  <div class="section-eyebrow" data-fade="1"><i class="red"></i><span>NLPSC &middot; Meta ads &middot; 30 days</span></div>
+  <h1 data-fade="1">54 leads in 30 days, at <em>$6.28</em> each.</h1>
+  <p class="hero-sub" data-fade="2">Websites, follow-up and ad campaigns for businesses that need the phone to ring. Built once, running while you work.</p>
   <div class="hero-cta" data-fade="3">
-    <a href="#contact" class="liquid-glass">Start your build</a>
+    <a href="meta-ads.html" class="liquid-glass">See how it was done</a>
+    <a href="services.html" class="btn-outline">What I do</a>
   </div>
-  <p class="hero-note" data-fade="3">From $300 · live in 48 hours.</p>
+  <p class="hero-note" data-fade="3">Websites from $500 + GST &middot; live in 14 days.</p>
 </section>
 
 <div class="menubar" data-reveal>
@@ -71,7 +80,7 @@
 
 <section id="work">
   <div class="build-window" data-reveal id="build-demo"></div>
-  <p class="build-note" data-reveal>A real build, brief to live, inside 48 hours. Hover to pause, tap a step to jump.</p>
+  <p class="build-note" data-reveal>A real build, brief to live, inside 14 days. Hover to pause, tap a step to jump.</p>
 </section>
 
 <section id="clients">
@@ -89,6 +98,39 @@
   </div>
   <div class="ladder" id="ladder-list" data-stagger></div>
   <div class="section-more" data-reveal><a href="how-it-works.html" class="btn-outline">See the full breakdown</a></div>
+</section>
+
+<section id="services">
+  <div data-reveal>
+    <div class="section-eyebrow"><i class="red"></i><span>Services</span></div>
+    <h2 class="section-h2">Or skip the ladder and buy a single <em>service</em>.</h2>
+    <p class="section-sub" style="max-width:56ch;">Already know what you need? Take it on its own.</p>
+  </div>
+  <div class="svc-grid" data-stagger style="margin-top:40px;">
+    <a href="meta-ads.html" class="liquid-glass svc-card stagger-item">
+      <div class="svc-card-top">
+        <img class="ts-icon svc-icon" src="assets/icons/ts-launch.svg" alt="">
+        <span class="svc-status svc-status--open">Open</span>
+      </div>
+      <h3 class="svc-name">Meta ads</h3>
+      <p class="svc-desc">Ads people finish watching. 54 leads at $6.28 each for a Perth gym.</p>
+      <span class="svc-go">See the case study
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg>
+      </span>
+    </a>
+    <a href="videography.html" class="liquid-glass svc-card stagger-item">
+      <div class="svc-card-top">
+        <img class="ts-icon svc-icon" src="assets/icons/ts-video.svg" alt="">
+        <span class="svc-status svc-status--open">Open</span>
+      </div>
+      <h3 class="svc-name">Videography</h3>
+      <p class="svc-desc">1 day of filming gives you a month of content.</p>
+      <span class="svc-go">See the work
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg>
+      </span>
+    </a>
+  </div>
+  <div class="section-more" data-reveal><a href="services.html" class="btn-outline">See all services</a></div>
 </section>
 
 
@@ -119,8 +161,8 @@
   </div>
   <div class="faq-list" data-stagger>
     <div class="liquid-glass faq-item stagger-item">
-      <button type="button" class="faq-q" aria-expanded="false">From $300 — what's the catch?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
-      <div class="faq-a-wrap"><div class="faq-a"><p>There isn't one. AI does the heavy lifting, so the build takes hours, not weeks — you're paying for judgment, not labour. Hosting is $25/month and that's the only ongoing cost. No lock-in contracts.</p></div></div>
+      <button type="button" class="faq-q" aria-expanded="false">From $500 — what's the catch?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+      <div class="faq-a-wrap"><div class="faq-a"><p>There isn't one. AI does the heavy lifting, so you're paying for judgment, not labour. From $500 excluding GST, hosting is $25/month, and that's the only ongoing cost. No lock-in contracts.</p></div></div>
     </div>
     <div class="liquid-glass faq-item stagger-item">
       <button type="button" class="faq-q" aria-expanded="false">AI-built — does that mean it'll look cheap?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
@@ -174,7 +216,7 @@
     </div>
     <div class="liquid-glass note-card stagger-item">
       <span class="note-tag"><img class="ts-icon" src="assets/icons/ts-website.svg" alt="">Websites</span>
-      <span class="note-title">Why a 48-hour website beats a 3-month one</span>
+      <span class="note-title">Why a two-week website beats a three-month one</span>
       <span class="note-excerpt">Placeholder — perfect is a stall tactic. Live and improving beats parked and polished.</span>
       <span class="note-date">Coming soon</span>
     </div>
@@ -200,8 +242,8 @@
   <div class="liquid-glass final-cta" data-reveal>
     <div class="final-cta-glow" aria-hidden="true"></div>
     <div class="final-cta-inner">
-      <h2>Send the brief, go <em>live</em> within 48 hours.</h2>
-      <p>A few answers and whatever photos you have. Starting from $300, and wherever you are in the world, the clock starts when you hit send.</p>
+      <h2>Send the brief, go <em>live</em> in 14 days.</h2>
+      <p>A few answers and whatever photos you have. From $500 excluding GST, and wherever you are in the world, the clock starts when you hit send.</p>
       <div class="final-cta-actions">
         <a href="enquiry.html" class="btn-red">Send an enquiry</a>
         <a href="https://calendly.com/alex-trigrams/30min" target="_blank" rel="noopener" class="btn-outline">Book a discovery call</a>
@@ -225,19 +267,19 @@
       </div>
       <div class="footer-nav">
         <div>
-          <div class="footer-col-lbl"><img class="ts-icon" src="assets/icons/ts-build.svg" alt="">Build</div>
+          <div class="footer-col-lbl"><img class="ts-icon" src="assets/icons/ts-build.svg" alt="">Services</div>
           <div class="footer-links">
-            <a href="index.html#work">AI-built websites</a>
-            <a href="how-it-works.html">Lead follow-up</a>
-            <a href="how-it-works.html">Retainers</a>
-            <a href="how-it-works.html">Campaign sprints</a>
+            <a href="how-it-works.html">Websites</a>
+            <a href="meta-ads.html">Meta ads</a>
+            <a href="videography.html">Videography</a>
+            <a href="creative-direction.html">Creative direction</a>
           </div>
         </div>
         <div>
           <div class="footer-col-lbl"><img class="ts-icon" src="assets/icons/ts-search.svg" alt="">Explore</div>
           <div class="footer-links">
             <a href="clients.html">Clients</a>
-            <a href="case-studies.html">Case studies</a>
+            <a href="case-studies.html">Case Studies</a>
             <a href="about.html">About</a>
             <a href="index.html#blog">Blog</a>
           </div>

@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Clients — TRIGRAMS Studio</title>
+<title>Clients · TRIGRAMS Studio</title>
 <meta name="description" content="Businesses of every shape, from tattoo studios to real estate. Browse the live sites." />
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 <link rel="icon" type="image/png" href="assets/Logo.png" sizes="any" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<script>(function(){try{var t=localStorage.getItem("ts-theme");if(!t)t=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();</script>
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -17,8 +18,6 @@
 <div class="grain-page" aria-hidden="true"></div>
 
 <div class="bg-video-wrap" aria-hidden="true">
-  <video autoplay loop muted playsinline src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260508_064122_c4750c0e-7476-4b44-94a2-a85a65c63bf2.mp4"></video>
-  <div class="bg-dim"></div>
   <div class="bg-fade"></div>
 </div>
 
@@ -31,15 +30,21 @@
     <video autoplay loop muted playsinline src="assets/logo-rotate.mp4"></video>
   </a>
   <nav class="nav-links" id="nav-links">
-    <a href="clients.html">Clients</a>
-    <a href="case-studies.html">Case studies</a>
-    <a href="how-it-works.html">How it works</a>
+    <a href="services.html">Services</a>
+    <a href="case-studies.html">Case Studies</a>
     <a href="about.html">About</a>
-    <a href="index.html#blog">Blog</a>
-    <a href="enquiry.html">Contact</a>
+    <div class="nav-more" id="nav-more">
+      <button type="button" class="nav-more-btn" id="nav-more-btn" aria-expanded="false" aria-haspopup="true" aria-controls="nav-more-menu">More<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+      <div class="nav-more-menu" id="nav-more-menu">
+        <a href="how-it-works.html">How It Works</a>
+        <a href="clients.html">Clients</a>
+        <a href="index.html#blog">Blog</a>
+      </div>
+    </div>
   </nav>
+
   <div class="nav-actions">
-    <a href="enquiry.html" class="liquid-glass nav-cta">Start your build</a>
+    <a href="enquiry.html" class="liquid-glass nav-cta">Get a quote</a>
     <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
       <svg class="icon-open" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       <svg class="icon-close" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -89,19 +94,19 @@
       </div>
       <div class="footer-nav">
         <div>
-          <div class="footer-col-lbl"><img class="ts-icon" src="assets/icons/ts-build.svg" alt="">Build</div>
+          <div class="footer-col-lbl"><img class="ts-icon" src="assets/icons/ts-build.svg" alt="">Services</div>
           <div class="footer-links">
-            <a href="index.html#work">AI-built websites</a>
-            <a href="how-it-works.html">Lead follow-up</a>
-            <a href="how-it-works.html">Retainers</a>
-            <a href="how-it-works.html">Campaign sprints</a>
+            <a href="how-it-works.html">Websites</a>
+            <a href="meta-ads.html">Meta ads</a>
+            <a href="videography.html">Videography</a>
+            <a href="creative-direction.html">Creative direction</a>
           </div>
         </div>
         <div>
           <div class="footer-col-lbl"><img class="ts-icon" src="assets/icons/ts-search.svg" alt="">Explore</div>
           <div class="footer-links">
             <a href="clients.html">Clients</a>
-            <a href="case-studies.html">Case studies</a>
+            <a href="case-studies.html">Case Studies</a>
             <a href="about.html">About</a>
             <a href="index.html#blog">Blog</a>
           </div>
