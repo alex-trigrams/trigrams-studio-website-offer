@@ -954,7 +954,14 @@ section { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 aut
   [data-theme="light"] .nav-links a { border-bottom-color: var(--line); }
   [data-theme="light"] .nav-more-menu { border-left-color: var(--line); }
 }
-[data-theme="light"] footer { border-top-color: var(--line); }
+/* The footer text tokens below were themed for light, but the footer kept its
+   dark background — dark-on-dark on every page. The panel stays translucent so
+   the blooms still read through it. */
+[data-theme="light"] footer { background: rgba(255,255,255,0.55); border-top-color: var(--line); }
+[data-theme="light"] .footer-top { border-bottom-color: var(--line); }
+[data-theme="light"] .footer-logo { border-color: var(--line); }
+[data-theme="light"] .footer-legal a { color: var(--text-soft); }
+[data-theme="light"] .footer-legal a:hover { color: var(--text); }
 [data-theme="light"] .footer-links a { color: var(--text-mid); }
 [data-theme="light"] .footer-links a:hover { color: var(--text); }
 [data-theme="light"] .footer-bottom { border-top-color: var(--line); }
@@ -1048,6 +1055,74 @@ section { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 aut
 [data-theme="light"] .client-tile { background: rgba(255,255,255,0.6); border-color: var(--line); }
 [data-theme="light"] .final-cta-glow { opacity: 0.35; }
 [data-theme="light"] .legal-body h2 { color: var(--text); }
+
+/* --- Pre-existing pages: about, how-it-works, index footer, legal ---
+   These predate the light theme and paint bone-on-dark directly, which lands
+   at 1.00:1 against the light --surface — the same colour as the ground, not
+   merely low contrast. Legal pages use .legal-panel, not the .legal-body
+   handled above. */
+[data-theme="light"] .about-copy-para { color: var(--text-mid); }
+[data-theme="light"] .about-copy-para--strong,
+[data-theme="light"] .about-meta-val { color: var(--text); }
+[data-theme="light"] .about-meta-label { color: var(--text-soft); }
+[data-theme="light"] .about-photo {
+  background: linear-gradient(160deg, rgba(217,43,27,0.16), rgba(21,23,26,0.04));
+  border-color: var(--line);
+  box-shadow: 0 24px 60px rgba(21,23,26,0.14);
+}
+[data-theme="light"] .creative-tile span { color: var(--text-soft); }
+
+[data-theme="light"] .process-tags span {
+  color: var(--text-mid);
+  border-color: var(--line);
+  background: rgba(255,255,255,0.5);
+}
+[data-theme="light"] .change-panel-label,
+[data-theme="light"] .change-note,
+[data-theme="light"] .change-row span:last-child { color: var(--text-soft); }
+[data-theme="light"] .change-row span:first-child { color: var(--text); }
+
+[data-theme="light"] .founder-line,
+[data-theme="light"] .newsletter-copy strong { color: var(--text); }
+[data-theme="light"] .founder-byline { color: var(--text-soft); }
+[data-theme="light"] .newsletter-copy { color: var(--text-mid); }
+[data-theme="light"] .social-link { color: var(--text); border-color: var(--line-2); }
+[data-theme="light"] .social-link:hover { background: var(--hover); }
+
+[data-theme="light"] .legal-panel h2,
+[data-theme="light"] .legal-panel a,
+[data-theme="light"] .legal-panel strong { color: var(--text); }
+[data-theme="light"] .legal-panel p,
+[data-theme="light"] .legal-panel li { color: var(--text-mid); }
+
+/* --- Shared components that sit on a themed panel but were missed ---
+   .final-cta is a .liquid-glass, so it turns light; .fit-list--no li outranks
+   the .fit-list li rule above and put bone back. Not included: .portal-mock
+   and .cal-float-tip, which keep dark chrome by design. */
+[data-theme="light"] .final-cta h2,
+[data-theme="light"] .enquiry-title { color: var(--text); }
+[data-theme="light"] .final-cta p,
+[data-theme="light"] .results-value p { color: var(--text-mid); }
+[data-theme="light"] .enquiry-sub,
+[data-theme="light"] .fit-list--no li { color: var(--text-soft); }
+
+/* Case-study cards are built by site.js, so these classes never appear in the
+   HTML — easy to miss when grepping the pages. The card itself is a light
+   panel, so its stats and meta need the light tokens. */
+[data-theme="light"] .cs-stat-val,
+[data-theme="light"] .cs-baseline-val--now { color: var(--text); }
+[data-theme="light"] .cs-visit { color: var(--text-mid); }
+[data-theme="light"] .cs-visit:hover { background: var(--hover); }
+[data-theme="light"] .cs-stat-lbl,
+[data-theme="light"] .cs-line,
+[data-theme="light"] .cs-turnaround { color: var(--text-soft); }
+[data-theme="light"] .cs-stats { border-top-color: var(--line); }
+
+/* "Full-page preview coming soon" — real copy, not a failed embed, and it was
+   invisible in light. The hover hint keeps its own dark pill, so it stays. */
+[data-theme="light"] .example-placeholder span { color: var(--text-soft); }
+[data-theme="light"] .example-shot { border-bottom-color: var(--line); }
+[data-theme="light"] .cs-shot { border-bottom-color: var(--line); }
 
 /* CLIENT PORTAL MOCKUP
    Deliberately a mockup and not a screenshot: a real client dashboard shows
