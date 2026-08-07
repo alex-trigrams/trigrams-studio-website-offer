@@ -623,6 +623,21 @@ section { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 aut
 .newsletter-form input:focus { border-color: var(--red); }
 .newsletter-form button { border: none; font: inherit; }
 
+/* Footer newsletter. Same language as the old standalone .newsletter-bar,
+   dialled down to a strip so it reads as part of the footer rather than a
+   section competing with it. Sits on every page. */
+.footer-news { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; padding: 20px 24px; border-radius: 16px; margin-bottom: 44px; }
+.footer-news-copy { display: flex; align-items: flex-start; gap: 10px; font-family: var(--font-body); font-size: 13.5px; line-height: 1.55; color: var(--text-mid); max-width: 52ch; }
+.footer-news-copy .ts-icon { width: 15px; height: 15px; opacity: 0.75; flex: none; margin-top: 2px; }
+.footer-news-copy strong { color: var(--text); font-weight: 600; }
+.footer-news .newsletter-form input { font-size: 13.5px; padding: 11px 16px; min-width: 210px; }
+
+@media (max-width: 640px) {
+  .footer-news { padding: 18px 16px; margin-bottom: 34px; gap: 14px; }
+  .footer-news .newsletter-form { width: 100%; }
+  .footer-news .newsletter-form input { flex: 1; min-width: 0; }
+}
+
 /* ENQUIRY SERVICE PICKER */
 .svc-picker { border: none; margin: 0 0 6px; padding: 0; }
 .svc-picker legend { font-family: var(--font-label); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(239,238,234,0.5); padding: 0; margin-bottom: 12px; }
@@ -1332,7 +1347,7 @@ section { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 aut
 }
 
 /* SECTION MORE LINK */
-.section-more { text-align: center; margin-top: 36px; }
+.section-more { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 36px; }
 
 /* FAQ */
 .faq-list { display: flex; flex-direction: column; gap: 12px; margin-top: 44px; max-width: 860px; }
@@ -1370,6 +1385,41 @@ section { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 aut
 .news-pop-sub { font-family: var(--font-body); font-size: 14px; line-height: 1.6; color: rgba(239,238,234,0.6); margin: 12px 0 0; }
 .news-pop-form { display: flex; flex-direction: column; gap: 10px; margin-top: 22px; }
 .news-pop-form input { font-family: var(--font-body); font-size: 16px; color: var(--bone); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 13px 16px; outline: none; transition: border-color 0.2s; width: 100%; }
+
+/* Enquiry modal. Shares the news-pop shell so the two popups read as one
+   family; wider, because it carries a real form. Font-size 16px on inputs is
+   deliberate: anything smaller makes iOS zoom the viewport on focus. */
+.enq-pop { position: fixed; inset: 0; z-index: 130; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s var(--ease); }
+.enq-pop.show { opacity: 1; pointer-events: auto; }
+.enq-pop-backdrop { position: absolute; inset: 0; background: rgba(8,9,10,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.enq-pop-card { position: relative; width: 100%; max-width: 520px; max-height: calc(100vh - 40px); overflow-y: auto; background: rgba(15,17,19,0.98); border: 1px solid rgba(255,255,255,0.13); border-radius: 22px; padding: 34px 30px 28px; box-shadow: 0 40px 100px rgba(0,0,0,0.6); transform: translateY(18px) scale(0.97); transition: transform 0.35s var(--ease); }
+.enq-pop.show .enq-pop-card { transform: none; }
+.enq-pop-title { font-family: var(--font-display); font-weight: 400; font-size: 27px; line-height: 1.1; letter-spacing: -0.02em; color: var(--bone); margin: 6px 0 0; }
+.enq-pop-title em { font-style: italic; color: var(--red); }
+.enq-pop-sub { font-family: var(--font-body); font-size: 13.5px; line-height: 1.6; color: rgba(239,238,234,0.6); margin: 10px 0 0; }
+.enq-pop-form { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.enq-pop-pills { border: none; padding: 0; margin: 0 0 4px; }
+.enq-pop-pills legend { font-family: var(--font-label); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(239,238,234,0.5); padding: 0; margin-bottom: 9px; }
+.enq-pop-pills > div { display: flex; flex-wrap: wrap; gap: 7px; }
+.enq-pop-form input, .enq-pop-form textarea { font-family: var(--font-body); font-size: 16px; color: var(--bone); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 12px 15px; outline: none; transition: border-color 0.2s; width: 100%; resize: vertical; }
+.enq-pop-form input:focus, .enq-pop-form textarea:focus { border-color: var(--red); }
+.enq-pop-form input::placeholder, .enq-pop-form textarea::placeholder { color: rgba(239,238,234,0.38); }
+.enq-pop-submit { margin-top: 4px; border: none; font: inherit; cursor: pointer; padding: 13px 26px; font-size: 14px; }
+.enq-pop-note { font-family: var(--font-body); font-size: 12.5px; margin: 2px 0 0; min-height: 1em; color: rgba(239,238,234,0.6); }
+.enq-pop-note.is-success { color: #63C08A; }
+.enq-pop-note.is-error { color: #E86A5C; }
+.enq-pop-alt { font-family: var(--font-body); font-size: 12px; color: rgba(239,238,234,0.45); margin: 4px 0 0; }
+.enq-pop-alt a { color: rgba(239,238,234,0.75); text-decoration: underline; text-underline-offset: 2px; }
+
+@media (max-width: 640px) {
+  .enq-pop { padding: 12px; }
+  .enq-pop-card { padding: 28px 20px 22px; max-height: calc(100vh - 24px); }
+  .enq-pop-title { font-size: 23px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enq-pop, .enq-pop-card { transition: none; }
+}
 .news-pop-form input:focus { border-color: var(--red); }
 .news-pop-form button { border: none; font: inherit; width: 100%; text-align: center; padding: 14px 20px; }
 .news-pop-note { font-family: var(--font-body); font-size: 12px; color: rgba(239,238,234,0.55); margin: 14px 0 0; text-align: center; min-height: 16px; }

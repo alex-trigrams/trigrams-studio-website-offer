@@ -38,7 +38,7 @@
       <div class="nav-more-menu" id="nav-more-menu">
         <a href="how-it-works.html">How It Works</a>
         <a href="clients.html">Clients</a>
-        <a href="index.html#newsletter">Newsletter</a>
+        <a href="#newsletter">Newsletter</a>
       </div>
     </div>
   </nav>
@@ -97,6 +97,19 @@
 
 <footer>
   <div class="wrap">
+    <div class="liquid-glass footer-news" id="newsletter">
+      <div class="footer-news-copy">
+        <img class="ts-icon" src="assets/icons/ts-email.svg" alt="">
+        <span><strong>One useful email a month.</strong> Systems, numbers, and what's working. No spam, unsubscribe any time.</span>
+      </div>
+      <form class="newsletter-form" id="newsletter-form">
+        <input type="email" name="email" placeholder="you@yourbusiness.com" autocomplete="email" required aria-label="Email address">
+        <input type="hidden" name="_subject" value="Newsletter signup from trigrams.studio">
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
+        <button type="submit" class="btn-red" style="padding:11px 22px;font-size:13px;">Subscribe</button>
+      </form>
+    </div>
+
     <div class="footer-top">
       <div class="footer-brand">
         <div class="footer-logo"><video autoplay loop muted playsinline src="assets/logo-rotate.mp4"></video></div>
@@ -118,7 +131,7 @@
             <a href="clients.html">Clients</a>
             <a href="case-studies.html">Case Studies</a>
             <a href="about.html">About</a>
-            <a href="index.html#newsletter">Newsletter</a>
+            <a href="#newsletter">Newsletter</a>
           </div>
         </div>
         <div>

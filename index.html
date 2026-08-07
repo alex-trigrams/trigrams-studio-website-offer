@@ -40,7 +40,7 @@
       <div class="nav-more-menu" id="nav-more-menu">
         <a href="how-it-works.html">How It Works</a>
         <a href="clients.html">Clients</a>
-        <a href="index.html#newsletter">Newsletter</a>
+        <a href="#newsletter">Newsletter</a>
       </div>
     </div>
   </nav>
@@ -87,26 +87,27 @@
 
 <section id="work">
   <div class="build-window" data-reveal id="build-demo"></div>
-  <p class="build-note" data-reveal>A real build, brief to live, inside 14 days. Hover to pause, tap a step to jump.</p>
-</section>
-
-<section id="ladder">
-  <div data-reveal>
-    <div class="section-eyebrow"><i></i><span>How it works</span></div>
-    <h2 class="section-h2">Four phases, best done start to <em>finish</em>.</h2>
-    <p class="section-sub" style="max-width:56ch;">My recommendation is to start at phase 1 and build up from solid foundations. If you already know which one you need, take it on its own and I'd back that call too. Tap any phase to see what's inside.</p>
-  </div>
-  <div class="ladder" id="ladder-list" data-stagger></div>
-  <div class="section-more" data-reveal><a href="how-it-works.html" class="btn-outline">See the full breakdown</a></div>
+  <p class="build-note" data-reveal>A real project, brief to live, inside 14 days. Hover to pause, tap a step to jump.</p>
 </section>
 
 <section id="services">
   <div data-reveal>
     <div class="section-eyebrow"><i class="red"></i><span>Services</span></div>
-    <h2 class="section-h2">Or take a single <em>service</em> on its own.</h2>
-    <p class="section-sub" style="max-width:56ch;">Already know what you need? Go straight to it.</p>
+    <h2 class="section-h2">The services, and what they're <em>for</em>.</h2>
+    <p class="section-sub" style="max-width:56ch;">Take any one of them on its own. If you'd rather build it up from the foundations, the four phases show how they fit together.</p>
   </div>
   <div class="svc-grid" data-stagger style="margin-top:40px;">
+    <a href="how-it-works.html" class="liquid-glass svc-card stagger-item">
+      <div class="svc-card-top">
+        <img class="ts-icon svc-icon" src="assets/icons/ts-website.svg" alt="">
+        <span class="svc-status svc-status--open">Open</span>
+      </div>
+      <h3 class="svc-name">Websites</h3>
+      <p class="svc-desc">A fast site that catches enquiries and chases them for you.</p>
+      <span class="svc-go">How it works
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg>
+      </span>
+    </a>
     <a href="meta-ads.html" class="liquid-glass svc-card stagger-item">
       <div class="svc-card-top">
         <img class="ts-icon svc-icon" src="assets/icons/ts-launch.svg" alt="">
@@ -129,14 +130,28 @@
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg>
       </span>
     </a>
+    <a href="creative-direction.html" class="liquid-glass svc-card svc-card--closed stagger-item">
+      <div class="svc-card-top">
+        <img class="ts-icon svc-icon" src="assets/icons/ts-layers.svg" alt="">
+        <span class="svc-status svc-status--closed"><i></i>At capacity</span>
+      </div>
+      <h3 class="svc-name">Creative direction</h3>
+      <p class="svc-desc">I run your marketing, all of it, for one business at a time.</p>
+      <span class="svc-go">Join the waitlist
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg>
+      </span>
+    </a>
   </div>
-  <div class="section-more" data-reveal><a href="services.html" class="btn-outline">See all services</a></div>
+  <div class="section-more" data-reveal>
+    <a href="services.html" class="btn-outline">See all services</a>
+    <a href="how-it-works.html" class="btn-outline">See the four phases</a>
+  </div>
 </section>
 
 
 <section id="examples">
   <div data-reveal>
-    <div class="section-eyebrow"><i></i><span>Recent builds</span></div>
+    <div class="section-eyebrow"><i></i><span>Examples of work</span></div>
     <h2 class="section-h2">Live sites you can open right now.</h2>
     <p class="section-sub">Drag or use the arrows to browse. Hover a card to scroll the page, or open the real thing in a new tab and poke around.</p>
   </div>
@@ -144,11 +159,11 @@
     <div class="examples-track" id="examples-grid" data-stagger></div>
   </div>
   <div class="carousel-controls">
-    <button type="button" class="carousel-btn" id="examples-prev" aria-label="Previous builds">
+    <button type="button" class="carousel-btn" id="examples-prev" aria-label="Previous examples">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
     </button>
     <div class="carousel-dots" id="examples-dots"></div>
-    <button type="button" class="carousel-btn" id="examples-next" aria-label="Next builds">
+    <button type="button" class="carousel-btn" id="examples-next" aria-label="Next examples">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
     </button>
   </div>
@@ -166,7 +181,7 @@
     </div>
     <div class="liquid-glass faq-item stagger-item">
       <button type="button" class="faq-q" aria-expanded="false">AI-built: does that mean it'll look cheap?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
-      <div class="faq-a-wrap"><div class="faq-a"><p>AI writes the code, and I make every design and copy decision myself. Scroll the recent builds above, they're all live. Judge it on the work.</p></div></div>
+      <div class="faq-a-wrap"><div class="faq-a"><p>AI writes the code, and I make every design and copy decision myself. Scroll the examples above, they're all live. Judge it on the work.</p></div></div>
     </div>
     <div class="liquid-glass faq-item stagger-item">
       <button type="button" class="faq-q" aria-expanded="false">I already have a website.<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
@@ -201,23 +216,6 @@
 
 
 
-<section id="newsletter">
-  <div data-reveal>
-    <div class="section-eyebrow"><i></i><span>Newsletter</span></div>
-    <h2 class="section-h2">Short reads that pay for <em>themselves</em>.</h2>
-    <p class="section-sub" style="max-width:52ch;">Notes on what's working for small businesses right now, sent straight to your inbox. Five minutes each, and nothing else.</p>
-  </div>
-  <div class="liquid-glass newsletter-bar" data-reveal>
-    <div class="newsletter-copy"><img class="ts-icon" src="assets/icons/ts-email.svg" alt=""><strong>One useful email a month.</strong> Systems, numbers, and what's working. No spam, unsubscribe any time.</div>
-    <form class="newsletter-form" id="newsletter-form">
-      <input type="email" name="email" placeholder="you@yourbusiness.com" autocomplete="email" required aria-label="Email address">
-      <input type="hidden" name="_subject" value="Newsletter signup from trigrams.studio">
-      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
-      <button type="submit" class="btn-red" style="padding:12px 26px;font-size:14px;">Subscribe</button>
-    </form>
-  </div>
-</section>
-
 <section id="contact" style="padding-top:20px;padding-bottom:90px;">
   <div class="liquid-glass final-cta" data-reveal>
     <div class="final-cta-glow" aria-hidden="true"></div>
@@ -240,6 +238,19 @@
 
 <footer>
   <div class="wrap">
+    <div class="liquid-glass footer-news" id="newsletter">
+      <div class="footer-news-copy">
+        <img class="ts-icon" src="assets/icons/ts-email.svg" alt="">
+        <span><strong>One useful email a month.</strong> Systems, numbers, and what's working. No spam, unsubscribe any time.</span>
+      </div>
+      <form class="newsletter-form" id="newsletter-form">
+        <input type="email" name="email" placeholder="you@yourbusiness.com" autocomplete="email" required aria-label="Email address">
+        <input type="hidden" name="_subject" value="Newsletter signup from trigrams.studio">
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
+        <button type="submit" class="btn-red" style="padding:11px 22px;font-size:13px;">Subscribe</button>
+      </form>
+    </div>
+
     <div class="footer-top">
       <div class="footer-brand">
         <div class="footer-logo"><video autoplay loop muted playsinline src="assets/logo-rotate.mp4"></video></div>
@@ -261,7 +272,7 @@
             <a href="clients.html">Clients</a>
             <a href="case-studies.html">Case Studies</a>
             <a href="about.html">About</a>
-            <a href="index.html#newsletter">Newsletter</a>
+            <a href="#newsletter">Newsletter</a>
           </div>
         </div>
         <div>

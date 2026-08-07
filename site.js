@@ -430,11 +430,11 @@ function renderBuildDemo() {
   root.innerHTML = '' +
     '<div class="build-titlebar">' +
       '<div class="build-dots"><span style="background:#ff5f57;"></span><span style="background:#febc2e;"></span><span style="background:#28c840;"></span></div>' +
-      '<span class="build-titlebar-label">updietitian.com, the 14-day build</span>' +
+      '<span class="build-titlebar-label">updietitian.com, 14 days start to finish</span>' +
     '</div>' +
     '<div class="build-body">' +
       '<div class="build-sidebar">' +
-        '<div class="build-sidebar-label"><img class="ts-icon" src="assets/icons/ts-build.svg" alt="">The build</div>' +
+        '<div class="build-sidebar-label"><img class="ts-icon" src="assets/icons/ts-build.svg" alt="">The work</div>' +
         '<div class="build-steps" id="build-steps"></div>' +
         '<div class="build-sidebar-label" style="margin-top:20px;"><img class="ts-icon" src="assets/icons/ts-files.svg" alt="">Your assets</div>' +
         '<div class="build-assets" id="build-assets"></div>' +
@@ -1391,6 +1391,143 @@ renderLadder();
     }, { threshold: 0.4 });
     sections.forEach(function (s) { so.observe(s); });
   }
+})();
+
+/* Enquiry modal. Any link to enquiry.html opens this instead of navigating, so
+   the form is reachable from anywhere without losing the visitor's place. The
+   page still exists and still works: this is progressive enhancement, and a
+   middle-click or a no-JS visitor gets the real page. Deliberately shorter than
+   the full form (no per-service extra fields) to keep it low-friction, with a
+   link through for anyone who wants to say more. */
+(function () {
+  var ENDPOINT = 'https://formspree.io/f/meewzagj';
+  var SUBJECTS = {
+    'Website': 'Website enquiry · trigrams.studio',
+    'Meta ads': 'Meta ads enquiry · trigrams.studio',
+    'Video': 'Video enquiry · trigrams.studio',
+    'Content marketing': 'Content marketing enquiry · trigrams.studio',
+    'Not sure': 'New enquiry · trigrams.studio'
+  };
+  var SERVICES = ['Website', 'Meta ads', 'Video', 'Content marketing', 'Not sure'];
+  var pop, lastFocus;
+
+  function build() {
+    pop = document.createElement('div');
+    pop.className = 'enq-pop';
+    pop.innerHTML =
+      '<div class="enq-pop-backdrop"></div>' +
+      '<div class="enq-pop-card" role="dialog" aria-modal="true" aria-labelledby="enq-pop-title">' +
+        '<button type="button" class="news-pop-close enq-pop-close" aria-label="Close">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
+        '</button>' +
+        '<div class="enq-pop-title" id="enq-pop-title">Tell me about the <em>business</em>.</div>' +
+        '<p class="enq-pop-sub">Two minutes, plain answers. I reply the same day.</p>' +
+        '<form class="enq-pop-form" id="enq-pop-form">' +
+          '<fieldset class="enq-pop-pills"><legend>What are you after?</legend><div>' +
+            SERVICES.map(function (svc, i) {
+              return '<label class="svc-pill"><input type="radio" name="service" value="' + svc + '"' + (i === 0 ? ' checked' : '') + '><span>' + svc + '</span></label>';
+            }).join('') +
+          '</div></fieldset>' +
+          '<input type="text" name="name" placeholder="Your name" autocomplete="name" required aria-label="Your name">' +
+          '<input type="email" name="email" placeholder="you@yourbusiness.com" autocomplete="email" required aria-label="Email address">' +
+          '<input type="text" name="business" placeholder="Business name (optional)" autocomplete="organization" aria-label="Business name">' +
+          '<textarea name="message" rows="3" placeholder="What do you need? A sentence or two is plenty." required aria-label="What do you need?"></textarea>' +
+          '<input type="hidden" name="_subject" id="enq-pop-subject" value="' + SUBJECTS.Website + '">' +
+          '<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">' +
+          '<button type="submit" class="btn-red enq-pop-submit">Send enquiry</button>' +
+          '<p class="enq-pop-note" id="enq-pop-note" role="status" aria-live="polite"></p>' +
+          '<p class="enq-pop-alt">Prefer the full form? <a href="enquiry.html">Open the enquiry page</a>.</p>' +
+        '</form>' +
+      '</div>';
+    document.body.appendChild(pop);
+
+    pop.querySelector('.enq-pop-close').addEventListener('click', close);
+    pop.querySelector('.enq-pop-backdrop').addEventListener('click', close);
+
+    /* Keep the emailed subject line matched to the chosen service. */
+    pop.querySelectorAll('input[name="service"]').forEach(function (r) {
+      r.addEventListener('change', function () {
+        pop.querySelector('#enq-pop-subject').value = SUBJECTS[r.value] || SUBJECTS['Not sure'];
+      });
+    });
+
+    var form = pop.querySelector('#enq-pop-form');
+    var note = pop.querySelector('#enq-pop-note');
+    var btn = pop.querySelector('.enq-pop-submit');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      note.className = 'enq-pop-note';
+      note.textContent = '';
+      fetch(ENDPOINT, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
+        .then(function (res) {
+          if (!res.ok) throw new Error('failed');
+          form.reset();
+          note.classList.add('is-success');
+          note.textContent = 'Sent. I’ll reply the same day.';
+        })
+        .catch(function () {
+          note.classList.add('is-error');
+          note.textContent = 'Something went wrong. Email hello@trigrams.studio directly.';
+        })
+        .finally(function () { btn.disabled = false; btn.textContent = 'Send enquiry'; });
+    });
+  }
+
+  function open(service) {
+    if (!pop) build();
+    lastFocus = document.activeElement;
+    if (service) {
+      var hit = pop.querySelector('input[name="service"][value="' + service + '"]');
+      if (hit) { hit.checked = true; pop.querySelector('#enq-pop-subject').value = SUBJECTS[service] || SUBJECTS['Not sure']; }
+    }
+    pop.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function () { pop.querySelector('input[name="name"]').focus(); }, 60);
+  }
+
+  function close() {
+    if (!pop) return;
+    pop.classList.remove('show');
+    document.body.style.overflow = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && pop && pop.classList.contains('show')) close();
+  });
+
+  /* Keep the modal inside itself while it is open. */
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab' || !pop || !pop.classList.contains('show')) return;
+    var f = pop.querySelectorAll('button, input:not([type="hidden"]), textarea, a[href]');
+    var list = Array.prototype.filter.call(f, function (el) { return el.offsetParent !== null; });
+    if (!list.length) return;
+    var first = list[0], last = list[list.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  /* Intercept enquiry links everywhere. Modified clicks fall through so
+     "open in new tab" still reaches the real page. */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href*="enquiry.html"], [data-enquiry]');
+    if (!a) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    if (a.closest && a.closest('.enq-pop')) return;
+    /* Already on the enquiry page: go to the form rather than reload the page. */
+    var onPage = document.getElementById('enquiry-form');
+    if (onPage) {
+      e.preventDefault();
+      onPage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    e.preventDefault();
+    var svc = a.getAttribute('data-enquiry');
+    var m = (a.getAttribute('href') || '').match(/service=([^&]+)/);
+    open(svc && svc !== 'true' ? svc : (m ? decodeURIComponent(m[1]) : null));
+  });
 })();
 
 /* Newsletter popup — shows once per week, never after subscribing */
