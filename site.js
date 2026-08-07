@@ -87,82 +87,161 @@ var STILLS = [
   { client: 'Waterford', dir: 'waterford', files: ['waterford-38.jpg','waterford-39.jpg','waterford-41.jpg','waterford-42.jpg','waterford-43.jpg','waterford-44.jpg','waterford-45.jpg'] }
 ];
 
+/* The ladder. Rungs are named by the outcome the business gets; the service
+   name rides underneath. Prices are "from" only, deliberately: the upper bound
+   depends on scope and stays out of the shop window. Ongoing management is an
+   attribute of a rung, never a rung of its own. */
 var SERVICE_STEPS = [
   {
-    n: '01', name: 'Website', icon: 'ts-website', price: 'From $500 + GST', timeline: 'Live in 14 days',
-    desc: 'A clean, functional site built fast with AI. Clear offer, clear pricing, a contact form that actually works. Hosted at $25/month.',
-    note: 'This is the door. It’s not the business.',
-    trigger: 'The question that starts step two: “what happens when someone fills in the contact form?”'
+    n: '01', outcome: 'Get found', name: 'Website', icon: 'ts-website',
+    price: 'From $500 + GST', timeline: 'Live in 14 days',
+    desc: 'A clean, fast site that says what you do and what it costs, with a contact form that works. Hosted at $25/month.',
+    note: 'The foundation everything else sits on. You own the domain, the content and the code.',
+    trigger: 'Once people are finding you, the next thing worth sorting is what happens when they enquire.'
   },
   {
-    n: '02', name: 'Lead follow-up system', icon: 'ts-email', price: '$500–800', timeline: 'Built once',
-    desc: 'A 3–5 email sequence that triggers the moment someone enquires, built in MailerLite or ConvertKit. Most small businesses get a lead and do nothing with it — this fixes that permanently.',
-    note: 'Built once. Runs forever. No extra work on your end.',
-    trigger: 'Once it’s live and working, managing it makes obvious sense.'
+    n: '02', outcome: 'Never lose an enquiry', name: 'Follow-up system', icon: 'ts-email',
+    price: 'From $500', timeline: 'Built once',
+    desc: 'A 3 to 5 email sequence that fires the moment someone enquires, built in MailerLite or ConvertKit. Most small businesses get an enquiry and do nothing with it, and this fixes that permanently.',
+    note: 'Built once, then it runs on its own. Add $150/month and I manage and optimise it for you.',
+    trigger: 'With enquiries handled, the natural next move is staying in front of the people who aren’t ready to buy yet.'
   },
   {
-    n: '03', name: 'Monthly retainer', icon: 'ts-sync', price: '$150–200/mo', timeline: 'Ongoing',
-    desc: 'Once the system is live, I manage and optimise it: open-rate reports, copy tweaks, keeping the automation healthy.',
-    note: 'Low cost, high peace of mind. No retainer for activity — only for results.',
-    trigger: 'Once there’s trust and a clear goal, a campaign sprint follows naturally.'
+    n: '03', outcome: 'Stay in front of them', name: 'Content marketing', icon: 'ts-video',
+    price: 'Priced monthly', timeline: 'Ongoing',
+    desc: 'Video and written content that keeps your business in front of the people who already know you. I plan it, produce it, and publish it on a schedule you can see.',
+    note: 'This is where most of the growth comes from, because it compounds. You approve the plan before anything goes out.',
+    trigger: 'Once the content is working, paid reach makes it go further.'
   },
   {
-    n: '04', name: 'Campaign sprint', icon: 'ts-launch', price: '$1,500–2,500', timeline: '6–8 weeks',
-    desc: 'A focused push with one clear objective: lead gen, re-engagement, or a seasonal promo. I build the structure, write the copy with AI, and run it.',
-    note: 'Defined start, defined end, clear outcome. This is where the real revenue shift happens.',
+    n: '04', outcome: 'Reach more people', name: 'Meta ads & campaigns', icon: 'ts-launch',
+    price: 'From $1,500', timeline: '6 to 8 weeks',
+    desc: 'A focused push with 1 clear objective: new enquiries, re-engagement, a seasonal promo, or a launch. I build the structure, write the copy, and run it.',
+    note: 'Defined start, defined end, and you see the numbers the whole way through.',
     trigger: null
   }
 ];
 
+/* The ladder renders as an ascending staircase: each rung sits higher than the
+   last, on a rail that fills as you scroll. Selecting a rung swaps the detail
+   panel underneath rather than expanding in place, because the rung columns
+   are too narrow for body copy on desktop.
+
+   Two modes. "Climb in order" is the staircase. "Pick one" flattens the rungs
+   to equal height and gives each its own CTA, so the optionality is something
+   you can see and click instead of a line of small print. */
 function renderLadder() {
   var el = document.getElementById('ladder-list');
   if (!el) return;
-  el.innerHTML = SERVICE_STEPS.map(function (step, i) {
-    var card = '' +
-      '<div class="liquid-glass ladder-step stagger-item' + (i === 0 ? ' open' : '') + '">' +
-        '<button type="button" class="ladder-head" aria-expanded="' + (i === 0 ? 'true' : 'false') + '">' +
-          '<span class="ladder-num">' + step.n + '</span>' +
-          '<span class="ladder-head-main"><span class="ladder-name"><img class="ts-icon" src="assets/icons/' + step.icon + '.svg" alt="">' + step.name + '</span><span class="ladder-timeline">' + step.timeline + '</span></span>' +
-          '<span class="ladder-price">' + step.price + '</span>' +
-          '<svg class="ladder-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>' +
-        '</button>' +
-        '<div class="ladder-body-wrap"><div class="ladder-body"><div>' +
-          '<p class="ladder-desc">' + step.desc + '</p>' +
-          '<p class="ladder-note">' + step.note + '</p>' +
-        '</div></div></div>' +
-      '</div>';
-    var connector = step.trigger
-      ? '<div class="ladder-connector stagger-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>' + step.trigger + '</div>'
-      : '';
-    return card + connector;
+
+  var rungs = SERVICE_STEPS.map(function (step, i) {
+    return '' +
+      '<button type="button" class="ladder-rung" data-i="' + i + '" style="--i:' + i + ';"' +
+        ' role="tab" aria-selected="' + (i === 0 ? 'true' : 'false') + '"' +
+        ' aria-controls="ladder-detail" id="rung-' + i + '" tabindex="' + (i === 0 ? '0' : '-1') + '">' +
+        '<span class="rung-stem" aria-hidden="true"></span>' +
+        '<span class="liquid-glass rung-card">' +
+          '<span class="rung-top">' +
+            '<span class="rung-num">' + step.n + '</span>' +
+            '<img class="ts-icon rung-icon" src="assets/icons/' + step.icon + '.svg" alt="">' +
+          '</span>' +
+          '<span class="rung-outcome">' + step.outcome + '</span>' +
+          '<span class="rung-name">' + step.name + '</span>' +
+          '<span class="rung-meta"><span class="rung-price">' + step.price + '</span><span class="rung-time">' + step.timeline + '</span></span>' +
+          '<span class="rung-cta">Get a quote' +
+            '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg>' +
+          '</span>' +
+        '</span>' +
+      '</button>';
   }).join('');
 
-  var steps = el.querySelectorAll('.ladder-step');
-  steps.forEach(function (stepEl) {
-    var btn = stepEl.querySelector('.ladder-head');
-    btn.addEventListener('click', function () {
-      var open = stepEl.classList.toggle('open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      stepEl.dataset.userToggled = '1';
+  el.innerHTML = '' +
+    '<div class="ladder-modes" role="group" aria-label="How to view the phases">' +
+      '<button type="button" class="ladder-mode is-on" data-mode="climb" aria-pressed="true">Start to finish</button>' +
+      '<button type="button" class="ladder-mode" data-mode="pick" aria-pressed="false">Pick one</button>' +
+    '</div>' +
+    '<div class="ladder-climb" data-reveal>' +
+      '<div class="ladder-rail" aria-hidden="true"><span class="ladder-rail-fill"></span></div>' +
+      '<div class="ladder-rungs" role="tablist" aria-label="The four phases">' + rungs + '</div>' +
+    '</div>' +
+    '<div class="liquid-glass ladder-detail" id="ladder-detail" role="tabpanel" aria-live="polite"></div>';
+
+  var detail = el.querySelector('#ladder-detail');
+  var rungEls = Array.prototype.slice.call(el.querySelectorAll('.ladder-rung'));
+  var climb = el.querySelector('.ladder-climb');
+  var railFill = el.querySelector('.ladder-rail-fill');
+  var active = 0;
+
+  function paint(i) {
+    var step = SERVICE_STEPS[i];
+    active = i;
+    rungEls.forEach(function (r, n) {
+      r.classList.toggle('is-active', n === i);
+      r.classList.toggle('is-climbed', n <= i);
+      r.setAttribute('aria-selected', n === i ? 'true' : 'false');
+      r.tabIndex = n === i ? 0 : -1;
+    });
+    detail.setAttribute('aria-labelledby', 'rung-' + i);
+    detail.innerHTML = '' +
+      '<div class="detail-head">' +
+        '<span class="detail-num">' + step.n + '</span>' +
+        '<div>' +
+          '<h3 class="detail-outcome">' + step.outcome + '</h3>' +
+          '<p class="detail-name">' + step.name + ', ' + step.price.toLowerCase() + ', ' + step.timeline.toLowerCase() + '</p>' +
+        '</div>' +
+      '</div>' +
+      '<p class="detail-desc">' + step.desc + '</p>' +
+      '<p class="detail-note">' + step.note + '</p>' +
+      (step.trigger
+        ? '<p class="detail-next"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' + step.trigger + '</p>'
+        : '') +
+      '<a class="btn-red detail-cta" href="enquiry.html">Get a quote for this</a>';
+    if (railFill) railFill.style.setProperty('--fill', ((i + 1) / SERVICE_STEPS.length * 100) + '%');
+  }
+
+  rungEls.forEach(function (r, i) {
+    r.addEventListener('click', function () {
+      paint(i);
+      climb.dataset.userPicked = '1';
+    });
+    /* Left/right (and up/down on the stacked layout) walk the rungs. */
+    r.addEventListener('keydown', function (e) {
+      var next = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? i + 1
+        : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? i - 1 : null;
+      if (next === null) return;
+      e.preventDefault();
+      next = (next + rungEls.length) % rungEls.length;
+      paint(next);
+      climb.dataset.userPicked = '1';
+      rungEls[next].focus();
     });
   });
 
-  /* Reveal steps open as they scroll into view, unless the visitor closed them */
-  if ('IntersectionObserver' in window) {
-    var ladderIo = new IntersectionObserver(function (entries) {
+  el.querySelectorAll('.ladder-mode').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var mode = btn.dataset.mode;
+      el.querySelectorAll('.ladder-mode').forEach(function (b) {
+        var on = b === btn;
+        b.classList.toggle('is-on', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      climb.classList.toggle('is-flat', mode === 'pick');
+      el.classList.toggle('mode-pick', mode === 'pick');
+    });
+  });
+
+  paint(0);
+
+  /* Climb the rungs as the section scrolls past, until the visitor takes over. */
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
-        var stepEl = entry.target;
-        if (!stepEl.dataset.userToggled) {
-          stepEl.classList.add('open');
-          stepEl.querySelector('.ladder-head').setAttribute('aria-expanded', 'true');
-        }
-        ladderIo.unobserve(stepEl);
+        var i = +entry.target.dataset.i;
+        if (!climb.dataset.userPicked && i > active) paint(i);
       });
-    }, { threshold: 0.55, rootMargin: '0px 0px -12% 0px' });
-    steps.forEach(function (s) { ladderIo.observe(s); });
-  } else {
-    steps.forEach(function (s) { s.classList.add('open'); });
+    }, { threshold: 0.9 });
+    rungEls.forEach(function (r) { io.observe(r); });
   }
 }
 
@@ -369,8 +448,8 @@ function renderBuildDemo() {
         '<div class="build-preview-stage">' +
 
           '<div class="build-stage build-stage--chat" id="stage-chat">' +
-            '<div class="chat-bubble chat-bubble--client" style="--d:0.15s;">Hi — I’m a dietitian in Perth. I need a website that takes bookings.</div>' +
-            '<div class="chat-bubble chat-bubble--studio" style="--d:0.9s;">Can do. Send your logo, photos and prices — whatever you’ve got.</div>' +
+            '<div class="chat-bubble chat-bubble--client" style="--d:0.15s;">Hi, I’m a dietitian in Perth. I need a website that takes bookings.</div>' +
+            '<div class="chat-bubble chat-bubble--studio" style="--d:0.9s;">Can do. Send your logo, photos and prices, whatever you’ve got.</div>' +
             '<div class="chat-bubble chat-bubble--studio" style="--d:1.6s;">The 14 days starts when you hit send.</div>' +
           '</div>' +
 
@@ -388,7 +467,7 @@ function renderBuildDemo() {
           '<div class="build-stage build-stage--content" id="stage-content">' +
             '<div class="bp-cols">' +
               '<div class="bp-text">' +
-                '<div class="build-preview-eyebrow bp-el" style="--i:0;">Dietitian, private practice — Perth</div>' +
+                '<div class="build-preview-eyebrow bp-el" style="--i:0;">Dietitian, private practice, Perth</div>' +
                 '<div class="build-preview-h bp-el" style="--i:1;">Feel good about <em>food</em> again.</div>' +
                 '<p class="bp-para bp-el" style="--i:2;">Evidence-based nutrition support, tailored to you. Initial consults available this week, in the clinic or over telehealth.</p>' +
                 '<div class="bp-cta-row bp-el" style="--i:3;"><span class="bp-btn" id="bp-btn">Book a consult</span><span class="bp-link">View services</span></div>' +
@@ -398,7 +477,7 @@ function renderBuildDemo() {
                   'Make the button pop' +
                 '</div>' +
               '</div>' +
-              '<div class="bp-photo bp-el" style="--i:5;"><img src="assets/upd.jpg" alt="UP Dietitian website preview"><span class="bp-photo-tag">Initial consult — 60 min</span></div>' +
+              '<div class="bp-photo bp-el" style="--i:5;"><img src="assets/upd.jpg" alt="UP Dietitian website preview"><span class="bp-photo-tag">Initial consult · 60 min</span></div>' +
             '</div>' +
             '<div class="bp-statbar bp-el" style="--i:6;">' +
               '<div><b>500+</b><span>clients helped</span></div>' +
@@ -484,7 +563,7 @@ function renderBuildDemo() {
 function reelCardHTML(reel, hidden) {
   return '' +
     '<button type="button" class="reel-card" data-reel="' + reel.id + '"' + (hidden ? ' aria-hidden="true" tabindex="-1"' : '') +
-      ' style="--accent:' + reel.accent + ';" aria-label="Play ' + reel.client + ' — ' + reel.label + '">' +
+      ' style="--accent:' + reel.accent + ';" aria-label="Play ' + reel.client + ' · ' + reel.label + '">' +
       '<span class="reel-notch" aria-hidden="true"></span>' +
       '<video class="reel-video" preload="none" muted loop playsinline poster="assets/reels/' + reel.id + '-poster.jpg" src="assets/reels/' + reel.id + '.mp4"></video>' +
       '<span class="reel-vignette" aria-hidden="true"></span>' +
@@ -892,11 +971,11 @@ renderLadder();
     'not-sure': 'Not sure'
   };
   var SUBJECTS = {
-    'Website': 'Website enquiry — trigrams.studio',
-    'Meta ads': 'Meta ads enquiry — trigrams.studio',
-    'Video': 'Video enquiry — trigrams.studio',
-    'Creative direction': 'Creative direction waitlist — trigrams.studio',
-    'Not sure': 'New enquiry — trigrams.studio'
+    'Website': 'Website enquiry · trigrams.studio',
+    'Meta ads': 'Meta ads enquiry · trigrams.studio',
+    'Video': 'Video enquiry · trigrams.studio',
+    'Creative direction': 'Creative direction waitlist · trigrams.studio',
+    'Not sure': 'New enquiry · trigrams.studio'
   };
 
   var radios = picker.querySelectorAll('input[name="service"]');
@@ -1172,7 +1251,7 @@ renderLadder();
       }
     }).catch(function () {
       note.classList.add('is-error');
-      note.textContent = 'Something went wrong — email hello@trigrams.studio directly.';
+      note.textContent = 'Something went wrong. Email hello@trigrams.studio directly.';
       submitBtn.textContent = 'Send enquiry';
     }).finally(function () {
       submitBtn.disabled = false;
@@ -1336,7 +1415,7 @@ renderLadder();
       '</button>' +
       '<div class="section-eyebrow"><i class="red"></i><span>The newsletter</span></div>' +
       '<div class="news-pop-title">One useful email a <em>month</em>.</div>' +
-      '<p class="news-pop-sub">What’s working in marketing for WA small businesses right now — systems, numbers, no fluff.</p>' +
+      '<p class="news-pop-sub">What’s working in marketing for WA small businesses right now: systems, numbers, no fluff.</p>' +
       '<form class="news-pop-form" id="news-pop-form">' +
         '<input type="email" name="email" placeholder="you@yourbusiness.com" autocomplete="email" required aria-label="Email address">' +
         '<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">' +
@@ -1386,7 +1465,7 @@ renderLadder();
       try { localStorage.setItem(KEY_DONE, '1'); } catch (e2) {}
       setTimeout(hide, 1800);
     }).catch(function () {
-      note.textContent = 'Something went wrong — try the form in the Blog section.';
+      note.textContent = 'Something went wrong. Try the form in the newsletter section.';
       btn.disabled = false;
       btn.textContent = 'Subscribe';
     });
