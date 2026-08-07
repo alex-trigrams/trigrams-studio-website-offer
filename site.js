@@ -108,7 +108,7 @@ var SERVICE_STEPS = [
   },
   {
     n: '03', outcome: 'Stay in front of them', name: 'Content marketing', icon: 'ts-video',
-    price: 'Priced monthly', timeline: 'Ongoing',
+    price: 'From $1,000/month', timeline: 'Ongoing',
     desc: 'Video and written content that keeps your business in front of the people who already know you. I plan it, produce it, and publish it on a schedule you can see.',
     note: 'This is where most of the growth comes from, because it compounds. You approve the plan before anything goes out.',
     trigger: 'Once the content is working, paid reach makes it go further.'
