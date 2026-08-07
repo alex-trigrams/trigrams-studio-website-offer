@@ -520,6 +520,13 @@ header.site-nav {
 .creative-tile svg { opacity: 1; }
 .creative-tile .ts-icon { width: 26px; height: 26px; opacity: 0.45; }
 .creative-tile span { font-family: var(--font-body); font-size: 12px; color: rgba(239,238,234,0.58); }
+/* 4-up variant. The base grid is built for the 3 tiles on about.html, so a
+   fourth would orphan onto its own row; these are also flatter, since they
+   carry a short label rather than sitting as a feature block. */
+.creative-grid--4 { grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.creative-grid--4 .creative-tile { aspect-ratio: auto; padding: 22px 16px; }
+@media (max-width: 900px) { .creative-grid--4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .creative-grid--4 { grid-template-columns: 1fr; } }
 .about-meta { display: flex; gap: 48px; flex-wrap: wrap; margin-top: 56px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.1); }
 .about-meta-label { font-family: var(--font-label); font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; font-size: 11px; color: rgba(239,238,234,0.55); margin-bottom: 8px; display: flex; align-items: center; gap: 7px; }
 .about-meta-label .ts-icon { width: 12px; height: 12px; opacity: 0.6; }
