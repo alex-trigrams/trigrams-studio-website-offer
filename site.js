@@ -967,6 +967,8 @@ renderLadder();
     'ads': 'Meta ads',
     'video': 'Video',
     'videography': 'Video',
+    'content': 'Content marketing',
+    'content-marketing': 'Content marketing',
     'creative-direction': 'Creative direction',
     'not-sure': 'Not sure'
   };
@@ -974,6 +976,7 @@ renderLadder();
     'Website': 'Website enquiry · trigrams.studio',
     'Meta ads': 'Meta ads enquiry · trigrams.studio',
     'Video': 'Video enquiry · trigrams.studio',
+    'Content marketing': 'Content marketing enquiry · trigrams.studio',
     'Creative direction': 'Creative direction waitlist · trigrams.studio',
     'Not sure': 'New enquiry · trigrams.studio'
   };
@@ -1406,9 +1409,17 @@ renderLadder();
     'Meta ads': 'Meta ads enquiry · trigrams.studio',
     'Video': 'Video enquiry · trigrams.studio',
     'Content marketing': 'Content marketing enquiry · trigrams.studio',
+    'Creative direction': 'Creative direction waitlist · trigrams.studio',
     'Not sure': 'New enquiry · trigrams.studio'
   };
-  var SERVICES = ['Website', 'Meta ads', 'Video', 'Content marketing', 'Not sure'];
+  var SERVICES = ['Website', 'Meta ads', 'Video', 'Content marketing', 'Creative direction', 'Not sure'];
+  /* Deep links use slugs; the pills use labels. Same map as the full page. */
+  var SLUGS = {
+    'website': 'Website', 'meta-ads': 'Meta ads', 'ads': 'Meta ads',
+    'video': 'Video', 'videography': 'Video',
+    'content': 'Content marketing', 'content-marketing': 'Content marketing',
+    'creative-direction': 'Creative direction', 'not-sure': 'Not sure'
+  };
   var pop, lastFocus;
 
   function build() {
@@ -1526,7 +1537,8 @@ renderLadder();
     e.preventDefault();
     var svc = a.getAttribute('data-enquiry');
     var m = (a.getAttribute('href') || '').match(/service=([^&]+)/);
-    open(svc && svc !== 'true' ? svc : (m ? decodeURIComponent(m[1]) : null));
+    var raw = svc && svc !== 'true' ? svc : (m ? decodeURIComponent(m[1]) : null);
+    open(raw ? (SLUGS[raw.toLowerCase()] || raw) : null);
   });
 })();
 
