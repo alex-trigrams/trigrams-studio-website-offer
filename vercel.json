@@ -29,5 +29,27 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/clients",
+      "destination": "/work.html",
+      "permanent": true
+    },
+    {
+      "source": "/clients.html",
+      "destination": "/work.html",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies",
+      "destination": "/work.html",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies.html",
+      "destination": "/work.html",
+      "permanent": true
+    }
   ]
 }

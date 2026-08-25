@@ -680,6 +680,20 @@ section { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 aut
 .svc-card:hover .svc-go { gap: 11px; }
 .svc-go svg { transition: transform 0.25s var(--ease); }
 
+/* SYMPTOM CARDS. The self-diagnosis step under the hero: the visitor picks
+   the complaint that stings and the card routes them at the phase that fixes
+   it, so nobody has to map 5 services onto their own problem. */
+.symptom-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media (min-width: 820px) { .symptom-grid { grid-template-columns: 1fr 1fr; } }
+.symptom-card { border-radius: 20px; padding: 26px 26px 22px; display: flex; flex-direction: column; gap: 12px; transition: transform 0.28s var(--ease); }
+.symptom-card:hover { transform: translateY(-4px); }
+.symptom-card .ts-icon { width: 20px; height: 20px; }
+.symptom-say { font-family: var(--font-display); font-size: 23px; font-weight: 400; line-height: 1.2; letter-spacing: -0.01em; color: var(--bone); }
+.symptom-fix { font-family: var(--font-body); font-size: 14px; line-height: 1.65; color: rgba(239,238,234,0.6); flex: 1; }
+.symptom-go { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--red); display: inline-flex; align-items: center; gap: 7px; margin-top: 2px; }
+.symptom-card:hover .symptom-go { gap: 11px; }
+.symptom-go svg { transition: transform 0.25s var(--ease); }
+
 /* CLIENT PORTAL BLOCK */
 .portal-split { display: grid; grid-template-columns: 1fr; gap: 28px; align-items: start; }
 @media (min-width: 900px) { .portal-split { grid-template-columns: 1fr 1.05fr; gap: 48px; } }
@@ -1059,6 +1073,8 @@ section { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 aut
   background: var(--soft-chrome); border: 1px solid var(--line);
   box-shadow: 0 1px 2px rgba(21,23,26,0.1), inset 0 1px 0 rgba(255,255,255,0.95);
 }
+[data-theme="light"] .symptom-say { color: var(--ink); }
+[data-theme="light"] .symptom-fix { color: var(--text-mid); }
 [data-theme="light"] .svc-card { overflow: hidden; }
 [data-theme="light"] .svc-card::after {
   content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 3px;
