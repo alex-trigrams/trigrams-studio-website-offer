@@ -26,7 +26,7 @@ var CLIENTS = [
   { name: 'UP Dietitian', logo: 'assets/clients/updietitian_logo.png', initials: '', url: 'https://www.updietitian.com/', shot: 'assets/upd.jpg' },
   { name: 'NLPSC', logo: 'assets/clients/nlpsc_logo.png', initials: '', url: 'https://www.nlpsc.com/', shot: 'assets/nlpsc.jpg' },
   { name: 'West Coast Allied Health', logo: '', initials: 'WC', url: 'https://wcah-website.vercel.app/', shot: 'assets/wcah.jpg' },
-  { name: 'Speed With Style', logo: 'assets/clients/sws_logo.jpg', initials: '', url: 'https://speedwithstyle.com.au/', shot: '', build: false },
+  { name: 'Speed With Style', logo: 'assets/clients/sws_logo.jpg', initials: '', url: 'https://www.speedwithstyle.com.au/', shot: 'assets/sws.jpg' },
   { name: 'AccuGuard', logo: 'assets/clients/acg_logo.jpg', initials: '', url: '#', shot: '', build: false },
   { name: 'Waterford Wellness', logo: 'assets/clients/waterford_logo.jpg', initials: '', url: '#', shot: '', build: false },
   { name: 'WA Sports Performance', logo: 'assets/clients/wasp_logo.png', initials: '', url: '#', shot: '', build: false },
@@ -34,55 +34,77 @@ var CLIENTS = [
   { name: 'Coffee Bean House', logo: 'assets/clients/cbh_logo.png', initials: '', url: '#', shot: '' }
 ];
 
+/* Case studies. Every figure here is a verified number from Alex's own
+   analytics or form submissions, with the window it was measured over. The
+   `caveat` is published on the card: stating the limits is what makes the
+   rest believable. `sources` drives the traffic bar and is emphasis-coloured,
+   the lead channel in red and the rest receding, never a rainbow. */
 var CASE_STUDIES = [
+  {
+    name: 'Studio 187 Tattoo', line: 'Tattoo studio, Maylands', url: 'https://www.studio187tattoo.com/',
+    logo: 'assets/clients/studio187tattoo_logo.png', initials: '', shot: 'assets/studio187.jpg',
+    kind: 'Website',
+    window: '21 Jul \u2013 25 Aug 2026',
+    before: 'A working website that needed the owner on text messages to get an enquiry moving.',
+    now: 'An enquiry flow that pre-qualifies: design, placement, size, budget band and preferred artist by name, so the first reply can be a real answer on price and availability.',
+    hero: { value: '73', label: 'booking enquiries', note: 'about 2 a day, every day' },
+    stats: [ { value: '2,074', label: 'visitors' }, { value: '36', label: 'days measured' } ],
+    sources: { total: 2074, segments: [ { label: 'Direct', value: 895 }, { label: 'Google', value: 564 }, { label: 'Other', value: 615 } ],
+               note: 'Direct traffic is word of mouth and returning visitors. The tail includes YouTube, Instagram and The Urban List.' },
+    caveat: 'These are enquiries. Confirmed bookings are a separate number.'
+  },
   {
     name: 'NLPSC', line: 'Gym, Perth', url: 'https://www.nlpsc.com/',
     logo: 'assets/clients/nlpsc_logo.png', initials: '', shot: 'assets/nlpsc.jpg',
-    turnaround: '30 days of Meta ads, cold audience',
+    kind: 'Meta ads',
+    window: '30 days, cold audience',
     before: 'The gym had only ever grown by word of mouth, with no way to turn enquiries on.',
     now: 'A free trial offer running on Meta, with every lead landing in the portal and explained in plain English.',
-    stats: [ { value: '54', label: 'leads in 30 days' }, { value: '$6.28', label: 'cost per lead' }, { value: '166%', label: 'above the CTR benchmark' } ],
+    hero: { value: '54', label: 'leads in 30 days', note: '$6.28 each, from cold' },
+    stats: [ { value: '166%', label: 'above the CTR benchmark' }, { value: '7,393', label: 'accounts reached' } ],
+    sources: null,
+    caveat: 'Leads, cost per lead and reach are real campaign figures. Your results will be different.',
     more: { href: 'meta-ads.html', label: 'Read the full case study' }
+  },
+  {
+    name: 'Speed With Style', line: 'Learn-to-swim school, Bateman', url: 'https://www.speedwithstyle.com.au/',
+    logo: 'assets/clients/sws_logo.jpg', initials: '', shot: 'assets/sws.jpg',
+    kind: 'Website',
+    window: '4 \u2013 23 Aug 2026',
+    before: 'Enquiries arrived however they arrived, with no shared record of who had been answered.',
+    now: 'A rebuilt site and funnel: parents pick an age band and a program and leave a number, and every enquiry lands in a portal the school ticks off as replied.',
+    hero: { value: '13', label: 'families enquired', note: 'in the first 3 weeks' },
+    stats: [ { value: '825', label: 'visitors, first full month' }, { value: '57%', label: 'came from their own social' } ],
+    sources: { total: 842, segments: [ { label: 'Their Facebook and Instagram', value: 481 }, { label: 'Everything else', value: 361 } ],
+               note: 'Of 842 visits in the window.' },
+    caveat: 'These are first-month figures, measured over the window shown. Launch months run hot, so expect a steady month to read lower.'
+  },
+  {
+    name: 'UP Dietitian', line: 'Performance dietitian, private practice', url: 'https://www.updietitian.com/',
+    logo: 'assets/clients/updietitian_logo.png', initials: '', shot: 'assets/upd.jpg',
+    kind: 'Website',
+    window: '2 \u2013 18 Aug 2026',
+    before: 'Bookings ran through a link in bio and email back-and-forth, with enquiries easy to lose.',
+    now: 'Separate general and seminar forms feeding a portal where Lauren ticks each enquiry as emailed and writes a note against it. She asked for that tick box, and it shipped.',
+    hero: { value: '5', label: 'new-client enquiries', note: 'and none of them lost' },
+    stats: [ { value: '195', label: 'visitors in August' }, { value: '36%', label: 'came from her Instagram' } ],
+    sources: { total: 249, segments: [ { label: 'Instagram', value: 90 }, { label: 'Everything else', value: 159 } ],
+               note: 'Of 249 visits in the window.' },
+    caveat: 'A small sample over 17 days. 5 enquiries are attributable to the site; a 6th arrived by name through word of mouth and is left out.'
   },
   {
     name: 'Pulse Property Group', line: 'Real estate, Perth', url: 'https://www.pulsepropertygroup.com.au/',
     logo: 'assets/clients/ppg_logo.png', initials: '', shot: 'assets/ppg.jpg',
-    turnaround: 'First message to live: 6 working days',
+    kind: 'In progress',
+    inProgress: true,
+    window: '15 Jun \u2013 24 Aug 2026',
     before: 'Listings lived on the portals, with no home base for the brand.',
-    now: 'One place to send buyers and sellers, with every appraisal request alerting the team instantly.',
-    stats: [ { value: '340', label: 'visits in the first month' }, { value: '2:10', label: 'average time on page' }, { value: '14', label: 'appraisal requests' } ]
-  },
-  {
-    name: 'MXF Athlete', line: 'Strength and conditioning', url: 'https://www.mxfathlete.com/',
-    logo: '', initials: 'MXF', shot: 'assets/mxf.jpg',
-    turnaround: 'First message to live: 5 working days',
-    before: 'Enquiries arrived through Instagram DMs and got buried.',
-    now: 'A coaching enquiry form with instant alerts. Every athlete gets an answer the same day.',
-    stats: [ { value: '31', label: 'enquiries in the first month' }, { value: '2:40', label: 'average time on page' }, { value: '9', label: 'new athletes on board' } ]
-  },
-  {
-    name: 'Studio 187 Tattoo', line: 'Tattoo studio', url: 'https://www.studio187tattoo.com/',
-    logo: 'assets/clients/studio187tattoo_logo.png', initials: '', shot: 'assets/studio187.jpg',
-    turnaround: 'First message to live: 4 working days',
-    before: 'Bookings ran on walk-ins and word of mouth.',
-    now: 'Artists get an alert the moment a booking request lands, with the reference photos attached.',
-    stats: [ { value: '48', label: 'booking requests, month one' }, { value: '3:10', label: 'average time on page' }, { value: '21', label: 'confirmed bookings' } ]
-  },
-  {
-    name: 'UP Dietitian', line: 'Dietitian, private practice', url: 'https://www.updietitian.com/',
-    logo: 'assets/clients/updietitian_logo.png', initials: '', shot: 'assets/upd.jpg',
-    turnaround: 'First message to live: 4 working days',
-    before: 'Bookings ran through a link in bio and email back-and-forth.',
-    now: 'Services and a booking form in one place, with new client alerts straight to her phone.',
-    stats: [ { value: '210', label: 'visits in the first month' }, { value: '3:05', label: 'average time on page' }, { value: '12', label: 'initial consults booked' } ]
-  },
-  {
-    name: 'West Coast Allied Health', line: 'Exercise physiology, Perth', url: 'https://wcah-website.vercel.app/',
-    logo: '', initials: 'WC', shot: 'assets/wcah.jpg',
-    turnaround: 'First message to live: 6 working days',
-    before: 'Referrals came by phone and paper forms.',
-    now: 'Online referrals and enquiries, routed to the right clinician with an instant alert.',
-    stats: [ { value: '420', label: 'visits in the first month' }, { value: '2:20', label: 'average time on page' }, { value: '19', label: 'referral enquiries' } ]
+    now: 'A complete rebuild with blogs, lead magnets and enquiry automation, plus a VaultRE integration so live listings feed straight onto the site, and 2 testimonial films in edit.',
+    hero: { value: '1,214', label: 'visitors', note: '264 of them found the agency by searching Google' },
+    stats: [ { value: '8 months', label: 'engagement so far' }, { value: '3', label: 'workstreams running' } ],
+    sources: { total: 1214, segments: [ { label: 'Google search', value: 264 }, { label: 'Everything else', value: 950 } ],
+               note: 'Of 1,214 visits in the window.' },
+    caveat: 'An engagement still in progress. These are visibility numbers; the integration and the films have yet to land.'
   }
 ];
 
@@ -447,15 +469,40 @@ function renderCaseStudies() {
   if (!el) return;
   var limit = parseInt(el.dataset.limit || '0', 10);
   var list = limit > 0 ? CASE_STUDIES.slice(0, limit) : CASE_STUDIES;
+
+  /* Emphasis, never a rainbow: the lead channel takes the one brand accent and
+     the rest recede. Steps are validated for separation against both surfaces. */
+  function sourceBar(src) {
+    if (!src) return '';
+    var segs = src.segments;
+    var bars = segs.map(function (sg, i) {
+      var pct = (sg.value / src.total) * 100;
+      return '<span class="cs-seg cs-seg--' + i + '" style="width:' + pct.toFixed(1) + '%;" ' +
+             'title="' + sg.label + ': ' + sg.value.toLocaleString() + '"></span>';
+    }).join('');
+    var keys = segs.map(function (sg, i) {
+      var pct = Math.round((sg.value / src.total) * 100);
+      return '<span class="cs-key"><i class="cs-seg--' + i + '"></i>' + sg.label +
+             ' <b>' + pct + '%</b></span>';
+    }).join('');
+    return '' +
+      '<div class="cs-sources">' +
+        '<div class="cs-srcbar" role="img" aria-label="Where visitors came from: ' +
+          segs.map(function (sg) { return sg.label + ' ' + sg.value; }).join(', ') + '">' + bars + '</div>' +
+        '<div class="cs-keys">' + keys + '</div>' +
+        (src.note ? '<p class="cs-srcnote">' + src.note + '</p>' : '') +
+      '</div>';
+  }
+
   el.innerHTML = list.map(function (cs) {
     var shot = cs.shot
-      ? '<img src="' + cs.shot + '" alt="' + cs.name + ' full page screenshot">'
-      : '<div class="example-placeholder"><span>Full-page preview coming soon</span></div>';
+      ? '<img src="' + cs.shot + '" alt="' + cs.name + ' website">'
+      : '<div class="example-placeholder"><span>Preview coming soon</span></div>';
     var stats = cs.stats.map(function (st) {
       return '<div><div class="cs-stat-val">' + st.value + '</div><div class="cs-stat-lbl">' + st.label + '</div></div>';
     }).join('');
     return '' +
-      '<div class="liquid-glass cs-card stagger-item">' +
+      '<div class="liquid-glass cs-card stagger-item' + (cs.inProgress ? ' cs-card--wip' : '') + '">' +
         '<div class="cs-shot">' + shot + '</div>' +
         '<div class="cs-body">' +
           '<div class="cs-head">' +
@@ -464,12 +511,22 @@ function renderCaseStudies() {
             '<a href="' + cs.url + '" target="_blank" rel="noopener" title="Open the live site" class="cs-visit">Visit ' +
               '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a>' +
           '</div>' +
-          '<div class="cs-turnaround"><img class="ts-icon" src="assets/icons/ts-turnaround.svg" alt="">' + cs.turnaround + '</div>' +
+          '<div class="cs-tags">' +
+            '<span class="cs-kind' + (cs.inProgress ? ' cs-kind--wip' : '') + '">' + cs.kind + '</span>' +
+            '<span class="cs-window"><img class="ts-icon" src="assets/icons/ts-turnaround.svg" alt="">' + cs.window + '</span>' +
+          '</div>' +
+          '<div class="cs-hero">' +
+            '<div class="cs-hero-val">' + cs.hero.value + '</div>' +
+            '<div class="cs-hero-meta"><span class="cs-hero-lbl">' + cs.hero.label + '</span>' +
+              '<span class="cs-hero-note">' + cs.hero.note + '</span></div>' +
+          '</div>' +
           '<div style="display:flex;flex-direction:column;gap:12px;">' +
             '<div class="cs-baseline"><span class="cs-baseline-label">Before</span><span class="cs-baseline-val">' + cs.before + '</span></div>' +
             '<div class="cs-baseline"><span class="cs-baseline-label">Now</span><span class="cs-baseline-val cs-baseline-val--now">' + cs.now + '</span></div>' +
           '</div>' +
+          sourceBar(cs.sources) +
           '<div class="cs-stats">' + stats + '</div>' +
+          '<p class="cs-caveat">' + cs.caveat + '</p>' +
           (cs.more
             ? '<a class="cs-more" href="' + cs.more.href + '">' + cs.more.label +
                 '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a>'

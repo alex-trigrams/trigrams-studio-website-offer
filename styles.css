@@ -412,6 +412,45 @@ header.site-nav {
 .cs-baseline-label { font-family: var(--font-label); font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; font-size: 10px; color: rgba(239,238,234,0.55); flex: none; width: 44px; }
 .cs-baseline-val { font-family: var(--font-body); font-size: 13px; line-height: 1.55; color: rgba(239,238,234,0.55); }
 .cs-baseline-val--now { color: var(--bone); }
+/* Case study card: kind + window chips, hero figure, traffic bar, caveat.
+   Bar colours are an EMPHASIS set (one accent + receding neutrals), validated
+   for adjacent separation against both surfaces. Never a categorical rainbow:
+   red is the only accent this brand has. */
+/* The homepage teaser runs 2 cards, so it drops to 2 columns rather than
+   leaving an empty third. */
+@media (min-width: 900px) { .cs-grid[data-limit="2"] { grid-template-columns: repeat(2, 1fr); } }
+.cs-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.cs-kind { font-family: var(--font-label); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.13em; border-radius: 999px; padding: 5px 11px; color: rgba(239,238,234,0.72); border: 1px solid rgba(255,255,255,0.16); }
+.cs-kind--wip { color: var(--red); border-color: rgba(217,43,27,0.4); background: rgba(217,43,27,0.08); }
+.cs-window { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: 11.5px; color: rgba(239,238,234,0.5); }
+.cs-window .ts-icon { width: 12px; height: 12px; opacity: 0.6; }
+
+.cs-hero { display: flex; align-items: baseline; gap: 14px; margin: 4px 0 2px; }
+.cs-hero-val { font-family: var(--font-display); font-weight: 400; font-size: 54px; line-height: 0.95; letter-spacing: -0.02em; color: var(--bone); flex: none; }
+.cs-hero-meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.cs-hero-lbl { font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--bone); }
+.cs-hero-note { font-family: var(--font-body); font-size: 12.5px; color: var(--red); }
+
+.cs-sources { display: flex; flex-direction: column; gap: 9px; }
+/* 2px surface gaps between segments, 4px rounded ends on the bar */
+.cs-srcbar { display: flex; gap: 2px; height: 10px; border-radius: 4px; overflow: hidden; }
+.cs-seg { display: block; height: 100%; border-radius: 2px; }
+.cs-seg--0 { background: #D92B1B; }
+.cs-seg--1 { background: #B9BDC0; }
+.cs-seg--2 { background: #6E757A; }
+.cs-keys { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.cs-key { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: 11.5px; color: rgba(239,238,234,0.62); }
+.cs-key i { width: 9px; height: 9px; border-radius: 3px; flex: none; }
+.cs-key b { font-weight: 600; color: var(--bone); }
+.cs-srcnote { font-family: var(--font-body); font-size: 11.5px; line-height: 1.5; color: rgba(239,238,234,0.45); margin: 0; }
+
+.cs-caveat { font-family: var(--font-body); font-size: 11.5px; line-height: 1.55; color: rgba(239,238,234,0.45); margin: 0; border-left: 2px solid rgba(255,255,255,0.14); padding-left: 11px; }
+.cs-card--wip { border-color: rgba(217,43,27,0.22); }
+
+@media (max-width: 520px) {
+  .cs-hero-val { font-size: 44px; }
+}
+
 .cs-more { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--red); margin-top: 14px; transition: gap 0.25s var(--ease); }
 .cs-card:hover .cs-more { gap: 11px; }
 .cs-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; margin-top: auto; }
@@ -1077,6 +1116,15 @@ section { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 aut
 }
 [data-theme="light"] .symptom-say { color: var(--ink); }
 [data-theme="light"] .symptom-fix { color: var(--text-mid); }
+[data-theme="light"] .cs-hero-val, [data-theme="light"] .cs-hero-lbl, [data-theme="light"] .cs-key b { color: var(--ink); }
+[data-theme="light"] .cs-kind { color: var(--text-mid); border-color: var(--line-2); }
+[data-theme="light"] .cs-window, [data-theme="light"] .cs-key { color: var(--text-mid); }
+[data-theme="light"] .cs-srcnote, [data-theme="light"] .cs-caveat { color: var(--text-soft); }
+[data-theme="light"] .cs-caveat { border-left-color: var(--line-2); }
+[data-theme="light"] .cs-seg--1 { background: #3A3F44; }
+[data-theme="light"] .cs-seg--2 { background: #969BA0; }
+[data-theme="light"] .cs-key i.cs-seg--1 { background: #3A3F44; }
+[data-theme="light"] .cs-key i.cs-seg--2 { background: #969BA0; }
 [data-theme="light"] .svc-card { overflow: hidden; }
 [data-theme="light"] .svc-card::after {
   content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 3px;
