@@ -15,6 +15,10 @@ var INTAKE_LONG  = 'November\u2013December 2026';
   } else { fill(); }
 })();
 
+/* `build: false` marks a client Alex works with on content but whose website
+   he did not build. They belong in the logo marquee, and the marquee links to
+   their real site, but they are kept out of the live-sites carousel so that
+   section never claims work that isn't his. */
 var CLIENTS = [
   { name: 'Studio 187 Tattoo', logo: 'assets/clients/studio187tattoo_logo.png', initials: '', url: 'https://www.studio187tattoo.com/', shot: 'assets/studio187.jpg' },
   { name: 'MXF Athlete', logo: '', initials: 'MXF', url: 'https://www.mxfathlete.com/', shot: 'assets/mxf.jpg' },
@@ -22,7 +26,8 @@ var CLIENTS = [
   { name: 'UP Dietitian', logo: 'assets/clients/updietitian_logo.png', initials: '', url: 'https://www.updietitian.com/', shot: 'assets/upd.jpg' },
   { name: 'NLPSC', logo: 'assets/clients/nlpsc_logo.png', initials: '', url: 'https://www.nlpsc.com/', shot: 'assets/nlpsc.jpg' },
   { name: 'West Coast Allied Health', logo: '', initials: 'WC', url: 'https://wcah-website.vercel.app/', shot: 'assets/wcah.jpg' },
-  { name: 'WA Sports Performance', logo: 'assets/clients/wasp_logo.png', initials: '', url: '#', shot: '' },
+  { name: 'Speed With Style', logo: '', initials: 'SWS', url: 'https://speedwithstyle.com.au/', shot: '', build: false },
+  { name: 'WA Sports Performance', logo: 'assets/clients/wasp_logo.png', initials: '', url: '#', shot: '', build: false },
   { name: 'Matt & Mates', logo: 'assets/clients/mattandmates_logo.jpg', initials: '', url: '#', shot: '' },
   { name: 'Coffee Bean House', logo: 'assets/clients/cbh_logo.png', initials: '', url: '#', shot: '' }
 ];
@@ -312,7 +317,7 @@ function renderMarquee() {
 function renderExamples() {
   var el = document.getElementById('examples-grid');
   if (!el) return;
-  var examples = CLIENTS.filter(function (c) { return c.url && c.url !== '#'; });
+  var examples = CLIENTS.filter(function (c) { return c.url && c.url !== '#' && c.build !== false; });
   el.innerHTML = examples.map(function (ex) {
     var shot = ex.shot
       ? '<img src="' + ex.shot + '" alt="' + ex.name + ' full page screenshot">'
