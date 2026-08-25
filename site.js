@@ -18,11 +18,10 @@ var INTAKE_LONG  = 'November\u2013December 2026';
 var CLIENTS = [
   { name: 'Studio 187 Tattoo', logo: 'assets/clients/studio187tattoo_logo.png', initials: '', url: 'https://www.studio187tattoo.com/', shot: 'assets/studio187.jpg' },
   { name: 'MXF Athlete', logo: '', initials: 'MXF', url: 'https://www.mxfathlete.com/', shot: 'assets/mxf.jpg' },
-  { name: 'Pulse Property Group', logo: 'assets/clients/ppg_logo.png', initials: '', url: 'https://www.pulsepropertygroup.com.au/', shot: '' },
+  { name: 'Pulse Property Group', logo: 'assets/clients/ppg_logo.png', initials: '', url: 'https://www.pulsepropertygroup.com.au/', shot: 'assets/ppg.jpg' },
   { name: 'UP Dietitian', logo: 'assets/clients/updietitian_logo.png', initials: '', url: 'https://www.updietitian.com/', shot: 'assets/upd.jpg' },
   { name: 'NLPSC', logo: 'assets/clients/nlpsc_logo.png', initials: '', url: 'https://www.nlpsc.com/', shot: 'assets/nlpsc.jpg' },
   { name: 'West Coast Allied Health', logo: '', initials: 'WC', url: 'https://wcah-website.vercel.app/', shot: 'assets/wcah.jpg' },
-  { name: 'Foggo', logo: '', initials: 'F', url: 'https://foggowebsite-3j2o38frm-trigramsstudio.vercel.app/', shot: '' },
   { name: 'WA Sports Performance', logo: 'assets/clients/wasp_logo.png', initials: '', url: '#', shot: '' },
   { name: 'Matt & Mates', logo: 'assets/clients/mattandmates_logo.jpg', initials: '', url: '#', shot: '' },
   { name: 'Coffee Bean House', logo: 'assets/clients/cbh_logo.png', initials: '', url: '#', shot: '' }
@@ -31,7 +30,7 @@ var CLIENTS = [
 var CASE_STUDIES = [
   {
     name: 'Pulse Property Group', line: 'Real estate, Perth', url: 'https://www.pulsepropertygroup.com.au/',
-    logo: 'assets/clients/ppg_logo.png', initials: '', shot: '',
+    logo: 'assets/clients/ppg_logo.png', initials: '', shot: 'assets/ppg.jpg',
     turnaround: 'First message to live: 6 working days',
     before: 'Listings lived on the portals, with no home base for the brand.',
     now: 'One place to send buyers and sellers, with every appraisal request alerting the team instantly.',
