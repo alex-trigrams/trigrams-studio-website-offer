@@ -1,3 +1,20 @@
+/* Creative direction intake window. Change these 2 strings when the intake
+   moves and every page updates: spans marked [data-intake] take the short
+   form, [data-intake="long"] takes the long one. */
+var INTAKE_SHORT = 'Nov\u2013Dec 2026';
+var INTAKE_LONG  = 'November\u2013December 2026';
+
+(function () {
+  function fill() {
+    document.querySelectorAll('[data-intake]').forEach(function (el) {
+      el.textContent = el.getAttribute('data-intake') === 'long' ? INTAKE_LONG : INTAKE_SHORT;
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fill);
+  } else { fill(); }
+})();
+
 var CLIENTS = [
   { name: 'Studio 187 Tattoo', logo: 'assets/clients/studio187tattoo_logo.png', initials: '', url: 'https://www.studio187tattoo.com/', shot: '' },
   { name: 'MXF Athlete', logo: '', initials: 'MXF', url: 'https://www.mxfathlete.com/', shot: 'assets/mxf.jpg' },
@@ -230,7 +247,35 @@ function renderLadder() {
     });
   });
 
-  paint(0);
+  /* Deep link: how-it-works.html#phase-2 (or #never-lose-an-enquiry) opens
+     that phase directly, so a service card can point straight at its phase. */
+  function slugOf(step) {
+    return step.outcome.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  }
+  function indexFromHash() {
+    var h = (location.hash || '').replace(/^#/, '').toLowerCase();
+    if (!h) return -1;
+    var m = h.match(/^phase-(\d+)$/);
+    if (m) {
+      var n = parseInt(m[1], 10) - 1;
+      return n >= 0 && n < SERVICE_STEPS.length ? n : -1;
+    }
+    for (var i = 0; i < SERVICE_STEPS.length; i++) {
+      if (slugOf(SERVICE_STEPS[i]) === h) return i;
+    }
+    return -1;
+  }
+
+  var start = indexFromHash();
+  paint(start > -1 ? start : 0);
+  if (start > -1) {
+    climb.dataset.userPicked = '1';
+    el.scrollIntoView({ block: 'start' });
+  }
+  window.addEventListener('hashchange', function () {
+    var i = indexFromHash();
+    if (i > -1) { paint(i); climb.dataset.userPicked = '1'; el.scrollIntoView({ block: 'start' }); }
+  });
 
   /* Climb the rungs as the section scrolls past, until the visitor takes over. */
   if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -1428,7 +1473,7 @@ renderLadder();
     pop.innerHTML =
       '<div class="enq-pop-backdrop"></div>' +
       '<div class="enq-pop-card" role="dialog" aria-modal="true" aria-labelledby="enq-pop-title">' +
-        '<button type="button" class="news-pop-close enq-pop-close" aria-label="Close">' +
+        '<button type="button" class="enq-pop-close" aria-label="Close">' +
           '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
         '</button>' +
         '<div class="enq-pop-title" id="enq-pop-title">Tell me about the <em>business</em>.</div>' +
@@ -1542,81 +1587,3 @@ renderLadder();
   });
 })();
 
-/* Newsletter popup — shows once per week, never after subscribing */
-(function () {
-  var KEY_DONE = 'tg_news_done';
-  var KEY_LAST = 'tg_news_last';
-  try {
-    if (localStorage.getItem(KEY_DONE)) return;
-    var last = parseInt(localStorage.getItem(KEY_LAST) || '0', 10);
-    if (Date.now() - last < 7 * 86400000) return;
-  } catch (e) { return; }
-  if (document.getElementById('enquiry-form')) return; // never over the enquiry page
-  if (document.body.hasAttribute('data-no-pop')) return; // 404 and legal pages opt out
-
-  var pop = document.createElement('div');
-  pop.className = 'news-pop';
-  pop.innerHTML = '' +
-    '<div class="news-pop-backdrop"></div>' +
-    '<div class="news-pop-card" role="dialog" aria-modal="true" aria-label="Newsletter signup">' +
-      '<button type="button" class="news-pop-close" aria-label="Close">' +
-        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
-      '</button>' +
-      '<div class="section-eyebrow"><i class="red"></i><span>The newsletter</span></div>' +
-      '<div class="news-pop-title">One useful email a <em>month</em>.</div>' +
-      '<p class="news-pop-sub">What’s working in marketing for WA small businesses right now: systems, numbers, no fluff.</p>' +
-      '<form class="news-pop-form" id="news-pop-form">' +
-        '<input type="email" name="email" placeholder="you@yourbusiness.com" autocomplete="email" required aria-label="Email address">' +
-        '<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">' +
-        '<input type="hidden" name="_subject" value="Newsletter signup (popup) from trigrams.studio">' +
-        '<button type="submit" class="btn-red">Subscribe</button>' +
-      '</form>' +
-      '<p class="news-pop-note" id="news-pop-note">No spam. Unsubscribe any time.</p>' +
-    '</div>';
-  document.body.appendChild(pop);
-
-  var shown = false;
-  function show() {
-    if (shown) return;
-    shown = true;
-    pop.classList.add('show');
-    try { localStorage.setItem(KEY_LAST, String(Date.now())); } catch (e) {}
-    window.removeEventListener('scroll', onScroll);
-  }
-  function hide() { pop.classList.remove('show'); }
-
-  var timer = setTimeout(show, 16000);
-  function onScroll() {
-    var depth = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
-    if (depth > 0.5) { clearTimeout(timer); show(); }
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  pop.querySelector('.news-pop-close').addEventListener('click', hide);
-  pop.querySelector('.news-pop-backdrop').addEventListener('click', hide);
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') hide(); });
-
-  var form = pop.querySelector('#news-pop-form');
-  var note = pop.querySelector('#news-pop-note');
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var btn = form.querySelector('button');
-    btn.disabled = true;
-    btn.textContent = 'Subscribing…';
-    fetch('https://formspree.io/f/meewzagj', {
-      method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
-    }).then(function (res) {
-      if (!res.ok) throw new Error('failed');
-      note.classList.add('is-success');
-      note.textContent = 'Done. First one lands soon.';
-      try { localStorage.setItem(KEY_DONE, '1'); } catch (e2) {}
-      setTimeout(hide, 1800);
-    }).catch(function () {
-      note.textContent = 'Something went wrong. Try the form in the newsletter section.';
-      btn.disabled = false;
-      btn.textContent = 'Subscribe';
-    });
-  });
-})();

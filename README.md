@@ -1,8 +1,8 @@
 # TRIGRAMS Studio — offer site
 
-Marketing site for TRIGRAMS Studio (Alex Oliver, Perth WA). AI marketing systems for small businesses: $300+ websites in 48 hours → lead follow-up automation → retainers → campaign sprints.
+Marketing site for TRIGRAMS Studio (Alex Oliver, Perth WA). Marketing systems for small businesses, in four phases: get found (website, from $500, live in 14 days) → never lose an enquiry (follow-up) → stay in front of them (content marketing) → reach more people (Meta ads).
 
-**Live:** offer.trigrams.studio (Vercel project `trigrams-studio-website-offer`)
+**Live:** www.trigrams.studio (Vercel project `trigrams-studio-website-offer`)
 
 ## Stack
 
