@@ -34,6 +34,15 @@ var CLIENTS = [
 
 var CASE_STUDIES = [
   {
+    name: 'NLPSC', line: 'Gym, Perth', url: 'https://www.nlpsc.com/',
+    logo: 'assets/clients/nlpsc_logo.png', initials: '', shot: 'assets/nlpsc.jpg',
+    turnaround: '30 days of Meta ads, cold audience',
+    before: 'The gym had only ever grown by word of mouth, with no way to turn enquiries on.',
+    now: 'A free trial offer running on Meta, with every lead landing in the portal and explained in plain English.',
+    stats: [ { value: '54', label: 'leads in 30 days' }, { value: '$6.28', label: 'cost per lead' }, { value: '166%', label: 'above the CTR benchmark' } ],
+    more: { href: 'meta-ads.html', label: 'Read the full case study' }
+  },
+  {
     name: 'Pulse Property Group', line: 'Real estate, Perth', url: 'https://www.pulsepropertygroup.com.au/',
     logo: 'assets/clients/ppg_logo.png', initials: '', shot: 'assets/ppg.jpg',
     turnaround: 'First message to live: 6 working days',
@@ -459,6 +468,10 @@ function renderCaseStudies() {
             '<div class="cs-baseline"><span class="cs-baseline-label">Now</span><span class="cs-baseline-val cs-baseline-val--now">' + cs.now + '</span></div>' +
           '</div>' +
           '<div class="cs-stats">' + stats + '</div>' +
+          (cs.more
+            ? '<a class="cs-more" href="' + cs.more.href + '">' + cs.more.label +
+                '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a>'
+            : '') +
         '</div>' +
       '</div>';
   }).join('');

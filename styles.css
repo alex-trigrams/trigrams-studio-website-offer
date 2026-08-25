@@ -412,6 +412,8 @@ header.site-nav {
 .cs-baseline-label { font-family: var(--font-label); font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; font-size: 10px; color: rgba(239,238,234,0.55); flex: none; width: 44px; }
 .cs-baseline-val { font-family: var(--font-body); font-size: 13px; line-height: 1.55; color: rgba(239,238,234,0.55); }
 .cs-baseline-val--now { color: var(--bone); }
+.cs-more { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--red); margin-top: 14px; transition: gap 0.25s var(--ease); }
+.cs-card:hover .cs-more { gap: 11px; }
 .cs-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; margin-top: auto; }
 .cs-stat-val { font-family: var(--font-display); font-weight: 400; font-size: 26px; letter-spacing: -0.01em; color: var(--bone); line-height: 1; }
 .cs-stat-lbl { font-family: var(--font-body); font-size: 11px; line-height: 1.45; color: rgba(239,238,234,0.5); margin-top: 6px; }
