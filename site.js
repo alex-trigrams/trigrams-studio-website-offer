@@ -21,12 +21,14 @@ var INTAKE_LONG  = 'November\u2013December 2026';
    section never claims work that isn't his. */
 var CLIENTS = [
   { name: 'Studio 187 Tattoo', logo: 'assets/clients/studio187tattoo_logo.png', initials: '', url: 'https://www.studio187tattoo.com/', shot: 'assets/studio187.jpg' },
-  { name: 'MXF Athlete', logo: '', initials: 'MXF', url: 'https://www.mxfathlete.com/', shot: 'assets/mxf.jpg' },
+  { name: 'MXF Athlete', logo: 'assets/clients/mxf_logo.jpg', initials: '', url: 'https://www.mxfathlete.com/', shot: 'assets/mxf.jpg' },
   { name: 'Pulse Property Group', logo: 'assets/clients/ppg_logo.png', initials: '', url: 'https://www.pulsepropertygroup.com.au/', shot: 'assets/ppg.jpg' },
   { name: 'UP Dietitian', logo: 'assets/clients/updietitian_logo.png', initials: '', url: 'https://www.updietitian.com/', shot: 'assets/upd.jpg' },
   { name: 'NLPSC', logo: 'assets/clients/nlpsc_logo.png', initials: '', url: 'https://www.nlpsc.com/', shot: 'assets/nlpsc.jpg' },
   { name: 'West Coast Allied Health', logo: '', initials: 'WC', url: 'https://wcah-website.vercel.app/', shot: 'assets/wcah.jpg' },
-  { name: 'Speed With Style', logo: '', initials: 'SWS', url: 'https://speedwithstyle.com.au/', shot: '', build: false },
+  { name: 'Speed With Style', logo: 'assets/clients/sws_logo.jpg', initials: '', url: 'https://speedwithstyle.com.au/', shot: '', build: false },
+  { name: 'AccuGuard', logo: 'assets/clients/acg_logo.jpg', initials: '', url: '#', shot: '', build: false },
+  { name: 'Waterford Wellness', logo: 'assets/clients/waterford_logo.jpg', initials: '', url: '#', shot: '', build: false },
   { name: 'WA Sports Performance', logo: 'assets/clients/wasp_logo.png', initials: '', url: '#', shot: '', build: false },
   { name: 'Matt & Mates', logo: 'assets/clients/mattandmates_logo.jpg', initials: '', url: '#', shot: '' },
   { name: 'Coffee Bean House', logo: 'assets/clients/cbh_logo.png', initials: '', url: '#', shot: '' }
@@ -1016,6 +1018,34 @@ initExamplesCarousel();
 renderCaseStudies();
 renderLadder();
 
+/* The 4 objections that apply whatever the service. Rendered into any page
+   carrying [data-faq-short], so the service pages answer them without the
+   homepage FAQ being copied 5 times. Must run before the accordion below
+   binds its listeners. */
+var FAQ_SHORT = [
+  { q: "What if it doesn't work?",
+    a: "You'll know early. Your portal shows the numbers live, and a weekly email gives you 2 of them: are you growing, or not. There's no lock-in, so you can stop after any phase." },
+  { q: 'How much of my time will this take?',
+    a: "About 20 minutes to start: a short brief, your logo, and whatever photos you've got. I chase you for what I need, so you can forget about it in between." },
+  { q: 'Do I own what you build?',
+    a: 'Yes. The domain, the content and the code are all yours. If you ever want to walk, it walks with you and keeps running.' },
+  { q: 'Why work with one person?',
+    a: "You talk to whoever is doing the work, so nothing gets lost in a handoff and a change is a message rather than a ticket. I also tell you when something isn't worth buying from me." }
+];
+
+(function () {
+  var mount = document.querySelector('[data-faq-short]');
+  if (!mount) return;
+  var plus = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>';
+  mount.innerHTML = FAQ_SHORT.map(function (f) {
+    return '' +
+      '<div class="liquid-glass faq-item stagger-item">' +
+        '<button type="button" class="faq-q" aria-expanded="false">' + f.q + plus + '</button>' +
+        '<div class="faq-a-wrap"><div class="faq-a"><p>' + f.a + '</p></div></div>' +
+      '</div>';
+  }).join('');
+})();
+
 /* Enquiry service picker: preselects from ?service=, reveals the fields that
    match, and sets the Formspree subject so the inbox sorts itself. Fields in
    hidden blocks are disabled so they never post as empty noise. */
@@ -1100,6 +1130,10 @@ renderLadder();
     entries.forEach(function (entry) {
       if (!entry.isIntersecting) return;
       if (entry.target.hasAttribute('data-stagger')) {
+        /* A container carrying data-reveal as well is still held at opacity 0
+           by that rule, which would hide the children no matter how many of
+           them get `in`. Reveal the container too rather than only its rows. */
+        if (entry.target.hasAttribute('data-reveal')) entry.target.classList.add('in');
         revealStagger(entry.target);
         io.unobserve(entry.target);
         return;
@@ -1346,34 +1380,6 @@ renderLadder();
       btn.disabled = false;
     });
   });
-})();
-
-/* The 4 objections that apply whatever the service. Rendered into any page
-   carrying [data-faq-short], so the service pages answer them without the
-   homepage FAQ being copied 5 times. Must run before the accordion below
-   binds its listeners. */
-var FAQ_SHORT = [
-  { q: "What if it doesn't work?",
-    a: "You'll know early. Your portal shows the numbers live, and a weekly email gives you 2 of them: are you growing, or not. There's no lock-in, so you can stop after any phase." },
-  { q: 'How much of my time will this take?',
-    a: "About 20 minutes to start: a short brief, your logo, and whatever photos you've got. I chase you for what I need, so you can forget about it in between." },
-  { q: 'Do I own what you build?',
-    a: 'Yes. The domain, the content and the code are all yours. If you ever want to walk, it walks with you and keeps running.' },
-  { q: 'Why work with one person?',
-    a: "You talk to whoever is doing the work, so nothing gets lost in a handoff and a change is a message rather than a ticket. I also tell you when something isn't worth buying from me." }
-];
-
-(function () {
-  var mount = document.querySelector('[data-faq-short]');
-  if (!mount) return;
-  var plus = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>';
-  mount.innerHTML = FAQ_SHORT.map(function (f) {
-    return '' +
-      '<div class="liquid-glass faq-item stagger-item">' +
-        '<button type="button" class="faq-q" aria-expanded="false">' + f.q + plus + '</button>' +
-        '<div class="faq-a-wrap"><div class="faq-a"><p>' + f.a + '</p></div></div>' +
-      '</div>';
-  }).join('');
 })();
 
 /* FAQ accordion */
