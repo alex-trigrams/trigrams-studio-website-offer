@@ -10,10 +10,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-<script>(function(){try{var t=localStorage.getItem("ts-theme");if(!t)t=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();</script>
+<script>(function(){try{var t=localStorage.getItem("ts-theme");if(!t)t=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","dark");}try{if(sessionStorage.getItem("ts-intro"))document.documentElement.classList.add("intro-done");else sessionStorage.setItem("ts-intro","1");}catch(e){}})();</script>
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-mark"><video autoplay loop muted playsinline src="assets/logo-rotate.mp4"></video></div>
+</div>
 
 <div class="grain-page" aria-hidden="true"></div>
 
@@ -118,7 +122,7 @@
 
 <section id="work" data-cinema="stack" data-cinema-tight>
   <div class="build-window" data-reveal id="build-demo"></div>
-  <p class="build-note" data-reveal>A real project, brief to live, inside 14 days. Hover to pause, tap a step to jump.</p>
+  <p class="build-note" data-reveal>A real project, brief to live. Hover to pause, tap a step to jump.</p>
 </section>
 
 <section id="proof" data-cinema="stack">

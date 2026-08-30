@@ -127,7 +127,7 @@ a.liquid-glass:hover, .liquid-glass.hoverable:hover { transform: scale(1.03); }
 }
 
 /* TRIGRAMS PIXEL ICONS (assets/icons/ts-*.svg) */
-.ts-icon { width: 14px; height: 14px; flex: none; display: inline-block; vertical-align: -2px; }
+.ts-icon { width: 17px; height: 17px; flex: none; display: inline-block; vertical-align: -2px; }
 
 /* NAV */
 .nav-bar {
@@ -192,7 +192,7 @@ header.site-nav {
 }
 
 .nav-actions { display: flex; align-items: center; gap: 10px; flex: none; }
-.nav-cta { border-radius: 999px; padding: 11px 22px; font-family: var(--font-body); font-size: 14px; font-weight: 500; color: var(--bone); cursor: pointer; display: inline-block; white-space: nowrap; }
+.nav-cta { border-radius: 999px; padding: 13px 26px; font-family: var(--font-body); font-size: 15.5px; font-weight: 500; color: var(--bone); cursor: pointer; display: inline-block; white-space: nowrap; }
 .nav-toggle {
   display: inline-flex; align-items: center; justify-content: center; flex: none;
   width: 38px; height: 38px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14);
@@ -205,10 +205,10 @@ header.site-nav {
 
 @media (min-width: 860px) {
   .nav-links {
-    display: flex !important; flex-direction: row; gap: 32px; align-items: center;
+    display: flex !important; flex-direction: row; gap: 38px; align-items: center;
     position: static; background: none; backdrop-filter: none; border: none; padding: 0; max-height: none; overflow: visible;
   }
-  .nav-links a { padding: 0; border: none; font-size: 14px; }
+  .nav-links a { padding: 0; border: none; font-size: 16px; letter-spacing: -0.005em; }
   .nav-toggle { display: none; }
 }
 
@@ -252,7 +252,7 @@ header.site-nav {
 @media (min-width: 760px) { .build-body { grid-template-columns: 280px 1fr; height: 560px; } }
 .build-sidebar { border-right: 1px solid rgba(255,255,255,0.08); background: rgba(0,0,0,0.3); padding: 18px; display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
 .build-sidebar-label { font-family: var(--font-label); font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; font-size: 10px; color: rgba(239,238,234,0.55); margin: 4px 0 10px; display: flex; align-items: center; gap: 6px; }
-.build-sidebar-label .ts-icon { width: 11px; height: 11px; opacity: 0.6; }
+.build-sidebar-label .ts-icon { width: 15px; height: 15px; opacity: 0.6; }
 .build-steps { display: flex; flex-direction: column; gap: 6px; }
 .build-step { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: space-between; padding: 9px 12px; border-radius: 10px; font-family: var(--font-body); font-size: 13px; color: rgba(239,238,234,0.6); border: none; background: transparent; width: 100%; text-align: left; cursor: pointer; appearance: none; -webkit-appearance: none; transition: background 0.2s, color 0.2s; }
 .build-step:hover { background: rgba(255,255,255,0.05); color: var(--bone); }
@@ -407,7 +407,7 @@ header.site-nav {
 .cs-visit { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: 12px; font-weight: 500; color: rgba(239,238,234,0.7); border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; padding: 7px 13px; flex: none; transition: background 0.2s, color 0.2s; }
 .cs-visit:hover { background: rgba(255,255,255,0.06); color: var(--bone); }
 .cs-turnaround { font-family: var(--font-label); font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; font-size: 10px; color: rgba(239,238,234,0.58); display: flex; align-items: center; gap: 8px; }
-.cs-turnaround .ts-icon { width: 12px; height: 12px; opacity: 0.65; }
+.cs-turnaround .ts-icon { width: 14px; height: 14px; opacity: 0.65; }
 .cs-baseline { display: flex; gap: 12px; align-items: baseline; }
 .cs-baseline-label { font-family: var(--font-label); font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; font-size: 10px; color: rgba(239,238,234,0.55); flex: none; width: 44px; }
 .cs-baseline-val { font-family: var(--font-body); font-size: 13px; line-height: 1.55; color: rgba(239,238,234,0.55); }
@@ -423,7 +423,7 @@ header.site-nav {
 .cs-kind { font-family: var(--font-label); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.13em; border-radius: 999px; padding: 5px 11px; color: rgba(239,238,234,0.72); border: 1px solid rgba(255,255,255,0.16); }
 .cs-kind--wip { color: var(--red); border-color: rgba(217,43,27,0.4); background: rgba(217,43,27,0.08); }
 .cs-window { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: 11.5px; color: rgba(239,238,234,0.5); }
-.cs-window .ts-icon { width: 12px; height: 12px; opacity: 0.6; }
+.cs-window .ts-icon { width: 14px; height: 14px; opacity: 0.6; }
 
 .cs-hero { display: flex; align-items: baseline; gap: 14px; margin: 4px 0 2px; }
 .cs-hero-val { font-family: var(--font-display); font-weight: 400; font-size: 54px; line-height: 0.95; letter-spacing: -0.02em; color: var(--bone); flex: none; }
@@ -528,7 +528,7 @@ header.site-nav {
 @media (min-width: 860px) { .process-grid { grid-template-columns: 1fr 1fr; gap: 72px; } }
 .process-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
 .process-tags span { font-family: var(--font-body); font-size: 12px; color: rgba(239,238,234,0.7); border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.03); border-radius: 999px; padding: 7px 14px; display: inline-flex; align-items: center; gap: 8px; }
-.process-tags .ts-icon { width: 13px; height: 13px; opacity: 0.7; }
+.process-tags .ts-icon { width: 17px; height: 17px; opacity: 0.7; }
 .change-panel { border-radius: 20px; padding: 24px; }
 .change-panel-label { font-family: var(--font-label); font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; font-size: 11px; color: rgba(239,238,234,0.58); margin: 4px 4px 18px; }
 .change-row { border-radius: 12px; padding: 16px 18px; display: flex; align-items: center; justify-content: space-between; }
@@ -553,7 +553,7 @@ header.site-nav {
 @media (min-width: 640px) { .creative-grid { grid-template-columns: repeat(3,1fr); } }
 .creative-tile { border-radius: 16px; aspect-ratio: 16/10; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
 .creative-tile svg { opacity: 1; }
-.creative-tile .ts-icon { width: 26px; height: 26px; opacity: 0.45; }
+.creative-tile .ts-icon { width: 28px; height: 28px; opacity: 0.45; }
 .creative-tile span { font-family: var(--font-body); font-size: 12px; color: rgba(239,238,234,0.58); }
 /* 4-up variant. The base grid is built for the 3 tiles on about.html, so a
    fourth would orphan onto its own row; these are also flatter, since they
@@ -564,7 +564,7 @@ header.site-nav {
 @media (max-width: 480px) { .creative-grid--4 { grid-template-columns: 1fr; } }
 .about-meta { display: flex; gap: 48px; flex-wrap: wrap; margin-top: 56px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.1); }
 .about-meta-label { font-family: var(--font-label); font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; font-size: 11px; color: rgba(239,238,234,0.55); margin-bottom: 8px; display: flex; align-items: center; gap: 7px; }
-.about-meta-label .ts-icon { width: 12px; height: 12px; opacity: 0.6; }
+.about-meta-label .ts-icon { width: 14px; height: 14px; opacity: 0.6; }
 .about-meta-val { font-family: var(--font-body); font-size: 15px; color: var(--bone); }
 
 /* FINAL CTA */
@@ -607,12 +607,12 @@ header.site-nav {
 footer { position: relative; z-index: 10; background: rgba(10,11,12,0.75); backdrop-filter: blur(16px); border-top: 1px solid rgba(255,255,255,0.08); padding: 64px 24px 36px; }
 .footer-top { display: flex; justify-content: space-between; gap: 48px; flex-wrap: wrap; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.08); }
 .footer-brand { max-width: 280px; }
-.footer-logo { width: 34px; height: 34px; border-radius: 999px; overflow: hidden; display: inline-flex; flex: none; border: 1px solid rgba(255,255,255,0.12); margin-bottom: 18px; }
+.footer-logo { width: 84px; height: 84px; border-radius: 999px; overflow: hidden; display: inline-flex; flex: none; border: 1px solid rgba(255,255,255,0.12); margin-bottom: 18px; }
 .footer-logo video { width: 100%; height: 100%; object-fit: cover; }
 .footer-desc { font-family: var(--font-body); font-size: 14px; line-height: 1.6; color: rgba(239,238,234,0.58); margin: 0; }
 .footer-nav { display: flex; gap: 64px; flex-wrap: wrap; }
 .footer-col-lbl { font-family: var(--font-label); font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; font-size: 11px; color: rgba(239,238,234,0.55); margin-bottom: 16px; display: flex; align-items: center; gap: 7px; }
-.footer-col-lbl .ts-icon { width: 12px; height: 12px; opacity: 0.5; }
+.footer-col-lbl .ts-icon { width: 14px; height: 14px; opacity: 0.5; }
 .footer-links { display: flex; flex-direction: column; gap: 11px; }
 .footer-links a { font-family: var(--font-body); font-size: 14px; color: rgba(239,238,234,0.8); }
 .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 22px; flex-wrap: wrap; gap: 12px; font-family: var(--font-body); font-size: 13px; color: rgba(239,238,234,0.55); }
@@ -644,13 +644,13 @@ section { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 aut
 .note-card { border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 12px; transition: transform 0.3s var(--ease); }
 .note-card:hover { transform: translateY(-4px); }
 .note-tag { font-family: var(--font-label); font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; font-size: 10px; color: var(--red); display: inline-flex; align-items: center; gap: 7px; }
-.note-tag .ts-icon { width: 12px; height: 12px; opacity: 0.85; }
+.note-tag .ts-icon { width: 14px; height: 14px; opacity: 0.85; }
 .note-title { font-family: var(--font-display); font-weight: 400; font-size: 20px; line-height: 1.2; color: var(--bone); }
 .note-excerpt { font-family: var(--font-body); font-size: 13px; line-height: 1.6; color: rgba(239,238,234,0.55); }
 .note-date { font-family: var(--font-body); font-size: 12px; color: rgba(239,238,234,0.55); margin-top: auto; }
 .newsletter-bar { border-radius: 18px; margin-top: 28px; padding: 26px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 18px; justify-content: space-between; }
 .newsletter-copy { font-family: var(--font-body); font-size: 14px; color: rgba(239,238,234,0.7); max-width: 40ch; }
-.newsletter-copy .ts-icon { width: 16px; height: 16px; opacity: 0.75; margin-right: 8px; vertical-align: -3px; }
+.newsletter-copy .ts-icon { width: 18px; height: 18px; opacity: 0.75; margin-right: 8px; vertical-align: -3px; }
 .newsletter-copy strong { color: var(--bone); font-weight: 600; }
 .newsletter-form { display: flex; gap: 10px; flex-wrap: wrap; }
 .newsletter-form input { font-family: var(--font-body); font-size: 14px; color: var(--bone); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 999px; padding: 12px 18px; outline: none; min-width: 220px; transition: border-color 0.2s; }
@@ -662,7 +662,7 @@ section { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 aut
    section competing with it. Sits on every page. */
 .footer-news { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; padding: 20px 24px; border-radius: 16px; margin-bottom: 44px; }
 .footer-news-copy { display: flex; align-items: flex-start; gap: 10px; font-family: var(--font-body); font-size: 13.5px; line-height: 1.55; color: var(--text-mid); max-width: 52ch; }
-.footer-news-copy .ts-icon { width: 15px; height: 15px; opacity: 0.75; flex: none; margin-top: 2px; }
+.footer-news-copy .ts-icon { width: 17px; height: 17px; opacity: 0.75; flex: none; margin-top: 2px; }
 .footer-news-copy strong { color: var(--text); font-weight: 600; }
 .footer-news .newsletter-form input { font-size: 13.5px; padding: 11px 16px; min-width: 210px; }
 
@@ -713,7 +713,7 @@ section { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 aut
 @media (min-width: 820px) { .symptom-grid { grid-template-columns: 1fr 1fr; } }
 .symptom-card { border-radius: 20px; padding: 26px 26px 22px; display: flex; flex-direction: column; gap: 12px; transition: transform 0.28s var(--ease); }
 .symptom-card:hover { transform: translateY(-4px); }
-.symptom-card .ts-icon { width: 20px; height: 20px; }
+.symptom-card .ts-icon { width: 22px; height: 22px; }
 .symptom-say { font-family: var(--font-display); font-size: 23px; font-weight: 400; line-height: 1.2; letter-spacing: -0.01em; color: var(--bone); }
 .symptom-fix { font-family: var(--font-body); font-size: 14px; line-height: 1.65; color: rgba(239,238,234,0.6); flex: 1; }
 .symptom-go { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--red); display: inline-flex; align-items: center; gap: 7px; margin-top: 2px; }
@@ -759,7 +759,7 @@ section { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 aut
 .tile-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 38px; }
 @media (min-width: 760px) { .tile-grid { grid-template-columns: repeat(3, 1fr); } }
 .tile { border-radius: 16px; padding: 24px 22px; display: flex; flex-direction: column; gap: 8px; }
-.tile .ts-icon { width: 20px; height: 20px; margin-bottom: 4px; }
+.tile .ts-icon { width: 22px; height: 22px; margin-bottom: 4px; }
 .tile-t { font-family: var(--font-label); font-size: 15px; font-weight: 600; color: var(--bone); }
 .tile-d { font-family: var(--font-body); font-size: 13px; line-height: 1.5; color: rgba(239,238,234,0.55); }
 
@@ -1695,4 +1695,98 @@ section[data-cinema] .liquid-glass:hover { box-shadow: var(--depth-3), var(--lif
 @media (max-width: 760px) {
   .layer-card { padding: 26px 22px 24px; }
   .layer-qs { grid-template-columns: 1fr; gap: 18px; }
+}
+
+/* ==========================================================================
+   FIRST-LOAD INTRO
+   The mark fades up centre screen, then flies to the corner and becomes the
+   nav logo as the page is revealed underneath it.
+
+   The whole sequence is CSS. It has to be, because site.js is a deferred
+   script at the end of body: if JS drove the fade-out, a slow connection
+   would sit on a covered page. Here the overlay clears itself even if the
+   script never runs. site.js only adds .intro-done, which skips the whole
+   thing for a visitor who has already seen it this session.
+   ========================================================================== */
+.intro {
+  position: fixed; inset: 0; z-index: 200; background: var(--surface);
+  display: grid; place-items: center; pointer-events: none;
+  animation: intro-veil 2.15s var(--ease) forwards;
+}
+.intro-mark {
+  width: 168px; height: 168px; border-radius: 999px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.14); box-shadow: 0 30px 90px rgba(0,0,0,0.55);
+  animation: intro-mark 2.15s var(--ease) forwards;
+}
+.intro-mark video, .intro-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Where the nav logo actually sits: the content column is capped at --maxw and
+   centred, so the mark's resting centre is that column's left edge plus its own
+   radius. Matching it in calc keeps the landing exact without waiting for JS. */
+@keyframes intro-mark {
+  0%   { opacity: 0; transform: translate(0, 0) scale(0.82); filter: blur(12px); }
+  22%  { opacity: 1; transform: translate(0, 0) scale(1); filter: blur(0); }
+  52%  { opacity: 1; transform: translate(0, 0) scale(1); filter: blur(0); }
+  100% {
+    opacity: 1;
+    transform:
+      translate(
+        var(--intro-dx, calc(max(24px, (100vw - var(--maxw)) / 2 + 24px) + 42px - 50vw)),
+        var(--intro-dy, calc(52px - 50vh))
+      )
+      scale(0.5);
+    filter: blur(0);
+  }
+}
+@keyframes intro-veil {
+  0%, 52% { opacity: 1; visibility: visible; }
+  100%    { opacity: 0; visibility: hidden; }
+}
+
+@media (max-width: 640px) {
+  .intro-mark { width: 120px; height: 120px; }
+  @keyframes intro-mark {
+    0%   { opacity: 0; transform: translate(0, 0) scale(0.82); filter: blur(12px); }
+    22%  { opacity: 1; transform: none; filter: blur(0); }
+    52%  { opacity: 1; transform: none; filter: blur(0); }
+    100% { opacity: 1; transform: translate(var(--intro-dx, calc(50px - 50vw)), var(--intro-dy, calc(38px - 50vh))) scale(0.5); }
+  }
+}
+
+/* Seen it already this session, or asked for less motion: no intro at all. */
+.intro-done .intro, .intro-done .intro-mark { animation: none; }
+.intro-done .intro { opacity: 0; visibility: hidden; }
+@media (prefers-reduced-motion: reduce) {
+  .intro { animation: intro-veil 0.4s linear forwards; }
+  .intro-mark { animation: none; }
+}
+
+/* ==========================================================================
+   The rest of the section arrives the way its heading does.
+   Inside a cinematic section the scroll-driven animation takes over from the
+   IntersectionObserver reveal entirely, so the two never fight over opacity.
+   Each item runs on its own view() timeline, which staggers a grid for free.
+   ========================================================================== */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    section[data-cinema] [data-reveal],
+    section[data-cinema] .stagger-item {
+      opacity: 1; transform: none; filter: none; transition: none;
+    }
+    section[data-cinema] > [data-reveal] ~ [data-reveal],
+    section[data-cinema] > [data-reveal] ~ * > .stagger-item,
+    section[data-cinema] > .stagger-item,
+    section[data-cinema] > [data-reveal] ~ .ladder,
+    section[data-cinema] > [data-reveal] ~ .layer-list > .layer-card {
+      animation: cine-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 6% cover 30%;
+    }
+    /* The carousel cards already have coverflow on the inline axis. */
+    .examples-track > * { animation-name: cine-flow; animation-timeline: view(inline); animation-range: entry 0% exit 100%; }
+  }
+}
+@keyframes cine-rise {
+  from { opacity: 0; transform: translateY(34px) scale(0.975); filter: blur(7px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
 }

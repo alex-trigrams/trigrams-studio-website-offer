@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-<script>(function(){try{var t=localStorage.getItem("ts-theme");if(!t)t=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();</script>
+<script>(function(){try{var t=localStorage.getItem("ts-theme");if(!t)t=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","dark");}try{if(sessionStorage.getItem("ts-intro"))document.documentElement.classList.add("intro-done");else sessionStorage.setItem("ts-intro","1");}catch(e){}})();</script>
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -65,8 +65,8 @@
       <div class="section-eyebrow"><i></i>Built with AI
         <span style="font-family:var(--font-body);font-weight:400;text-transform:none;letter-spacing:0;font-size:12px;color:rgba(239,238,234,0.45);border:1px solid rgba(255,255,255,0.12);border-radius:999px;padding:3px 10px;">The honest part</span>
       </div>
-      <h2 class="section-h2" style="max-width:16ch;">Fast to launch, and even faster to change.</h2>
-      <p class="section-sub" style="max-width:46ch;">Yes, AI writes the code. That's the point. It's why the whole build lands inside 14 days, and why changing your mind costs minutes instead of another invoice. The page stays soft while your business finds its shape.</p>
+      <h2 class="section-h2" style="max-width:16ch;">Fast to build, and even faster to change.</h2>
+      <p class="section-sub" style="max-width:46ch;">Yes, AI writes a lot of the code. That's the point. It's why changing your mind costs minutes instead of another invoice, and why the system stays soft while your business finds its shape.</p>
       <div class="process-tags">
         <span><img class="ts-icon" src="assets/icons/ts-edit.svg" alt="">New copy in minutes</span>
         <span><img class="ts-icon" src="assets/icons/ts-photo.svg" alt="">Swap photos any time</span>
@@ -89,7 +89,7 @@
 
 <section id="work">
   <div class="build-window" data-reveal id="build-demo"></div>
-  <p class="build-note" data-reveal>A real build, brief to live, inside 14 days. Hover to pause, tap a step to jump.</p>
+  <p class="build-note" data-reveal>A real build, brief to live. Hover to pause, tap a step to jump.</p>
 </section>
 
 <section id="faq" style="padding-top:20px;padding-bottom:70px;">

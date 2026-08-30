@@ -1,3 +1,22 @@
+/* The intro mark flies to where the nav logo actually is. styles.css carries a
+   calc() fallback good enough for a no-JS load; this pins it exactly. It runs
+   long before the flight begins at ~1.1s of the 2.15s sequence. */
+(function () {
+  var intro = document.getElementById('intro');
+  var logo = document.querySelector('.nav-logo');
+  if (!intro || !logo) return;
+  function pin() {
+    var r = logo.getBoundingClientRect();
+    var de = document.documentElement;
+    /* Measured against clientWidth, not 100vw: vw units include the scrollbar,
+       which is what the CSS fallback is out by. */
+    de.style.setProperty('--intro-dx', ((r.left + r.width / 2) - de.clientWidth / 2) + 'px');
+    de.style.setProperty('--intro-dy', ((r.top + r.height / 2) - de.clientHeight / 2) + 'px');
+  }
+  pin();
+  window.addEventListener('resize', pin);
+})();
+
 /* `build: false` marks a client Alex works with on content but whose website
    he did not build. They belong in the logo marquee, and the marquee links to
    their real site, but they are kept out of the live-sites carousel so that
@@ -544,7 +563,7 @@ function renderBuildDemo() {
   root.innerHTML = '' +
     '<div class="build-titlebar">' +
       '<div class="build-dots"><span style="background:#ff5f57;"></span><span style="background:#febc2e;"></span><span style="background:#28c840;"></span></div>' +
-      '<span class="build-titlebar-label">updietitian.com, 14 days start to finish</span>' +
+      '<span class="build-titlebar-label">updietitian.com, brief to live</span>' +
     '</div>' +
     '<div class="build-body">' +
       '<div class="build-sidebar">' +
@@ -564,7 +583,7 @@ function renderBuildDemo() {
           '<div class="build-stage build-stage--chat" id="stage-chat">' +
             '<div class="chat-bubble chat-bubble--client" style="--d:0.15s;">Hi, I’m a dietitian in Perth. I need a website that takes bookings.</div>' +
             '<div class="chat-bubble chat-bubble--studio" style="--d:0.9s;">Can do. Send your logo, photos and prices, whatever you’ve got.</div>' +
-            '<div class="chat-bubble chat-bubble--studio" style="--d:1.6s;">The 14 days starts when you hit send.</div>' +
+            '<div class="chat-bubble chat-bubble--studio" style="--d:1.6s;">Send that through and we\u2019ll map it out.</div>' +
           '</div>' +
 
           '<div class="build-stage build-stage--mood" id="stage-mood">' +
@@ -605,7 +624,7 @@ function renderBuildDemo() {
           '<img src="assets/logo-mark-transparent.png" alt="" loading="lazy" decoding="async" style="width:20px;height:20px;flex:none;">' +
           '<div>' +
             '<div style="font-family:var(--font-body);font-size:12px;font-weight:600;color:#EFEEEA;">Site is live</div>' +
-            '<div style="font-family:var(--font-body);font-size:11px;color:rgba(239,238,234,0.5);">14 days, brief to live</div>' +
+            '<div style="font-family:var(--font-body);font-size:11px;color:rgba(239,238,234,0.5);">Brief to live</div>' +
           '</div>' +
         '</div>' +
       '</div>' +
@@ -1419,7 +1438,7 @@ var FAQ_SHORT = [
    of Alex's Substack. Set SUBSTACK_URL below and the footer panel reveals
    itself on every page; while it is empty the panel stays hidden rather than
    shipping a dead link. */
-var SUBSTACK_URL = '';
+var SUBSTACK_URL = 'https://substack.com/@trigramsstudio';
 
 (function () {
   var panels = document.querySelectorAll('[data-substack]');
