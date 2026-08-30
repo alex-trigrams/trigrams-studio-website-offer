@@ -139,10 +139,10 @@ a.liquid-glass:hover, .liquid-glass.hoverable:hover { transform: scale(1.03); }
 .nav-bar.scrolled { background: rgba(12,13,15,0.86); border-color: rgba(255,255,255,0.1); box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
 header.site-nav {
   position: relative; display: flex; align-items: center; justify-content: space-between;
-  max-width: var(--maxw); margin: 0 auto; padding: 16px 24px;
+  max-width: var(--maxw); margin: 0 auto; padding: 10px 24px;
   gap: 16px;
 }
-.nav-logo { width: 42px; height: 42px; border-radius: 999px; overflow: hidden; display: block; flex: none; border: 1px solid rgba(255,255,255,0.14); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+.nav-logo { width: 84px; height: 84px; border-radius: 999px; overflow: hidden; display: block; flex: none; border: 1px solid rgba(255,255,255,0.14); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
 .nav-logo video { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 .nav-links {
@@ -464,10 +464,6 @@ header.site-nav {
    every rung. All colour comes from themed tokens, so light mode follows. */
 .ladder { margin-top: 40px; --rise: 44px; }
 
-.ladder-modes { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel-2); margin-bottom: 34px; }
-.ladder-mode { font-family: var(--font-label); font-size: 12.5px; font-weight: 600; letter-spacing: 0.01em; color: var(--text-soft); background: transparent; border: none; border-radius: 999px; padding: 8px 16px; cursor: pointer; transition: color 0.2s, background 0.25s var(--ease); }
-.ladder-mode:hover { color: var(--text); }
-.ladder-mode.is-on { color: var(--text); background: var(--hover); }
 
 .ladder-climb { position: relative; padding-bottom: 30px; }
 .ladder-rail { position: absolute; left: 0; right: 0; bottom: 22px; height: 1px; background: var(--line); overflow: hidden; }
@@ -488,15 +484,9 @@ header.site-nav {
 .rung-icon { width: 17px; height: 17px; opacity: 0.75; }
 .rung-outcome { font-family: var(--font-body); font-size: 16.5px; font-weight: 700; line-height: 1.25; color: var(--text); }
 .rung-name { font-family: var(--font-body); font-size: 12.5px; color: var(--text-soft); }
-.rung-meta { display: flex; flex-direction: column; gap: 3px; margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
-.rung-price { font-family: var(--font-label); font-size: 13px; font-weight: 700; color: var(--text); }
-.rung-time { font-family: var(--font-body); font-size: 11.5px; color: var(--text-soft); }
-.rung-cta { display: none; align-items: center; gap: 6px; margin-top: 12px; font-family: var(--font-label); font-size: 12px; font-weight: 600; color: var(--red); }
+.rung-layer { display: block; margin-top: 10px; padding-top: 12px; border-top: 1px solid var(--line); font-family: var(--font-label); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; color: var(--text-faint); }
 
 /* Pick-one mode: level the rungs, drop the stems, give each its own way in. */
-.ladder-climb.is-flat .ladder-rung { margin-bottom: 0; }
-.ladder-climb.is-flat .rung-stem, .ladder-climb.is-flat .ladder-rail { opacity: 0; }
-.ladder.mode-pick .rung-cta { display: inline-flex; }
 .ladder-rail, .rung-stem { transition: opacity 0.3s; }
 
 .ladder-detail { margin-top: 26px; padding: 30px 32px; border-radius: 20px; }
@@ -504,13 +494,15 @@ header.site-nav {
 .detail-num { font-family: var(--font-display); font-size: 30px; line-height: 1; color: var(--red); flex: none; width: 40px; }
 .detail-outcome { font-family: var(--font-body); font-size: 21px; font-weight: 700; color: var(--text); }
 .detail-name { font-family: var(--font-body); font-size: 13px; color: var(--text-soft); margin-top: 3px; }
-.detail-desc, .detail-note, .detail-next { padding-left: 56px; }
-.detail-cta { margin-left: 56px; }
+.detail-desc, .detail-next { padding-left: 56px; }
+
 .detail-desc { font-family: var(--font-body); font-size: 14.5px; line-height: 1.7; color: var(--text-mid); max-width: 66ch; margin-top: 18px; }
-.detail-note { font-family: var(--font-body); font-size: 13.5px; line-height: 1.65; color: var(--text); max-width: 66ch; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
+.detail-qs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 34px; margin-top: 20px; padding: 20px 0 0 56px; border-top: 1px solid var(--line); }
+.detail-q-lbl { display: block; font-family: var(--font-label); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; color: var(--text-faint); margin-bottom: 8px; }
+.detail-q p { font-family: var(--font-body); font-size: 14px; line-height: 1.65; color: var(--text); margin: 0; }
+@media (max-width: 760px) { .detail-qs { grid-template-columns: 1fr; padding-left: 0; } }
 .detail-next { display: flex; align-items: flex-start; gap: 9px; margin-top: 14px; font-family: var(--font-body); font-size: 12.5px; font-style: italic; color: var(--text-soft); }
 .detail-next svg { flex: none; margin-top: 3px; color: var(--red); }
-.detail-cta { display: inline-block; margin-top: 22px; }
 
 @media (prefers-reduced-motion: reduce) {
   .ladder-rung, .rung-stem, .ladder-rail-fill { transition: none; }
@@ -639,14 +631,6 @@ section { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 aut
   [data-reveal], [data-fade], .stagger-item { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
 }
 
-/* FLOATING CALENDLY */
-.cal-float { position: fixed; right: 22px; bottom: 22px; z-index: 80; width: 58px; height: 58px; border-radius: 999px; background: var(--red); color: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 16px 44px rgba(217,43,27,0.45), 0 4px 14px rgba(0,0,0,0.4); transition: transform 0.25s var(--ease), background 0.2s; }
-.cal-float:hover { transform: scale(1.08); background: var(--red-deep); }
-.cal-float::after { content: ''; position: absolute; inset: -6px; border-radius: 999px; border: 1px solid rgba(217,43,27,0.5); animation: calPulse 2.4s var(--ease) infinite; pointer-events: none; }
-@keyframes calPulse { 0% { transform: scale(0.9); opacity: 0.9; } 70% { transform: scale(1.25); opacity: 0; } 100% { opacity: 0; } }
-.cal-float-tip { position: absolute; right: calc(100% + 12px); top: 50%; transform: translateY(-50%); background: rgba(12,13,15,0.94); color: var(--bone); font-family: var(--font-body); font-size: 12px; padding: 8px 13px; border-radius: 10px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; border: 1px solid rgba(255,255,255,0.1); }
-.cal-float:hover .cal-float-tip { opacity: 1; }
-@media (prefers-reduced-motion: reduce) { .cal-float::after { animation: none; } }
 
 /* PAGE HERO (subpages) */
 .page-hero { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 auto; padding: 76px 24px 12px; text-align: left; }
@@ -691,6 +675,7 @@ section { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 aut
 /* ENQUIRY SERVICE PICKER */
 .svc-picker { border: none; margin: 0 0 6px; padding: 0; }
 .svc-picker legend { font-family: var(--font-label); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(239,238,234,0.5); padding: 0; margin-bottom: 12px; }
+.svc-picker-note { font-size: 12.5px; line-height: 1.5; color: rgba(239,238,234,0.5); margin: 12px 0 0; }
 .svc-pills { display: flex; flex-wrap: wrap; gap: 8px; }
 .svc-pill { position: relative; cursor: pointer; }
 .svc-pill input { position: absolute; opacity: 0; width: 0; height: 0; }
@@ -1180,6 +1165,7 @@ section { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 aut
 [data-theme="light"] .svc-pill span { color: var(--text-mid); border-color: var(--line-2); }
 [data-theme="light"] .svc-pill:hover span { color: var(--text); background: var(--hover); }
 [data-theme="light"] .svc-picker legend { color: var(--text-soft); }
+[data-theme="light"] .svc-picker-note { color: var(--text-soft); }
 [data-theme="light"] .svc-extra-note { color: var(--text-soft); }
 [data-theme="light"] .enquiry-note { color: var(--text-mid); }
 
@@ -1238,8 +1224,8 @@ section { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 aut
 
 /* --- Shared components that sit on a themed panel but were missed ---
    .final-cta is a .liquid-glass, so it turns light; .fit-list--no li outranks
-   the .fit-list li rule above and put bone back. Not included: .portal-mock
-   and .cal-float-tip, which keep dark chrome by design. */
+   the .fit-list li rule above and put bone back. Not included: .portal-mock,
+   which keeps dark chrome by design. */
 [data-theme="light"] .final-cta h2,
 [data-theme="light"] .enquiry-title { color: var(--text); }
 [data-theme="light"] .final-cta p,
@@ -1351,13 +1337,9 @@ section { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 aut
 
 /* Bigger touch targets on touch devices; no hover-only affordances */
 @media (hover: none) {
-  .cal-float-tip { display: none; }
   .carousel-dot { width: 10px; height: 10px; }
   .carousel-btn { width: 44px; height: 44px; }
 }
-
-/* Respect iPhone home-bar safe area */
-.cal-float { bottom: calc(22px + env(safe-area-inset-bottom, 0px)); }
 
 @media (max-width: 640px) {
   /* Prevent iOS auto-zoom on focus: inputs must be >= 16px */
@@ -1366,8 +1348,6 @@ section { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 aut
   section { padding: 44px 20px; }
   .hero { padding: 64px 20px 72px; }
   .page-hero { padding: 56px 20px 8px; }
-
-  .cal-float { width: 52px; height: 52px; right: 16px; }
 
   /* Build demo */
   .build-stage { padding: 20px; }
@@ -1387,12 +1367,9 @@ section { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 aut
   .rung-card { padding: 16px 16px 18px; }
   .rung-outcome { font-size: 15.5px; }
   .detail-num { font-size: 24px; width: 30px; }
-  .detail-desc, .detail-note, .detail-next { padding-left: 0; }
-  .detail-cta { margin-left: 0; }
+  .detail-desc, .detail-next { padding-left: 0; }
   .detail-outcome { font-size: 18px; }
   .ladder-detail { padding: 22px 18px; }
-  .ladder-modes { margin-bottom: 26px; }
-  .ladder-mode { font-size: 12px; padding: 7px 13px; }
 
   /* Footer */
   .footer-nav { gap: 36px; }
@@ -1518,3 +1495,204 @@ section { position: relative; z-index: 10; max-width: var(--maxw); margin: 0 aut
 [data-theme="light"] .compare-h--on,
 [data-theme="light"] .vprocess-tag,
 [data-theme="light"] .tl-when { color: var(--red-deep); }
+
+/* ==========================================================================
+   CINEMATIC LAYER
+   Depth, stacked sections, scroll-told headers and a coverflow carousel.
+
+   Everything here is opt-in: a section only participates once it carries
+   [data-cinema], so pages can adopt it one at a time. The motion runs on
+   CSS scroll-driven animations (animation-timeline), which the compositor
+   handles off the main thread. Browsers without support keep the existing
+   [data-reveal] entrance and lose nothing but the flourish.
+   ========================================================================== */
+
+:root {
+  /* Layered shadows. Each step stacks a tight contact shadow under a wide
+     ambient one, which is what reads as physical rather than as a blur. */
+  --depth-1: 0 2px 6px rgba(0,0,0,0.22), 0 10px 26px rgba(0,0,0,0.20);
+  --depth-2: 0 4px 12px rgba(0,0,0,0.28), 0 22px 56px rgba(0,0,0,0.30);
+  --depth-3: 0 8px 22px rgba(0,0,0,0.34), 0 44px 110px rgba(0,0,0,0.44);
+  --lift-edge: inset 0 1px 0 rgba(255,255,255,0.10);
+  /* The gap a stacked section pulls up by, and its shoulder radius. */
+  --stack-overlap: 46px;
+  --stack-radius: 34px;
+}
+[data-theme="light"] {
+  --depth-1: 0 2px 6px rgba(21,23,26,0.06), 0 10px 26px rgba(21,23,26,0.07);
+  --depth-2: 0 4px 12px rgba(21,23,26,0.08), 0 22px 56px rgba(21,23,26,0.10);
+  --depth-3: 0 8px 22px rgba(21,23,26,0.10), 0 44px 110px rgba(21,23,26,0.14);
+  --lift-edge: inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+/* ---- More air. The old 60px gutter read as a brochure; this gives each
+   section room to arrive on its own. ---- */
+section[data-cinema] { padding: clamp(84px, 10vw, 148px) 24px; }
+/* Thin transitional bands (a logo marquee, a single strip) keep the stack seam
+   but not the full rhythm, or they read as an empty screen. */
+section[data-cinema][data-cinema-tight] { padding: clamp(44px, 5vw, 72px) 24px; }
+
+/* ---- Stacked sections. Each one pulls up over the last and carries its own
+   substrate, so the seam is a lit edge with a shadow under it rather than a
+   border. The substrate is translucent, which keeps the hero video alive
+   underneath instead of sealing it off. ---- */
+section[data-cinema="stack"] {
+  margin-top: calc(var(--stack-overlap) * -1);
+  border-radius: var(--stack-radius) var(--stack-radius) 0 0;
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--surface) 88%, transparent) 0%,
+    color-mix(in srgb, var(--surface) 97%, transparent) 18%,
+    var(--surface) 100%);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  box-shadow: 0 -24px 60px rgba(0,0,0,0.42), var(--lift-edge);
+  border-top: 1px solid var(--line);
+}
+[data-theme="light"] section[data-cinema="stack"] { box-shadow: 0 -24px 60px rgba(21,23,26,0.10), var(--lift-edge); }
+/* A hairline of red at the shoulder, so the seam reads as intentional. */
+section[data-cinema="stack"]::before {
+  content: ''; position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+  width: 96px; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+  opacity: 0.55; pointer-events: none;
+}
+
+/* ---- Bigger, editorial section headers. ---- */
+section[data-cinema] .section-h2 {
+  font-size: clamp(36px, 6.4vw, 84px);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  margin: 26px 0 0;
+  max-width: 18ch;
+}
+section[data-cinema] .section-sub {
+  font-size: clamp(16px, 1.9vw, 19px);
+  line-height: 1.6;
+  max-width: 56ch;
+  margin-top: 26px;
+}
+section[data-cinema] .section-eyebrow { font-size: 12.5px; letter-spacing: 0.22em; }
+
+/* Depth on the cards inside a cinematic section. */
+section[data-cinema] .liquid-glass { box-shadow: var(--depth-2), var(--lift-edge); }
+section[data-cinema] .liquid-glass:hover { box-shadow: var(--depth-3), var(--lift-edge); }
+
+@media (max-width: 900px) {
+  /* 8 stacked backdrop-filters is the single most expensive thing on this
+     page for a mobile GPU. The gradient alone carries the depth; the blur is
+     the part phones cannot afford. */
+  section[data-cinema="stack"] {
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+    background: linear-gradient(180deg,
+      color-mix(in srgb, var(--surface) 96%, transparent) 0%,
+      var(--surface) 14%);
+  }
+}
+
+@media (max-width: 640px) {
+  :root { --stack-overlap: 28px; --stack-radius: 24px; }
+  /* The doubled logo would otherwise eat an eighth of a phone screen on a
+     sticky bar that never leaves. */
+  .nav-logo { width: 60px; height: 60px; }
+  header.site-nav { padding: 8px 20px; }
+  section[data-cinema] { padding: clamp(64px, 12vw, 96px) 20px; }
+  section[data-cinema][data-cinema-tight] { padding: clamp(36px, 8vw, 52px) 20px; }
+  section[data-cinema] .section-h2 { max-width: none; }
+}
+
+/* ==========================================================================
+   SCROLL-TOLD MOTION
+   Gated on animation-timeline so unsupported browsers never see a half-applied
+   keyframe. Each element animates across its own view() progress, so the page
+   tells the story at whatever speed the reader scrolls.
+   ========================================================================== */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+
+    /* The header rises and settles while the section enters. `both` holds the
+       first frame before entry and the last after, so nothing snaps. */
+    section[data-cinema] .section-h2 {
+      animation: cine-head linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 34%;
+      transform-origin: left center;
+    }
+    section[data-cinema] .section-eyebrow {
+      animation: cine-eyebrow linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 22%;
+    }
+    section[data-cinema] .section-sub {
+      animation: cine-sub linear both;
+      animation-timeline: view();
+      animation-range: entry 12% cover 40%;
+    }
+
+    /* Parallax: the header drifts up slower than the page across the whole
+       pass, which is what sells depth between the header and its content. */
+    section[data-cinema="stack"] > [data-reveal]:first-child,
+    section[data-cinema] > [data-cine-parallax] {
+      animation: cine-drift linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+
+@keyframes cine-head {
+  from { opacity: 0; transform: translateY(46px) scale(0.94); filter: blur(9px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+@keyframes cine-eyebrow {
+  from { opacity: 0; transform: translateX(-18px); letter-spacing: 0.34em; }
+  to   { opacity: 1; transform: none; letter-spacing: 0.22em; }
+}
+@keyframes cine-sub {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes cine-drift {
+  from { transform: translateY(38px); }
+  to   { transform: translateY(-38px); }
+}
+
+/* ==========================================================================
+   COVERFLOW CAROUSEL
+   The flat side-to-side track becomes a curved one: cards off-centre rotate
+   away, drop back in Z and dim. Driven by view(inline) against the scroller,
+   so it tracks a finger drag exactly, with no JS in the scroll path.
+   ========================================================================== */
+.examples-carousel { overflow: visible; }
+.examples-track { perspective: 1600px; perspective-origin: 50% 45%; padding: 30px 4px 34px; gap: 26px; }
+.examples-track > * { transform-style: preserve-3d; }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .examples-track > * {
+      animation: cine-flow linear both;
+      animation-timeline: view(inline);
+      animation-range: entry 0% exit 100%;
+    }
+  }
+}
+@keyframes cine-flow {
+  0%   { opacity: 0.42; transform: translateZ(-190px) rotateY(26deg) scale(0.9); }
+  50%  { opacity: 1;    transform: translateZ(0) rotateY(0deg) scale(1); }
+  100% { opacity: 0.42; transform: translateZ(-190px) rotateY(-26deg) scale(0.9); }
+}
+
+/* ---- The System page: the long-form layer cards. ---- */
+.layer-list { display: grid; gap: 22px; margin-top: 48px; }
+.layer-card { padding: 34px 34px 30px; border-radius: 20px; scroll-margin-top: 130px; }
+.layer-head { display: flex; align-items: center; gap: 16px; }
+.layer-n { font-family: var(--font-label); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; color: var(--red); }
+.layer-icon { width: 26px; height: 26px; flex: none; }
+.layer-name { font-family: var(--font-display); font-weight: 400; font-size: clamp(26px, 3.4vw, 38px); line-height: 1.05; letter-spacing: -0.02em; color: var(--text); margin: 0; }
+.layer-outcome { font-family: var(--font-body); font-size: 14px; color: var(--text-soft); margin: 4px 0 0; }
+.layer-desc { font-family: var(--font-body); font-size: clamp(15px, 1.7vw, 17px); line-height: 1.65; color: var(--text); max-width: 68ch; margin: 20px 0 0; }
+.layer-qs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 34px; margin-top: 24px; padding-top: 22px; border-top: 1px solid var(--line); }
+.layer-qs p { font-family: var(--font-body); font-size: 14px; line-height: 1.65; color: var(--text-mid); margin: 0; }
+@media (max-width: 760px) {
+  .layer-card { padding: 26px 22px 24px; }
+  .layer-qs { grid-template-columns: 1fr; gap: 18px; }
+}

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>The work · TRIGRAMS Studio</title>
-<meta name="description" content="Live sites, video, photos and results from Perth small businesses. Open any of it and judge the work." />
+<title>The System · TRIGRAMS Studio</title>
+<meta name="description" content="One connected system in four layers: attention, traffic, conversion and follow up. Built for small businesses in Perth that need leads, not a menu of services." />
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 <link rel="icon" type="image/png" href="assets/Logo.png" sizes="any" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -44,75 +44,106 @@
   </div>
 </header>
 </div>
+
+
 <div class="page-hero" id="top">
-  <div class="section-eyebrow" data-fade="1"><i class="red"></i><span>The work</span></div>
-  <h1 data-fade="1">Open any of it and judge the <em>work</em>.</h1>
-  <p data-fade="2">Live sites, video, photos from set, and what the numbers did afterwards. Tattoo studios, dietitians, real estate, strength coaches, all of it built from a short brief and whatever photos they had.</p>
+  <div class="section-eyebrow" data-fade="1"><i class="red"></i><span>The system</span></div>
+  <h1 data-fade="1">Four layers, and the joins between <em>them</em>.</h1>
+  <p data-fade="2">Most marketing fails at a join rather than in a layer. Ads that land on a page nobody enquires from. Enquiries that nobody follows up. We build the whole run, so there's nowhere for it to leak.</p>
 </div>
 
-<section id="clients" style="padding-bottom:40px;">
-  <div class="clients-label" data-reveal>Built for businesses of every shape</div>
-  <div class="marquee-outer" data-reveal data-reveal-delay="120">
-    <div class="marquee-track" id="clients-marquee"></div>
-  </div>
-</section>
 
-<section id="sites">
+<section id="layers" data-cinema="stack">
   <div data-reveal>
-    <div class="section-eyebrow"><i></i><span>Live sites</span></div>
-    <h2 class="section-h2">Sites you can open right <em>now</em>.</h2>
-    <p class="section-sub">Drag or use the arrows to browse. Hover a card to scroll the page, or open the real thing in a new tab and poke around.</p>
+    <div class="section-eyebrow"><i></i><span>How it fits together</span></div>
+    <h2 class="section-h2">One system, in <em>order</em>.</h2>
+    <p class="section-sub">Each layer feeds the next. You can start anywhere, but a layer built on top of a missing one underneath it will underperform, and we'll tell you that before you spend anything.</p>
   </div>
-  <div class="examples-carousel" data-reveal data-reveal-delay="120">
-    <div class="examples-track" id="examples-grid" data-stagger></div>
-  </div>
-  <div class="carousel-controls">
-    <button type="button" class="carousel-btn" id="examples-prev" aria-label="Previous builds">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-    </button>
-    <div class="carousel-dots" id="examples-dots"></div>
-    <button type="button" class="carousel-btn" id="examples-next" aria-label="Next builds">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-    </button>
-  </div>
+  <div class="ladder" id="ladder-list" data-stagger></div>
 </section>
 
-<section id="results" style="padding-top:20px;">
+<section id="layer-detail" data-cinema="stack">
   <div data-reveal>
-    <div class="section-eyebrow"><i></i><span>Results</span></div>
-    <h2 class="section-h2">What happened <em>afterwards</em>.</h2>
-    <p class="section-sub">Websites and ad campaigns, with what each one produced. Most of these businesses had no way to catch an enquiry before we started, and the numbers keep counting.</p>
+    <div class="section-eyebrow"><i></i><span>Layer by layer</span></div>
+    <h2 class="section-h2">What each one actually <em>does</em>.</h2>
   </div>
-  <div class="cs-grid" id="cs-grid" data-stagger></div>
+  <div class="layer-list" data-stagger id="layer-list"></div>
 </section>
 
-<section id="video" style="padding-top:20px;">
+<section id="portal" data-cinema="stack">
   <div data-reveal>
-    <div class="section-eyebrow"><i></i><span>Video</span></div>
-    <h2 class="section-h2">Ads and brand films people finish <em>watching</em>.</h2>
-    <p class="section-sub" style="max-width:52ch;">Hover to preview. Tap to watch it properly, with sound.</p>
+    <div class="section-eyebrow"><i class="red"></i><span>Included with every site</span></div>
+    <h2 class="section-h2">Log in and see your numbers any <em>time</em>.</h2>
+    <p class="section-sub" style="max-width:48ch;">Your own portal, in your colours. It reads your site live, so you never wait on me for an update.</p>
   </div>
-  <div class="reel-carousel" data-reels="all" data-reveal data-reveal-delay="120"></div>
+
+  <!-- A mockup with invented figures. Real client dashboards carry their
+       enquirers' names and emails, so none of this is a screenshot. -->
+  <div class="portal-mock liquid-glass" data-reveal data-reveal-delay="120">
+    <div class="pm-bar">
+      <div class="pm-brand"><span class="pm-logo-client">YOUR LOGO</span><span class="pm-x">&times;</span><img class="pm-logo-ts" src="assets/logo-mark-transparent.png" alt="TRIGRAMS Studio" loading="lazy" decoding="async"></div>
+      <div class="pm-status"><span class="pm-live"></span>LIVE</div>
+    </div>
+    <div class="pm-body">
+      <aside class="pm-side">
+        <div class="pm-side-lbl">This portal</div>
+        <div class="pm-nav">
+          <span class="is-on">Overview</span><span>Enquiries</span><span>Projects</span><span>Ideas</span>
+        </div>
+        <div class="pm-side-lbl" style="margin-top:22px;">Last 7 days</div>
+        <div class="pm-mini"><span class="pm-mini-v">58</span><span class="pm-mini-l">visitors</span></div>
+        <div class="pm-mini"><span class="pm-mini-v">6</span><span class="pm-mini-l">enquiries</span></div>
+      </aside>
+      <div class="pm-main">
+        <div class="pm-tabs"><span>Charts</span><span>Snapshot</span><span class="is-on">In words</span></div>
+        <div class="pm-words">
+          <div class="pm-words-lbl">Your month, in short</div>
+          <p class="pm-words-lead">104 people visited your site this month, and traffic picked up in the second half. The trend is heading the right way.</p>
+          <p class="pm-words-p">Most arrive directly, which usually means word of mouth or repeat customers.</p>
+          <p class="pm-words-p">60% are on a phone, so the phone version is the one that matters.</p>
+          <p class="pm-words-p">7 enquiries came in. That's 6.7% of everyone who visited, which is strong for a service business.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pm-points" data-stagger>
+    <div class="liquid-glass pm-point stagger-item"><span class="pm-point-t">Plain English</span><span class="pm-point-d">No dashboards to decode. It just tells you.</span></div>
+    <div class="liquid-glass pm-point stagger-item"><span class="pm-point-t">Every enquiry, kept</span><span class="pm-point-d">They land here as well as your inbox.</span></div>
+    <div class="liquid-glass pm-point stagger-item"><span class="pm-point-t">A weekly email</span><span class="pm-point-d">2 numbers: are you growing, or not.</span></div>
+    <div class="liquid-glass pm-point stagger-item"><span class="pm-point-t">I read every message</span><span class="pm-point-d">Ask for a change and it's me replying.</span></div>
+  </div>
+
+  <div class="section-more" data-reveal style="margin-top:26px;">
+    <a href="https://client.trigrams.studio/admin" rel="noopener" class="btn-outline" data-portal="client">Client login</a>
+  </div>
 </section>
 
-<section id="stills" style="padding-top:20px;">
+<section id="pricing" data-cinema="stack">
   <div data-reveal>
-    <div class="section-eyebrow"><i></i><span>Stills from set</span></div>
-    <h2 class="section-h2">Shot on the same day as the <em>video</em>.</h2>
-    <p class="section-sub" style="max-width:54ch;">One day on location gives a business a month of posts and a library of photos it owns outright. These come from coffee roasters, dietitians and building sites around Perth.</p>
-    <div class="section-more" style="margin-top:20px;"><button type="button" class="btn-outline" id="stills-open">View all photos</button></div>
+    <div class="section-eyebrow"><i></i><span>What it costs</span></div>
+    <h2 class="section-h2">Projects start at <em>$5,000</em>.</h2>
+    <p class="section-sub">That's a floor, not a quote. What it costs depends on how many layers you need built and how much of the running we take on afterwards. You'll get a number before anything starts.</p>
   </div>
-  <div class="stills-strip" id="stills-strip" data-reveal data-reveal-delay="120"></div>
 </section>
 
-<section id="contact" style="padding-top:20px;padding-bottom:90px;">
+<section id="faq" data-cinema="stack">
+  <div data-reveal>
+    <div class="section-eyebrow"><i class="red"></i><span>Before you ask</span></div>
+    <h2 class="section-h2">The 4 questions everyone <em>asks</em>.</h2>
+  </div>
+  <div class="faq-list" data-faq-short data-stagger></div>
+</section>
+
+<section id="contact" data-cinema="stack">
   <div class="liquid-glass final-cta" data-reveal>
     <div class="final-cta-glow" aria-hidden="true"></div>
     <div class="final-cta-inner">
-      <h2>Want something like this for <em>yours</em>?</h2>
-      <p>Send a short brief and whatever you already have. We'll tell you which layer to fix first.</p>
+      <h2>Not sure which one you <em>need</em>?</h2>
+      <p>Tell me what's not working. I'll point you at the right thing, even if it's nothing I sell.</p>
       <div class="final-cta-actions">
         <a href="enquiry.html" class="btn-red">Get a quote</a>
+        <a href="mailto:hello@trigrams.studio" class="btn-outline">Email directly</a>
       </div>
     </div>
   </div>

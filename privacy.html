@@ -30,16 +30,9 @@
     <video autoplay loop muted playsinline src="assets/logo-rotate.mp4"></video>
   </a>
   <nav class="nav-links" id="nav-links">
-    <a href="services.html">Services</a>
+    <a href="system.html">The System</a>
     <a href="work.html">Work</a>
     <a href="about.html">About</a>
-    <div class="nav-more" id="nav-more">
-      <button type="button" class="nav-more-btn" id="nav-more-btn" aria-expanded="false" aria-haspopup="true" aria-controls="nav-more-menu">More<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-      <div class="nav-more-menu" id="nav-more-menu">
-        <a href="how-it-works.html">How It Works</a>
-        <a href="#newsletter">Newsletter</a>
-      </div>
-    </div>
   </nav>
 
   <div class="nav-actions">
@@ -111,33 +104,27 @@
 
 <footer>
   <div class="wrap">
-    <div class="liquid-glass footer-news" id="newsletter">
+    <a class="liquid-glass footer-news" id="newsletter" data-substack href="#" target="_blank" rel="noopener" hidden>
       <div class="footer-news-copy">
         <img class="ts-icon" src="assets/icons/ts-email.svg" alt="">
-        <span><strong>One useful email a month.</strong> Systems, numbers, and what's working. No spam, unsubscribe any time.</span>
+        <span><strong>Read the newsletter on Substack.</strong> Systems, numbers, and what's actually working. Free, and you can leave any time.</span>
       </div>
-      <form class="newsletter-form" id="newsletter-form">
-        <input type="email" name="email" placeholder="you@yourbusiness.com" autocomplete="email" required aria-label="Email address">
-        <input type="hidden" name="_subject" value="Newsletter signup from trigrams.studio">
-        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
-        <button type="submit" class="btn-red" style="padding:11px 22px;font-size:13px;">Subscribe</button>
-      </form>
-    </div>
+      <span class="btn-red footer-news-go">Read it on Substack</span>
+    </a>
 
     <div class="footer-top">
       <div class="footer-brand">
-        <div class="footer-logo"><video autoplay loop muted playsinline src="assets/logo-rotate.mp4"></video></div>
+        <div class="footer-logo"><video autoplay loop muted playsinline preload="none" src="assets/logo-rotate.mp4"></video></div>
         <p class="footer-desc">The marketing systems that run while you're doing everything else.</p>
       </div>
       <div class="footer-nav">
         <div>
-          <div class="footer-col-lbl"><img class="ts-icon" src="assets/icons/ts-build.svg" alt="">Services</div>
+          <div class="footer-col-lbl"><img class="ts-icon" src="assets/icons/ts-build.svg" alt="">The system</div>
           <div class="footer-links">
-            <a href="how-it-works.html#phase-1">Websites</a>
-            <a href="meta-ads.html">Meta ads</a>
-            <a href="content-marketing.html">Content marketing</a>
-            <a href="videography.html">Videography</a>
-            <a href="creative-direction.html">Creative direction</a>
+            <a href="system.html#attention">Attention</a>
+            <a href="system.html#traffic">Traffic</a>
+            <a href="system.html#conversion">Conversion</a>
+            <a href="system.html#follow-up">Follow up</a>
           </div>
         </div>
         <div>
@@ -145,14 +132,13 @@
           <div class="footer-links">
             <a href="work.html">Work</a>
             <a href="about.html">About</a>
-            <a href="#newsletter">Newsletter</a>
+            <a href="how-it-works.html">How it works</a>
           </div>
         </div>
         <div>
           <div class="footer-col-lbl"><img class="ts-icon" src="assets/icons/ts-chat.svg" alt="">Talk</div>
           <div class="footer-links">
             <a href="enquiry.html">Get a quote</a>
-            <a href="https://calendly.com/alex-trigrams/30min" target="_blank" rel="noopener">Book a discovery call</a>
             <a href="mailto:hello@trigrams.studio">hello@trigrams.studio</a>
             <a href="https://www.instagram.com/trigramsstudio/" target="_blank" rel="noopener">Instagram</a>
           </div>
@@ -167,10 +153,6 @@
   </div>
 </footer>
 
-<a href="https://calendly.com/alex-trigrams/30min" target="_blank" rel="noopener" class="cal-float" aria-label="Book a discovery call">
-  <span class="cal-float-tip">Book a discovery call</span>
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-</a>
 <script src="site.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>

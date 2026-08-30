@@ -1,20 +1,3 @@
-/* Creative direction intake window. Change these 2 strings when the intake
-   moves and every page updates: spans marked [data-intake] take the short
-   form, [data-intake="long"] takes the long one. */
-var INTAKE_SHORT = 'Nov\u2013Dec 2026';
-var INTAKE_LONG  = 'November\u2013December 2026';
-
-(function () {
-  function fill() {
-    document.querySelectorAll('[data-intake]').forEach(function (el) {
-      el.textContent = el.getAttribute('data-intake') === 'long' ? INTAKE_LONG : INTAKE_SHORT;
-    });
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', fill);
-  } else { fill(); }
-})();
-
 /* `build: false` marks a client Alex works with on content but whose website
    he did not build. They belong in the logo marquee, and the marquee links to
    their real site, but they are kept out of the live-sites carousel so that
@@ -141,41 +124,41 @@ var STILLS = [
   { client: 'Waterford', dir: 'waterford', files: ['waterford-38.jpg','waterford-39.jpg','waterford-41.jpg','waterford-42.jpg','waterford-43.jpg','waterford-44.jpg','waterford-45.jpg'] }
 ];
 
-/* The ladder. Rungs are named by the outcome the business gets; the service
-   name rides underneath. Prices are "from" only, deliberately: the upper bound
-   depends on scope and stays out of the shop window. Ongoing management is an
-   attribute of a rung, never a rung of its own. */
+/* The four layers. They are the product, in order, and they are not a menu:
+   nothing here is individually purchasable and nothing carries a price. Each
+   layer answers the same three questions, because that is what makes the
+   connection between them legible. `outcome` is what the client gets; `name`
+   is the layer; `breaks` is the cost of skipping it. */
 var SERVICE_STEPS = [
   {
-    n: '01', outcome: 'Get found', name: 'Website', icon: 'ts-website',
-    price: 'From $500 + GST', timeline: 'Live in 14 days',
-    desc: 'A clean, fast site that says what you do and what it costs, with a contact form that works. Hosted at $25/month.',
-    note: 'The foundation everything else sits on. You own the domain, the content and the code.',
-    trigger: 'Once people are finding you, the next thing worth sorting is what happens when they enquire.'
+    n: '01', outcome: 'People find you', name: 'Attention', icon: 'ts-video',
+    desc: 'Content, photography, video and social proof, planned around 1 offer and published on a schedule you can see.',
+    breaks: 'Without it you are relying on the people who already know you, and that pool only shrinks.',
+    get: 'A content plan, the shoots that feed it, and a publishing calendar you approve before anything goes out.',
+    trigger: 'Attention only pays once there is somewhere to send it.'
   },
   {
-    n: '02', outcome: 'Never lose an enquiry', name: 'Follow-up system', icon: 'ts-email',
-    price: 'From $500', timeline: 'Built once',
-    desc: 'A 3 to 5 email sequence that fires the moment someone enquires, built in MailerLite or ConvertKit. Most small businesses get an enquiry and do nothing with it, and this fixes that permanently.',
-    note: 'Built once, then it runs on its own. Add $150/month and I manage and optimise it for you.',
-    trigger: 'With enquiries handled, the natural next move is staying in front of the people who aren’t ready to buy yet.'
+    n: '02', outcome: 'The right people arrive', name: 'Traffic', icon: 'ts-launch',
+    desc: 'Meta campaigns built around a clear objective, with creative tested against each other rather than guessed at.',
+    breaks: 'Without it your reach is capped at whoever the algorithm hands you for free.',
+    get: 'Campaign structure, the ad creative, and reporting in plain English that says what it cost to get each lead.',
+    trigger: 'Traffic is wasted if the page it lands on does not do its job.'
   },
   {
-    n: '03', outcome: 'Stay in front of them', name: 'Content marketing', icon: 'ts-video',
-    price: 'From $1,000/month', timeline: 'Ongoing',
-    desc: 'Video and written content that keeps your business in front of the people who already know you. I plan it, produce it, and publish it on a schedule you can see.',
-    note: 'This is where most of the growth comes from, because it compounds. You approve the plan before anything goes out.',
-    trigger: 'Once the content is working, paid reach makes it go further.'
+    n: '03', outcome: 'Visitors become enquiries', name: 'Conversion', icon: 'ts-website',
+    desc: 'The site and landing pages people arrive on, built to be fast, to say what you do, and to make enquiring obvious.',
+    breaks: 'Without it you pay for every visitor twice: once to get them there, once to get them back.',
+    get: 'The pages, the forms, and tracking that shows which channel actually produced each enquiry.',
+    trigger: 'An enquiry is only worth something if somebody answers it.'
   },
   {
-    n: '04', outcome: 'Reach more people', name: 'Meta ads & campaigns', icon: 'ts-launch',
-    price: 'From $1,500', timeline: '6 to 8 weeks',
-    desc: 'A focused push with 1 clear objective: new enquiries, re-engagement, a seasonal promo, or a launch. I build the structure, write the copy, and run it.',
-    note: 'Defined start, defined end, and you see the numbers the whole way through.',
+    n: '04', outcome: 'Nothing goes cold', name: 'Follow up', icon: 'ts-email',
+    desc: 'Automated sequences and a shared record of every enquiry, so the ones who are not ready yet stay in the conversation.',
+    breaks: 'Without it the leads the first three layers paid for quietly go quiet.',
+    get: 'The sequences, the CRM they run through, and a portal where you can see what has been answered.',
     trigger: null
   }
 ];
-
 /* The ladder renders as an ascending staircase: each rung sits higher than the
    last, on a rail that fills as you scroll. Selecting a rung swaps the detail
    panel underneath rather than expanding in place, because the rung columns
@@ -184,6 +167,33 @@ var SERVICE_STEPS = [
    Two modes. "Climb in order" is the staircase. "Pick one" flattens the rungs
    to equal height and gives each its own CTA, so the optionality is something
    you can see and click instead of a line of small print. */
+/* The System page: each layer written out in full, anchored by its own name so
+   the footer and any deep link can land on it. Reuses the ladder data, so the
+   staircase and the long form can never drift apart. */
+function renderLayerList() {
+  var el = document.getElementById('layer-list');
+  if (!el) return;
+  el.innerHTML = SERVICE_STEPS.map(function (step) {
+    var slug = step.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    return '' +
+      '<article class="liquid-glass layer-card stagger-item" id="' + slug + '">' +
+        '<div class="layer-head">' +
+          '<span class="layer-n">' + step.n + '</span>' +
+          '<img class="ts-icon layer-icon" src="assets/icons/' + step.icon + '.svg" alt="">' +
+          '<div>' +
+            '<h3 class="layer-name">' + step.name + '</h3>' +
+            '<p class="layer-outcome">' + step.outcome + '</p>' +
+          '</div>' +
+        '</div>' +
+        '<p class="layer-desc">' + step.desc + '</p>' +
+        '<div class="layer-qs">' +
+          '<div><span class="detail-q-lbl">What breaks without it</span><p>' + step.breaks + '</p></div>' +
+          '<div><span class="detail-q-lbl">What you get</span><p>' + step.get + '</p></div>' +
+        '</div>' +
+      '</article>';
+  }).join('');
+}
+
 function renderLadder() {
   var el = document.getElementById('ladder-list');
   if (!el) return;
@@ -201,22 +211,15 @@ function renderLadder() {
           '</span>' +
           '<span class="rung-outcome">' + step.outcome + '</span>' +
           '<span class="rung-name">' + step.name + '</span>' +
-          '<span class="rung-meta"><span class="rung-price">' + step.price + '</span><span class="rung-time">' + step.timeline + '</span></span>' +
-          '<span class="rung-cta">Get a quote' +
-            '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg>' +
-          '</span>' +
+          '<span class="rung-layer">Layer ' + step.n.replace(/^0/, '') + '</span>' +
         '</span>' +
       '</button>';
   }).join('');
 
   el.innerHTML = '' +
-    '<div class="ladder-modes" role="group" aria-label="How to view the phases">' +
-      '<button type="button" class="ladder-mode is-on" data-mode="climb" aria-pressed="true">Start to finish</button>' +
-      '<button type="button" class="ladder-mode" data-mode="pick" aria-pressed="false">Pick one</button>' +
-    '</div>' +
     '<div class="ladder-climb" data-reveal>' +
       '<div class="ladder-rail" aria-hidden="true"><span class="ladder-rail-fill"></span></div>' +
-      '<div class="ladder-rungs" role="tablist" aria-label="The four phases">' + rungs + '</div>' +
+      '<div class="ladder-rungs" role="tablist" aria-label="The four layers">' + rungs + '</div>' +
     '</div>' +
     '<div class="liquid-glass ladder-detail" id="ladder-detail" role="tabpanel" aria-live="polite"></div>';
 
@@ -241,15 +244,18 @@ function renderLadder() {
         '<span class="detail-num">' + step.n + '</span>' +
         '<div>' +
           '<h3 class="detail-outcome">' + step.outcome + '</h3>' +
-          '<p class="detail-name">' + step.name + ', ' + step.price.toLowerCase() + ', ' + step.timeline.toLowerCase() + '</p>' +
+          '<p class="detail-name">Layer ' + step.n.replace(/^0/, '') + ', ' + step.name.toLowerCase() + '</p>' +
         '</div>' +
       '</div>' +
       '<p class="detail-desc">' + step.desc + '</p>' +
-      '<p class="detail-note">' + step.note + '</p>' +
+      '<div class="detail-qs">' +
+        '<div class="detail-q"><span class="detail-q-lbl">What breaks without it</span><p>' + step.breaks + '</p></div>' +
+        '<div class="detail-q"><span class="detail-q-lbl">What you get</span><p>' + step.get + '</p></div>' +
+      '</div>' +
       (step.trigger
         ? '<p class="detail-next"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' + step.trigger + '</p>'
         : '') +
-      '<a class="btn-red detail-cta" href="enquiry.html">Get a quote</a>';
+      '';
     if (railFill) railFill.style.setProperty('--fill', ((i + 1) / SERVICE_STEPS.length * 100) + '%');
   }
 
@@ -268,19 +274,6 @@ function renderLadder() {
       paint(next);
       climb.dataset.userPicked = '1';
       rungEls[next].focus();
-    });
-  });
-
-  el.querySelectorAll('.ladder-mode').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var mode = btn.dataset.mode;
-      el.querySelectorAll('.ladder-mode').forEach(function (b) {
-        var on = b === btn;
-        b.classList.toggle('is-on', on);
-        b.setAttribute('aria-pressed', on ? 'true' : 'false');
-      });
-      climb.classList.toggle('is-flat', mode === 'pick');
-      el.classList.toggle('mode-pick', mode === 'pick');
     });
   });
 
@@ -332,7 +325,7 @@ function hostOf(url) {
 }
 
 function avatarInner(item) {
-  if (item.logo) return '<img src="' + item.logo + '" alt="' + item.name + '">';
+  if (item.logo) return '<img src="' + item.logo + '" alt="' + item.name + '" loading="lazy" decoding="async">';
   return '<span>' + item.initials + '</span>';
 }
 
@@ -353,7 +346,7 @@ function renderExamples() {
   var examples = CLIENTS.filter(function (c) { return c.url && c.url !== '#' && c.build !== false; });
   el.innerHTML = examples.map(function (ex) {
     var shot = ex.shot
-      ? '<img src="' + ex.shot + '" alt="' + ex.name + ' full page screenshot">'
+      ? '<img src="' + ex.shot + '" alt="' + ex.name + ' full page screenshot" loading="lazy" decoding="async">'
       : '<div class="example-placeholder"><span>Full-page preview coming soon</span></div>';
     var chrome = '' +
       '<div class="example-chrome" aria-hidden="true">' +
@@ -496,7 +489,7 @@ function renderCaseStudies() {
 
   el.innerHTML = list.map(function (cs) {
     var shot = cs.shot
-      ? '<img src="' + cs.shot + '" alt="' + cs.name + ' website">'
+      ? '<img src="' + cs.shot + '" alt="' + cs.name + ' website" loading="lazy" decoding="async">'
       : '<div class="example-placeholder"><span>Preview coming soon</span></div>';
     var stats = cs.stats.map(function (st) {
       return '<div><div class="cs-stat-val">' + st.value + '</div><div class="cs-stat-lbl">' + st.label + '</div></div>';
@@ -609,7 +602,7 @@ function renderBuildDemo() {
 
         '</div>' +
         '<div class="build-badge" id="build-badge">' +
-          '<img src="assets/logo-mark-transparent.png" alt="" style="width:20px;height:20px;flex:none;">' +
+          '<img src="assets/logo-mark-transparent.png" alt="" loading="lazy" decoding="async" style="width:20px;height:20px;flex:none;">' +
           '<div>' +
             '<div style="font-family:var(--font-body);font-size:12px;font-weight:600;color:#EFEEEA;">Site is live</div>' +
             '<div style="font-family:var(--font-body);font-size:11px;color:rgba(239,238,234,0.5);">14 days, brief to live</div>' +
@@ -1074,6 +1067,7 @@ renderExamples();
 initExamplesCarousel();
 renderCaseStudies();
 renderLadder();
+renderLayerList();
 
 /* The 4 objections that apply whatever the service. Rendered into any page
    carrying [data-faq-short], so the service pages answer them without the
@@ -1111,23 +1105,29 @@ var FAQ_SHORT = [
   if (!picker) return;
 
   var SLUGS = {
-    'website': 'Website',
-    'meta-ads': 'Meta ads',
-    'ads': 'Meta ads',
-    'video': 'Video',
-    'videography': 'Video',
-    'content': 'Content marketing',
-    'content-marketing': 'Content marketing',
-    'creative-direction': 'Creative direction',
-    'not-sure': 'Not sure'
+    'attention': 'Attention',
+    'traffic': 'Traffic',
+    'conversion': 'Conversion',
+    'follow-up': 'Follow up',
+    'followup': 'Follow up',
+    'not-sure': 'Not sure',
+    /* Legacy service slugs still land on the layer that covers them, so old
+       links and anything already indexed keeps working. */
+    'website': 'Conversion',
+    'meta-ads': 'Traffic',
+    'ads': 'Traffic',
+    'video': 'Attention',
+    'videography': 'Attention',
+    'content': 'Attention',
+    'content-marketing': 'Attention',
+    'creative-direction': 'Not sure'
   };
   var SUBJECTS = {
-    'Website': 'Website enquiry · trigrams.studio',
-    'Meta ads': 'Meta ads enquiry · trigrams.studio',
-    'Video': 'Video enquiry · trigrams.studio',
-    'Content marketing': 'Content marketing enquiry · trigrams.studio',
-    'Creative direction': 'Creative direction waitlist · trigrams.studio',
-    'Not sure': 'New enquiry · trigrams.studio'
+    'Attention': 'Attention enquiry \u00b7 trigrams.studio',
+    'Traffic': 'Traffic enquiry \u00b7 trigrams.studio',
+    'Conversion': 'Conversion enquiry \u00b7 trigrams.studio',
+    'Follow up': 'Follow-up enquiry \u00b7 trigrams.studio',
+    'Not sure': 'New enquiry \u00b7 trigrams.studio'
   };
 
   var radios = picker.querySelectorAll('input[name="service"]');
@@ -1142,7 +1142,7 @@ var FAQ_SHORT = [
       block.querySelectorAll('input, textarea').forEach(function (f) { f.disabled = !on; });
     });
     if (subject) subject.value = SUBJECTS[value] || SUBJECTS['Not sure'];
-    if (submit) submit.textContent = value === 'Creative direction' ? 'Join the waitlist' : 'Send enquiry';
+    if (submit) submit.textContent = 'Send enquiry';
   }
 
   radios.forEach(function (r) {
@@ -1154,7 +1154,7 @@ var FAQ_SHORT = [
     radios.forEach(function (r) { r.checked = (r.value === wanted); });
   }
   var current = document.querySelector('input[name="service"]:checked');
-  apply(current ? current.value : 'Website');
+  apply(current ? current.value : 'Attention');
 })();
 
 /* Entrance */
@@ -1400,7 +1400,7 @@ var FAQ_SHORT = [
       if (res.ok) {
         form.reset();
         note.classList.add('is-success');
-        note.textContent = 'Sent. I’ll reply the same day.';
+        note.textContent = 'Sent. I’ll reply the same day with a time to talk.';
         submitBtn.textContent = 'Send enquiry';
       } else {
         throw new Error('Request failed');
@@ -1415,27 +1415,18 @@ var FAQ_SHORT = [
   });
 })();
 
-/* Newsletter form */
+/* Newsletter. The built-in Formspree signup was retired on 2026-08-30 in favour
+   of Alex's Substack. Set SUBSTACK_URL below and the footer panel reveals
+   itself on every page; while it is empty the panel stays hidden rather than
+   shipping a dead link. */
+var SUBSTACK_URL = '';
+
 (function () {
-  var form = document.getElementById('newsletter-form');
-  if (!form) return;
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var btn = form.querySelector('button');
-    btn.disabled = true;
-    btn.textContent = 'Subscribing…';
-    fetch('https://formspree.io/f/meewzagj', {
-      method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
-    }).then(function (res) {
-      if (!res.ok) throw new Error('failed');
-      form.reset();
-      btn.textContent = 'Subscribed ✓';
-    }).catch(function () {
-      btn.textContent = 'Try again';
-      btn.disabled = false;
-    });
+  var panels = document.querySelectorAll('[data-substack]');
+  if (!panels.length || !SUBSTACK_URL) return;
+  panels.forEach(function (el) {
+    el.href = SUBSTACK_URL;
+    el.hidden = false;
   });
 })();
 
@@ -1511,8 +1502,7 @@ var FAQ_SHORT = [
     var href = el.getAttribute('href') || '';
     var label = (el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60);
     var kind = null;
-    if (href.indexOf('calendly.com') !== -1 || el.classList.contains('cal-float')) kind = 'Book a call';
-    else if (el.id === 'enquiry-submit' || href.indexOf('enquiry.html') !== -1) kind = 'Enquiry';
+    if (el.id === 'enquiry-submit' || href.indexOf('enquiry.html') !== -1) kind = 'Enquiry';
     else if (el.classList.contains('nav-cta') || el.classList.contains('liquid-glass') || /start your build|get started/i.test(label)) kind = 'CTA';
     if (kind) track('CTA Click', { kind: kind, label: label, from: PAGE });
   });
@@ -1558,20 +1548,38 @@ var FAQ_SHORT = [
 (function () {
   var ENDPOINT = 'https://formspree.io/f/meewzagj';
   var SUBJECTS = {
-    'Website': 'Website enquiry · trigrams.studio',
-    'Meta ads': 'Meta ads enquiry · trigrams.studio',
-    'Video': 'Video enquiry · trigrams.studio',
-    'Content marketing': 'Content marketing enquiry · trigrams.studio',
-    'Creative direction': 'Creative direction waitlist · trigrams.studio',
-    'Not sure': 'New enquiry · trigrams.studio'
+    'Attention': 'Attention enquiry \u00b7 trigrams.studio',
+    'Traffic': 'Traffic enquiry \u00b7 trigrams.studio',
+    'Conversion': 'Conversion enquiry \u00b7 trigrams.studio',
+    'Follow up': 'Follow-up enquiry \u00b7 trigrams.studio',
+    'Not sure': 'New enquiry \u00b7 trigrams.studio'
   };
-  var SERVICES = ['Website', 'Meta ads', 'Video', 'Content marketing', 'Creative direction', 'Not sure'];
-  /* Deep links use slugs; the pills use labels. Same map as the full page. */
-  var SLUGS = {
-    'website': 'Website', 'meta-ads': 'Meta ads', 'ads': 'Meta ads',
-    'video': 'Video', 'videography': 'Video',
-    'content': 'Content marketing', 'content-marketing': 'Content marketing',
-    'creative-direction': 'Creative direction', 'not-sure': 'Not sure'
+  var SERVICES = [
+    { value: 'Attention', label: 'Attention' },
+    { value: 'Traffic', label: 'Traffic' },
+    { value: 'Conversion', label: 'Conversion' },
+    { value: 'Follow up', label: 'Follow up' },
+    { value: 'Not sure', label: 'Not sure yet' }
+  ];
+  /* Deep links use slugs; the pills use labels. Same map as the full page,
+     legacy service slugs included so old links keep resolving. */
+var SLUGS = {
+    'attention': 'Attention',
+    'traffic': 'Traffic',
+    'conversion': 'Conversion',
+    'follow-up': 'Follow up',
+    'followup': 'Follow up',
+    'not-sure': 'Not sure',
+    /* Legacy service slugs still land on the layer that covers them, so old
+       links and anything already indexed keeps working. */
+    'website': 'Conversion',
+    'meta-ads': 'Traffic',
+    'ads': 'Traffic',
+    'video': 'Attention',
+    'videography': 'Attention',
+    'content': 'Attention',
+    'content-marketing': 'Attention',
+    'creative-direction': 'Not sure'
   };
   var pop, lastFocus;
 
@@ -1585,18 +1593,18 @@ var FAQ_SHORT = [
           '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
         '</button>' +
         '<div class="enq-pop-title" id="enq-pop-title">Tell me about the <em>business</em>.</div>' +
-        '<p class="enq-pop-sub">Two minutes, plain answers. I reply the same day.</p>' +
+        '<p class="enq-pop-sub">Two minutes, plain answers. I reply the same day with a time to talk.</p>' +
         '<form class="enq-pop-form" id="enq-pop-form">' +
-          '<fieldset class="enq-pop-pills"><legend>What are you after?</legend><div>' +
+          '<fieldset class="enq-pop-pills"><legend>What\u2019s not working?</legend><div>' +
             SERVICES.map(function (svc, i) {
-              return '<label class="svc-pill"><input type="radio" name="service" value="' + svc + '"' + (i === 0 ? ' checked' : '') + '><span>' + svc + '</span></label>';
+              return '<label class="svc-pill"><input type="radio" name="service" value="' + svc.value + '"' + (i === 0 ? ' checked' : '') + '><span>' + svc.label + '</span></label>';
             }).join('') +
           '</div></fieldset>' +
           '<input type="text" name="name" placeholder="Your name" autocomplete="name" required aria-label="Your name">' +
           '<input type="email" name="email" placeholder="you@yourbusiness.com" autocomplete="email" required aria-label="Email address">' +
           '<input type="text" name="business" placeholder="Business name (optional)" autocomplete="organization" aria-label="Business name">' +
           '<textarea name="message" rows="3" placeholder="What do you need? A sentence or two is plenty." required aria-label="What do you need?"></textarea>' +
-          '<input type="hidden" name="_subject" id="enq-pop-subject" value="' + SUBJECTS.Website + '">' +
+          '<input type="hidden" name="_subject" id="enq-pop-subject" value="' + SUBJECTS.Attention + '">' +
           '<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">' +
           '<button type="submit" class="btn-red enq-pop-submit">Send enquiry</button>' +
           '<p class="enq-pop-note" id="enq-pop-note" role="status" aria-live="polite"></p>' +
@@ -1629,7 +1637,7 @@ var FAQ_SHORT = [
           if (!res.ok) throw new Error('failed');
           form.reset();
           note.classList.add('is-success');
-          note.textContent = 'Sent. I’ll reply the same day.';
+          note.textContent = 'Sent. I’ll reply the same day with a time to talk.';
         })
         .catch(function () {
           note.classList.add('is-error');
