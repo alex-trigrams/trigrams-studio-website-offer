@@ -1176,14 +1176,21 @@ var FAQ_SHORT = [
   apply(current ? current.value : 'Attention');
 })();
 
-/* Entrance */
+/* Entrance. On a first load the intro veil is still up for ~1.5s, so the hero
+   would otherwise play its entrance behind a covered screen and be sitting
+   still by the time anyone saw it. Offsetting by the veil's lift keeps the two
+   sequences reading as one. */
 (function () {
   var els = document.querySelectorAll('[data-fade]');
-  var delays = [80, 250, 450, 650];
+  if (!els.length) return;
+  var delays = [80, 250, 450, 650, 850];
+  var intro = document.getElementById('intro');
+  var offset = (intro && !document.documentElement.classList.contains('intro-done')) ? 1150 : 0;
   els.forEach(function (el) {
-    var i = parseInt(el.dataset.fade || '0');
+    var i = parseInt(el.dataset.fade || '0', 10);
+    var d = (delays[i] === undefined ? 80 : delays[i]) + offset;
     requestAnimationFrame(function () {
-      setTimeout(function () { el.classList.add('in'); }, delays[i] || 80);
+      setTimeout(function () { el.classList.add('in'); }, d);
     });
   });
 })();
