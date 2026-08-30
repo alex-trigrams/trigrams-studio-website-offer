@@ -47,12 +47,12 @@ var CASE_STUDIES = [
     logo: 'assets/clients/studio187tattoo_logo.png', initials: '', shot: 'assets/studio187.jpg',
     kind: 'Website',
     window: '21 Jul \u2013 25 Aug 2026',
-    before: 'A working website that needed the owner on text messages to get an enquiry moving.',
+    before: 'The website worked, but the owner still had to text people back and forth before anything happened.',
     now: 'An enquiry flow that pre-qualifies: design, placement, size, budget band and preferred artist by name, so the first reply can be a real answer on price and availability.',
     hero: { value: '73', label: 'booking enquiries', note: 'about 2 a day, every day' },
     stats: [ { value: '2,074', label: 'visitors' }, { value: '36', label: 'days measured' } ],
     sources: { total: 2074, segments: [ { label: 'Direct', value: 895 }, { label: 'Google', value: 564 }, { label: 'Other', value: 615 } ],
-               note: 'Direct traffic is word of mouth and returning visitors. The tail includes YouTube, Instagram and The Urban List.' },
+               note: 'Direct means word of mouth and people coming back. The rest came from YouTube, Instagram and The Urban List.' },
     caveat: 'These are enquiries. Confirmed bookings are a separate number.'
   },
   {
@@ -60,12 +60,12 @@ var CASE_STUDIES = [
     logo: 'assets/clients/nlpsc_logo.png', initials: '', shot: 'assets/nlpsc.jpg',
     kind: 'Meta ads',
     window: '30 days, cold audience',
-    before: 'The gym had only ever grown by word of mouth, with no way to turn enquiries on.',
-    now: 'A free trial offer running on Meta, with every lead landing in the portal and explained in plain English.',
-    hero: { value: '54', label: 'leads in 30 days', note: '$6.28 each, from cold' },
+    before: 'The gym had only ever grown by word of mouth. They had no way to bring in new enquiries when they wanted them.',
+    now: 'A free trial offer running as ads on Facebook and Instagram. Every enquiry lands in their login, explained in plain English.',
+    hero: { value: '54', label: 'enquiries in 30 days', note: '$6.28 each, from people who had never heard of them' },
     stats: [ { value: '166%', label: 'above the CTR benchmark' }, { value: '7,393', label: 'accounts reached' } ],
     sources: null,
-    caveat: 'Leads, cost per lead and reach are real campaign figures. Your results will be different.',
+    caveat: 'These are the real numbers from the campaign. Your results will be different.',
     more: { href: 'meta-ads.html', label: 'Read the full case study' }
   },
   {
@@ -73,26 +73,26 @@ var CASE_STUDIES = [
     logo: 'assets/clients/sws_logo.jpg', initials: '', shot: 'assets/sws.jpg',
     kind: 'Website',
     window: '4 \u2013 23 Aug 2026',
-    before: 'Enquiries arrived however they arrived, with no shared record of who had been answered.',
+    before: 'Enquiries came in from all over the place, with no single list showing who had been replied to.',
     now: 'A rebuilt site and funnel: parents pick an age band and a program and leave a number, and every enquiry lands in a portal the school ticks off as replied.',
     hero: { value: '13', label: 'families enquired', note: 'in the first 3 weeks' },
     stats: [ { value: '825', label: 'visitors, first full month' }, { value: '57%', label: 'came from their own social' } ],
     sources: { total: 842, segments: [ { label: 'Their Facebook and Instagram', value: 481 }, { label: 'Everything else', value: 361 } ],
-               note: 'Of 842 visits in the window.' },
-    caveat: 'These are first-month figures, measured over the window shown. Launch months run hot, so expect a steady month to read lower.'
+               note: 'Out of 842 visits over the dates shown.' },
+    caveat: 'These are first-month numbers, over the dates shown. A launch month is always busier than a normal one, so expect a normal month to be lower.'
   },
   {
     name: 'UP Dietitian', line: 'Performance dietitian, private practice', url: 'https://www.updietitian.com/',
     logo: 'assets/clients/updietitian_logo.png', initials: '', shot: 'assets/upd.jpg',
     kind: 'Website',
     window: '2 \u2013 18 Aug 2026',
-    before: 'Bookings ran through a link in bio and email back-and-forth, with enquiries easy to lose.',
+    before: 'Bookings went through an Instagram link and a lot of back-and-forth email. Enquiries were easy to lose.',
     now: 'Separate general and seminar forms feeding a portal where Lauren ticks each enquiry as emailed and writes a note against it. She asked for that tick box, and it shipped.',
     hero: { value: '5', label: 'new-client enquiries', note: 'and none of them lost' },
     stats: [ { value: '195', label: 'visitors in August' }, { value: '36%', label: 'came from her Instagram' } ],
     sources: { total: 249, segments: [ { label: 'Instagram', value: 90 }, { label: 'Everything else', value: 159 } ],
-               note: 'Of 249 visits in the window.' },
-    caveat: 'A small sample over 17 days. 5 enquiries are attributable to the site; a 6th arrived by name through word of mouth and is left out.'
+               note: 'Out of 249 visits over the dates shown.' },
+    caveat: 'A small number over 17 days. 5 enquiries came through the website. A 6th came by word of mouth, so we have not counted it.'
   },
   {
     name: 'Pulse Property Group', line: 'Real estate, Perth', url: 'https://www.pulsepropertygroup.com.au/',
@@ -100,13 +100,13 @@ var CASE_STUDIES = [
     kind: 'In progress',
     inProgress: true,
     window: '15 Jun \u2013 24 Aug 2026',
-    before: 'Listings lived on the portals, with no home base for the brand.',
-    now: 'A complete rebuild with blogs, lead magnets and enquiry automation, plus a VaultRE integration so live listings feed straight onto the site, and 2 testimonial films in edit.',
+    before: 'Their listings only appeared on the big property portals. The agency had no proper website of its own.',
+    now: 'A new website with blog posts, enquiry forms and automatic follow-up emails. It connects to VaultRE, so their live listings appear on the site on their own. 2 client videos are still being edited.',
     hero: { value: '1,214', label: 'visitors', note: '264 of them found the agency by searching Google' },
-    stats: [ { value: '8 months', label: 'engagement so far' }, { value: '3', label: 'workstreams running' } ],
+    stats: [ { value: '8 months', label: 'working together so far' }, { value: '3', label: 'parts being built' } ],
     sources: { total: 1214, segments: [ { label: 'Google search', value: 264 }, { label: 'Everything else', value: 950 } ],
-               note: 'Of 1,214 visits in the window.' },
-    caveat: 'An engagement still in progress. These are visibility numbers; the integration and the films have yet to land.'
+               note: 'Out of 1,214 visits over the dates shown.' },
+    caveat: 'Still being built. These numbers only show how many people visited. The listings feed and the videos are not finished yet.'
   }
 ];
 
@@ -151,30 +151,30 @@ var STILLS = [
 var SERVICE_STEPS = [
   {
     n: '01', outcome: 'People find you', name: 'Attention', icon: 'ts-video',
-    desc: 'Content, photography, video and social proof, planned around 1 offer and published on a schedule you can see.',
-    breaks: 'Without it you are relying on the people who already know you, and that pool only shrinks.',
-    get: 'A content plan, the shoots that feed it, and a publishing calendar you approve before anything goes out.',
-    trigger: 'Attention only pays once there is somewhere to send it.'
+    desc: 'Photos, video and posts, planned around 1 offer and published to a schedule you can see.',
+    breaks: 'Without it, only the people who already know you ever hear from you.',
+    get: 'A content plan, the photo and video shoots that feed it, and a calendar you approve before anything goes out.',
+    trigger: 'Once people notice you, they need somewhere to go.'
   },
   {
     n: '02', outcome: 'The right people arrive', name: 'Traffic', icon: 'ts-launch',
-    desc: 'Meta campaigns built around a clear objective, with creative tested against each other rather than guessed at.',
-    breaks: 'Without it your reach is capped at whoever the algorithm hands you for free.',
-    get: 'Campaign structure, the ad creative, and reporting in plain English that says what it cost to get each lead.',
-    trigger: 'Traffic is wasted if the page it lands on does not do its job.'
+    desc: 'Facebook and Instagram ads built around 1 clear goal, with different versions tested against each other.',
+    breaks: 'Without it you only reach the people Facebook and Instagram give you for free.',
+    get: 'The ad campaigns, the photos and video in them, and a plain report telling you what each enquiry cost.',
+    trigger: 'Sending people to a page that does not work is wasted money.'
   },
   {
     n: '03', outcome: 'Visitors become enquiries', name: 'Conversion', icon: 'ts-website',
-    desc: 'The site and landing pages people arrive on, built to be fast, to say what you do, and to make enquiring obvious.',
-    breaks: 'Without it you pay for every visitor twice: once to get them there, once to get them back.',
-    get: 'The pages, the forms, and tracking that shows which channel actually produced each enquiry.',
-    trigger: 'An enquiry is only worth something if somebody answers it.'
+    desc: 'The website and landing pages people arrive on, built to load fast, say what you do, and make it easy to get in touch.',
+    breaks: 'Without it you pay to bring people to your site and then watch them leave.',
+    get: 'The pages, the enquiry forms, and tracking that shows you where each enquiry came from.',
+    trigger: 'An enquiry is only worth something if someone replies to it.'
   },
   {
     n: '04', outcome: 'Nothing goes cold', name: 'Follow up', icon: 'ts-email',
-    desc: 'Automated sequences and a shared record of every enquiry, so the ones who are not ready yet stay in the conversation.',
-    breaks: 'Without it the leads the first three layers paid for quietly go quiet.',
-    get: 'The sequences, the CRM they run through, and a portal where you can see what has been answered.',
+    desc: 'Automatic emails and 1 shared list of every enquiry, so people who are not ready to buy yet still hear from you.',
+    breaks: 'Without it, the enquiries the first 3 parts paid for go nowhere.',
+    get: 'The emails, the system that sends them, and a login showing you which enquiries have been answered.',
     trigger: null
   }
 ];
