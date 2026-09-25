@@ -1426,7 +1426,7 @@ var FAQ_SHORT = [
       if (res.ok) {
         form.reset();
         note.classList.add('is-success');
-        note.textContent = 'Sent. I’ll reply the same day with a time to talk.';
+        note.textContent = 'Sent. I’ll reply within 24 hours with a time to talk.';
         submitBtn.textContent = 'Send enquiry';
       } else {
         throw new Error('Request failed');
@@ -1619,7 +1619,7 @@ var SLUGS = {
           '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
         '</button>' +
         '<div class="enq-pop-title" id="enq-pop-title">Tell me about the <em>business</em>.</div>' +
-        '<p class="enq-pop-sub">Two minutes, plain answers. I reply the same day with a time to talk.</p>' +
+        '<p class="enq-pop-sub">Two minutes, plain answers. I reply within 24 hours with a time to talk.</p>' +
         '<form class="enq-pop-form" id="enq-pop-form">' +
           '<fieldset class="enq-pop-pills"><legend>What\u2019s not working?</legend><div>' +
             SERVICES.map(function (svc, i) {
@@ -1663,7 +1663,7 @@ var SLUGS = {
           if (!res.ok) throw new Error('failed');
           form.reset();
           note.classList.add('is-success');
-          note.textContent = 'Sent. I’ll reply the same day with a time to talk.';
+          note.textContent = 'Sent. I’ll reply within 24 hours with a time to talk.';
         })
         .catch(function () {
           note.classList.add('is-error');
