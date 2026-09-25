@@ -1,0 +1,13 @@
+# TRIGRAMS Studio
+
+> TRIGRAMS Studio is a marketing agency in Perth, Western Australia, run by Alex Oliver. It builds a repeatable way for small businesses to get customers, in 4 connected parts: attention (photo, video and social content), traffic (Facebook and Instagram ads), conversion (the website and landing pages people arrive on) and follow up (automatic emails and 1 shared list of every enquiry). Alex is the single point of contact and brings in a specialist for each part. Clients get their own login showing their numbers live, and they own the domain, the content and the code. Projects start at $5,000. To start, fill in the enquiry form at https://www.trigrams.studio/enquiry or email hello@trigrams.studio. ABN 85 714 298 118.
+
+## Pages
+
+- [Home](https://www.trigrams.studio/): what TRIGRAMS Studio does, a measured result, and the most common questions
+- [The System](https://www.trigrams.studio/system): the 4 parts in full, what each one does and what you get
+- [Work](https://www.trigrams.studio/work): case studies with dated numbers from Perth businesses, plus live websites, video and photos
+- [How it works](https://www.trigrams.studio/how-it-works): how a project runs from first enquiry to launch
+- [About](https://www.trigrams.studio/about): Alex Oliver's background and how the work is delivered
+- [Facebook ads case study](https://www.trigrams.studio/meta-ads): a Perth gym, 54 enquiries in 30 days at $6.28 each
+- [Enquiry](https://www.trigrams.studio/enquiry): the form to get a quote

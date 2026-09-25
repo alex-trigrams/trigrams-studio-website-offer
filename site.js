@@ -66,7 +66,7 @@ var CASE_STUDIES = [
     stats: [ { value: '166%', label: 'more clicks than the industry average' }, { value: '7,393', label: 'accounts reached' } ],
     sources: null,
     caveat: 'These are the real numbers from the campaign. Your results will be different.',
-    more: { href: 'meta-ads.html', label: 'Read the full case study' }
+    more: { href: '/meta-ads', label: 'Read the full case study' }
   },
   {
     name: 'Speed With Style', line: 'Learn-to-swim school, Bateman', url: 'https://www.speedwithstyle.com.au/',
@@ -1099,8 +1099,8 @@ var FAQ_SHORT = [
     a: "About 20 minutes to start: a short brief, your logo, and whatever photos you've got. I chase you for what I need, so you can forget about it in between." },
   { q: 'Do I own what you build?',
     a: 'Yes. The domain, the content and the code are all yours. If you ever want to walk, it walks with you and keeps running.' },
-  { q: 'Why work with one person?',
-    a: "You talk to whoever is doing the work, so nothing gets lost in a handoff and a change is a message rather than a ticket. I also tell you when something isn't worth buying from me." }
+  { q: 'Is this a one person operation?',
+    a: "You deal with one person the whole way through, and that person is responsible for the results. The building is done by specialists we bring in for each part. So there's only ever one person to call, and a lot more gets done than one person could manage alone." }
 ];
 
 (function () {
@@ -1528,7 +1528,7 @@ var SUBSTACK_URL = 'https://substack.com/@trigramsstudio';
     var href = el.getAttribute('href') || '';
     var label = (el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60);
     var kind = null;
-    if (el.id === 'enquiry-submit' || href.indexOf('enquiry.html') !== -1) kind = 'Enquiry';
+    if (el.id === 'enquiry-submit' || /^\/?enquiry(\.html)?([?#]|$)/.test(href)) kind = 'Enquiry';
     else if (el.classList.contains('nav-cta') || el.classList.contains('liquid-glass') || /start your build|get started/i.test(label)) kind = 'CTA';
     if (kind) track('CTA Click', { kind: kind, label: label, from: PAGE });
   });
@@ -1634,7 +1634,7 @@ var SLUGS = {
           '<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">' +
           '<button type="submit" class="btn-red enq-pop-submit">Send enquiry</button>' +
           '<p class="enq-pop-note" id="enq-pop-note" role="status" aria-live="polite"></p>' +
-          '<p class="enq-pop-alt">Prefer the full form? <a href="enquiry.html">Open the enquiry page</a>.</p>' +
+          '<p class="enq-pop-alt">Prefer the full form? <a href="/enquiry">Open the enquiry page</a>.</p>' +
         '</form>' +
       '</div>';
     document.body.appendChild(pop);
@@ -1710,7 +1710,7 @@ var SLUGS = {
   /* Intercept enquiry links everywhere. Modified clicks fall through so
      "open in new tab" still reaches the real page. */
   document.addEventListener('click', function (e) {
-    var a = e.target.closest && e.target.closest('a[href*="enquiry.html"], [data-enquiry]');
+    var a = e.target.closest && e.target.closest('a[href^="/enquiry"], a[href^="enquiry"], [data-enquiry]');
     if (!a) return;
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
     if (a.closest && a.closest('.enq-pop')) return;
