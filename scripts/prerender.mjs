@@ -132,9 +132,8 @@ function inject(html, openRe, inner) {
 
 /* ---------- Structured data (JSON-LD) ----------
    One @graph per page. Business facts live here and nowhere else. The address
-   must match the Google Business Profile character for character. Add
-   `streetAddress`/`postalCode`, `telephone` and `openingHoursSpecification`
-   only once they are confirmed. */
+   must match the Google Business Profile and the site footer character for
+   character. No telephone: Alex is keeping his number private for now. */
 const SITE = 'https://www.trigrams.studio';
 const BUSINESS = {
   '@type': 'ProfessionalService',
@@ -145,7 +144,15 @@ const BUSINESS = {
   image: SITE + '/assets/og-share.jpg',
   description: 'A Perth marketing agency for small businesses. TRIGRAMS Studio builds content, Facebook and Instagram ads, websites and follow-up emails as 1 connected system that brings in customers.',
   email: 'hello@trigrams.studio',
-  address: { '@type': 'PostalAddress', addressLocality: 'Perth', addressRegion: 'WA', addressCountry: 'AU' },
+  address: {
+    '@type': 'PostalAddress', streetAddress: '130 Burswood Rd', addressLocality: 'Burswood',
+    addressRegion: 'WA', postalCode: '6100', addressCountry: 'AU'
+  },
+  openingHoursSpecification: [{
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    opens: '10:00', closes: '15:00'
+  }],
   areaServed: { '@type': 'City', name: 'Perth' },
   identifier: { '@type': 'PropertyValue', propertyID: 'ABN', value: '85 714 298 118' },
   founder: { '@id': SITE + '/#alex' },
