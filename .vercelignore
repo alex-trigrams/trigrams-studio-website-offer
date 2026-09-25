@@ -1,2 +1,6 @@
 assets/vsl-raw.mov
 .DS_Store
+# Internal: the positioning brief and build scripts are not part of the site
+context/
+scripts/
+README.md
