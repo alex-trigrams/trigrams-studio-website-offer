@@ -939,17 +939,17 @@ a.logo-tile:hover .logo-info { background: var(--red); }
 .motif-cta { margin-left: 6px; padding: 0 18px; background: var(--ink); color: var(--white); }
 .motif-cta:hover { background: #000; }
 
-/* on small screens it sits bottom-right under your thumb and opens upward as a card */
+/* on small screens it sits top-right and opens downward as a card */
 @media (max-width: 640px) {
   .motif {
-    top: auto; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); left: auto; right: 16px;
-    transform-origin: calc(100% - var(--mark) / 2) calc(100% - var(--mark) / 2);
+    left: auto; right: 16px;
+    transform-origin: calc(100% - var(--mark) / 2) calc(var(--mark) / 2);
   }
   .motif-tray {
-    top: auto; left: auto; right: 0; bottom: 0; height: auto; width: 230px;
-    flex-direction: column; align-items: stretch; padding: 10px 10px calc(var(--mark) + 8px);
+    top: 0; left: auto; right: 0; height: auto; width: 230px;
+    flex-direction: column; align-items: stretch; padding: calc(var(--mark) + 8px) 10px 10px;
     border-radius: 28px; font-size: 16px;
-    clip-path: inset(calc(100% - var(--mark)) 0 0 calc(100% - var(--mark)) round 28px);
+    clip-path: inset(0 0 calc(100% - var(--mark)) calc(100% - var(--mark)) round 28px);
   }
   .motif.is-open .motif-tray,
   .motif:has(:focus-visible) .motif-tray { clip-path: inset(0 0 0 0 round 28px); }
