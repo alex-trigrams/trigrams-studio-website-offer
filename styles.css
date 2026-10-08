@@ -956,3 +956,27 @@ a.logo-tile:hover .logo-info { background: var(--red); }
   .motif-link, .motif-cta { height: 44px; }
   .motif-cta { margin: 6px 0 0; justify-content: center; }
 }
+
+/* ---------- Join the team: homepage banner + /join ---------- */
+.hire { padding: 0 var(--gutter) var(--section-y); }
+.hire-inner { max-width: 1500px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px 40px; padding: clamp(28px, 3.4vw, 48px); border-radius: 24px; background: var(--field); }
+.hire-copy { display: flex; flex-direction: column; gap: 10px; max-width: 62ch; }
+.hire-copy h2 { margin: 0; font-size: clamp(26px, 2.4vw, 36px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; }
+.hire-copy p { margin: 0; font-size: 18px; line-height: 1.5; color: var(--ink-mid); }
+
+.join .page-hero .h1 { font-size: clamp(44px, 5.6vw, 88px); }
+.join-body { max-width: 1500px; margin: 0 auto; padding: 0 var(--gutter) 120px; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(32px, 5vw, 80px); align-items: start; }
+.join-copy h2, .join-done h2 { margin: 0 0 14px; font-size: 26px; font-weight: 600; letter-spacing: -0.02em; }
+.join-copy h2 + * { margin-top: 0; }
+.join-copy * + h2 { margin-top: 40px; }
+.join-copy p { font-size: 18px; line-height: 1.6; color: var(--ink-mid); }
+.join-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.join-list li { padding: 16px 0; border-top: 1px solid var(--hairline); font-size: 18px; line-height: 1.55; color: var(--ink-mid); }
+.join-list li:last-child { border-bottom: 1px solid var(--hairline); }
+.join-list b { display: block; color: var(--ink); font-weight: 600; }
+.join-note { font-size: 16px !important; }
+.join-note a { color: var(--ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.join-card { padding: clamp(22px, 3vw, 40px); background: var(--white); border: 1px solid var(--hairline); border-radius: 20px; box-shadow: var(--shadow-2); }
+.join-done { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.join-done p { margin: 0 0 18px; font-size: 18px; line-height: 1.6; color: var(--ink-mid); }
+@media (max-width: 900px) { .join-body { grid-template-columns: 1fr; } }

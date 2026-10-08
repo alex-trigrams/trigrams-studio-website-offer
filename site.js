@@ -572,6 +572,45 @@ document.querySelectorAll('form[data-qualify]').forEach(function (form) {
   });
 });
 
+/* ---------- Join the team form ----------
+   Plain one-step form; lands in the same inbox, subject starts "[Team]". */
+document.querySelectorAll('form[data-apply]').forEach(function (form) {
+  var err = form.querySelector('[data-form-error]');
+  var btn = form.querySelector('button[type="submit"]');
+  var btnText = btn.textContent;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    err.hidden = true;
+    var gap = null;
+    form.querySelectorAll('[required]').forEach(function (el) {
+      if (gap) return;
+      var v = el.value.trim();
+      if (!v || (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))) gap = el;
+    });
+    if (gap) {
+      err.textContent = gap.type === 'email' ? 'Please add a valid email address.' : 'Please fill in the fields marked with a star.';
+      err.hidden = false;
+      gap.focus();
+      return;
+    }
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    fetch(ENDPOINT, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Formspree ' + res.status);
+        track('Job Application', {});
+        form.hidden = true;
+        document.querySelector('[data-apply-done]').hidden = false;
+      })
+      .catch(function () {
+        err.textContent = 'Something went wrong sending that. Please email hello@trigrams.studio instead.';
+        err.hidden = false;
+        btn.disabled = false;
+        btn.textContent = btnText;
+      });
+  });
+});
+
 /* ---------- Click tracking ---------- */
 document.addEventListener('click', function (e) {
   var a = e.target.closest && e.target.closest('a');
