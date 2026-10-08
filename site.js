@@ -182,21 +182,6 @@ if (finePointer && !reduceMotion) {
   });
 }
 
-/* ---------- Count up the comparison numbers when they come into view ---------- */
-var counters = document.querySelectorAll('[data-count]');
-if (counters.length && 'IntersectionObserver' in window && !reduceMotion) {
-  var co = new IntersectionObserver(function (entries) {
-    entries.forEach(function (en) {
-      if (!en.isIntersecting) return;
-      co.unobserve(en.target);
-      var el = en.target, end = parseInt(el.getAttribute('data-count'), 10), n = 0;
-      var t = setInterval(function () { el.textContent = ++n; if (n >= end) clearInterval(t); }, 90);
-      el.textContent = '0';
-    });
-  }, { threshold: 0.8 });
-  counters.forEach(function (c) { co.observe(c); });
-}
-
 /* ---------- What's included: a timeline that plays itself until you touch it ---------- */
 var tl = document.querySelector('[data-timeline]');
 if (tl) {
