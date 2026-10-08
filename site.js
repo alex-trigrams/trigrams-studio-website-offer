@@ -10,6 +10,30 @@ function track(name, data) {
 }
 var PAGE = location.pathname || '/';
 
+/* ---------- Meta Pixel ----------
+   Paste the Pixel ID from Events Manager below. While it's empty nothing from
+   Meta loads. No consent banner: under Australian privacy law notice is
+   enough, and the privacy policy explains the Pixel and how to opt out. */
+var META_PIXEL_ID = '';
+
+function loadPixel() {
+  if (window.fbq || !META_PIXEL_ID) return;
+  var f = window.fbq = function () {
+    f.callMethod ? f.callMethod.apply(f, arguments) : f.queue.push(arguments);
+  };
+  window._fbq = f; f.push = f; f.loaded = true; f.version = '2.0'; f.queue = [];
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://connect.facebook.net/en_US/fbevents.js';
+  document.head.appendChild(s);
+  f('init', META_PIXEL_ID);
+  f('track', 'PageView');
+}
+function pixel(event, data) {
+  if (window.fbq) window.fbq('track', event, data || {});
+}
+loadPixel();
+
 /* ---------- Price ----------
    The campaign price lives here and nowhere else. The HTML ships the default
    so crawlers and no-JS visitors see it too.
@@ -561,6 +585,7 @@ document.querySelectorAll('form[data-qualify]').forEach(function (form) {
       .then(function (res) {
         if (!res.ok) throw new Error('Formspree ' + res.status);
         track(kind === 'call' ? 'Call Qualifier' : 'Enquiry', { fit: unfit ? 'no' : 'yes', price: PRICE_TEXT });
+        if (!unfit) pixel('Lead', { content_name: kind === 'call' ? 'Call request' : 'Enquiry', value: PRICE, currency: 'AUD' });
         if (!unfit && kind === 'call') openCalendar();
         stage(unfit ? 'unfit' : 'fit');
       })

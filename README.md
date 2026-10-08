@@ -46,6 +46,7 @@ Recommended approach when the time comes:
 - Session context already includes Vercel guidance for auth (`vercel:auth` skill) and storage (`vercel:vercel-storage`) when starting this.
 
 ### Smaller backlog
+- **Meta Pixel ID (to do):** paste it into `META_PIXEL_ID` at the top of `site.js`, then deploy. Everything else is ready: the loader, a `Lead` event on qualified enquiries/call requests, the CSP, and the privacy policy. No cookie banner on purpose (Australian law only needs notice + opt-out, which the policy gives).
 - Real blog posts to replace the three placeholder cards (`#blog`), possibly a `/blog/` folder with one HTML page per post.
 - UP Dietitian brand colours in the build demo moodboard are guesses (`#7A9B76`, `#F4EFE6`) — replace with her real hexes.
 - Case-study stats: verify/update numbers periodically; disclaimer already covers "results vary".
