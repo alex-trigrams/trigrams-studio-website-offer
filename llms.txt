@@ -1,13 +1,15 @@
 # TRIGRAMS Studio
 
-> TRIGRAMS Studio is a marketing agency at 130 Burswood Rd, Burswood WA 6100 (Perth, Western Australia), run by Alex Oliver. Open 10am to 3pm, Monday to Friday. It builds a repeatable way for small businesses to get customers, in 4 connected parts: attention (photo, video and social content), traffic (Facebook and Instagram ads), conversion (the website and landing pages people arrive on) and follow up (automatic emails and 1 shared list of every enquiry). Alex is the single point of contact and brings in a specialist for each part. Clients get their own login showing their numbers live, and they own the domain, the content and the code. Projects start at $5,000. To start, fill in the enquiry form at https://www.trigrams.studio/enquiry or email hello@trigrams.studio. ABN 85 714 298 118.
+> TRIGRAMS Studio makes and runs Meta (Facebook and Instagram) ads for small businesses. It is run by Alex Oliver at 130 Burswood Rd, Burswood WA 6100 (Perth, Western Australia), open 10am to 3pm, Monday to Friday. It sells one thing: a complete ad campaign, from $4,000 plus GST, covering planning, scripts, a half-day shoot, editing (1 main video and 2 to 3 vertical cuts), audience and tracking set-up, ad copy and test versions, running the ads, sending every lead straight to the client, and an end-of-campaign report. Ad spend is separate and paid to Meta directly; the recommended minimum is $35 a day. To start, answer a few questions and book a call at https://www.trigrams.studio/book-a-call, or email hello@trigrams.studio. ABN 85 714 298 118.
 
 ## Pages
 
-- [Home](https://www.trigrams.studio/): what TRIGRAMS Studio does, a measured result, and the most common questions
-- [The System](https://www.trigrams.studio/system): the 4 parts in full, what each one does and what you get
-- [Work](https://www.trigrams.studio/work): case studies with dated numbers from Perth businesses, plus live websites, video and photos
-- [How it works](https://www.trigrams.studio/how-it-works): how a project runs from first enquiry to launch
-- [About](https://www.trigrams.studio/about): Alex Oliver's background and how the work is delivered
-- [Facebook ads case study](https://www.trigrams.studio/meta-ads): a Perth gym, 54 enquiries in 30 days at $6.28 each
-- [Enquiry](https://www.trigrams.studio/enquiry): the form to get a quote
+- [Home](https://www.trigrams.studio/): the offer, how it works, the price, ad budget guidance and common questions
+- [Work](https://www.trigrams.studio/work): the ads, and a Perth gym campaign with 54 enquiries in 30 days at $6.28 each
+- [What to expect](https://www.trigrams.studio/what-to-expect): how a campaign runs, how much to spend on ads, what's needed from the client
+- [Book a call](https://www.trigrams.studio/book-a-call): a few questions, then a calendar to book a 30 minute call
+- [Enquire](https://www.trigrams.studio/enquiry): the written enquiry form
+
+## Free resources
+
+- [The Cutting Room](https://onboarding.trigrams.studio): short films, templates and an occasional email on running ads and shooting, free

@@ -7,7 +7,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'sha256-899ZNv1Uti5ont1CYn9ZIm0AxNq/u+uxM4bGaFQBC/8='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' https://formspree.io; form-action 'self' https://formspree.io; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' https://formspree.io; frame-src https://calendly.com; form-action 'self' https://formspree.io; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
         },
         {
           "key": "X-Content-Type-Options",
@@ -52,6 +52,86 @@
   ],
   "redirects": [
     {
+      "source": "/about",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/about.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/system",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/system.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/how-it-works",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/how-it-works.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/services",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/services.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/videography",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/videography.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/content-marketing",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/content-marketing.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/creative-direction",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/creative-direction.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/meta-ads",
+      "destination": "/work",
+      "permanent": true
+    },
+    {
+      "source": "/meta-ads.html",
+      "destination": "/work",
+      "permanent": true
+    },
+    {
       "source": "/clients",
       "destination": "/work",
       "permanent": true
@@ -87,44 +167,14 @@
       "permanent": false
     },
     {
-      "source": "/services",
-      "destination": "/system",
-      "permanent": true
+      "source": "/book",
+      "destination": "/book-a-call",
+      "permanent": false
     },
     {
-      "source": "/services.html",
-      "destination": "/system",
-      "permanent": true
-    },
-    {
-      "source": "/videography",
-      "destination": "/system",
-      "permanent": true
-    },
-    {
-      "source": "/videography.html",
-      "destination": "/system",
-      "permanent": true
-    },
-    {
-      "source": "/content-marketing",
-      "destination": "/system",
-      "permanent": true
-    },
-    {
-      "source": "/content-marketing.html",
-      "destination": "/system",
-      "permanent": true
-    },
-    {
-      "source": "/creative-direction",
-      "destination": "/system",
-      "permanent": true
-    },
-    {
-      "source": "/creative-direction.html",
-      "destination": "/system",
-      "permanent": true
+      "source": "/call",
+      "destination": "/book-a-call",
+      "permanent": false
     }
   ]
 }

@@ -4,111 +4,82 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Page not found · TRIGRAMS Studio</title>
-<meta name="description" content="That page never got built. The rest of the site is very much alive." />
+<meta name="description" content="This page does not exist." />
 <meta name="robots" content="noindex" />
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-<link rel="icon" type="image/png" href="assets/Logo.png" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+<link rel="icon" type="image/png" href="/assets/Logo.png" sizes="any" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-<script>(function(){try{var t=localStorage.getItem("ts-theme");if(!t)t=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","dark");}try{if(sessionStorage.getItem("ts-intro"))document.documentElement.classList.add("intro-done");else sessionStorage.setItem("ts-intro","1");}catch(e){}})();</script>
-<link rel="stylesheet" href="styles.css" />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
-
-<div class="grain-page" aria-hidden="true"></div>
-
-<div class="bg-video-wrap" aria-hidden="true">
-  <div class="bg-fade"></div>
-</div>
-
-<div class="guide-line guide-line--l" aria-hidden="true"></div>
-<div class="guide-line guide-line--r" aria-hidden="true"></div>
-
-<div class="nav-bar" id="nav-bar" data-fade="0">
 <header class="site-nav">
-  <a href="/" title="TRIGRAMS Studio" class="nav-logo">
-    <video autoplay loop muted playsinline src="assets/logo-rotate.mp4"></video>
-  </a>
-  <nav class="nav-links" id="nav-links">
-    <a href="/system">The System</a>
+  <a href="/" class="logo" title="TRIGRAMS Studio home"><video autoplay loop muted playsinline disablepictureinpicture disableremoteplayback preload="metadata" src="/assets/logo-rotate.mp4" aria-hidden="true"></video><span class="sr-only">TRIGRAMS Studio</span></a>
+  <nav class="nav-mid" aria-label="Main">
     <a href="/work">Work</a>
-    <a href="/about">About</a>
+    <a href="/#process">How it works</a>
+    <a href="/#campaign">Pricing</a>
+    <a href="/what-to-expect">What to expect</a>
+    <a href="https://onboarding.trigrams.studio" data-portal="resource">Free resources</a>
   </nav>
-
-  <div class="nav-actions">
-    <a href="/enquiry" class="liquid-glass nav-cta">Get a quote</a>
-    <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
-      <svg class="icon-open" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-      <svg class="icon-close" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-    </button>
+  <div class="nav-end">
+    <a href="/enquiry" class="nav-link">Enquire</a>
+    <a href="/book-a-call" class="btn">Book a call</a>
+    <button type="button" class="nav-menu-btn" data-menu-open aria-controls="menu" aria-expanded="false">Menu</button>
   </div>
 </header>
-</div>
-
-<div class="nf-wrap">
-  <div class="nf-code" data-fade="1">404</div>
-  <h1 class="nf-title" data-fade="1">This page never got built.</h1>
-  <p class="nf-sub" data-fade="2">Ironic, for a studio that ships websites in a fortnight. The rest of the site is very much alive, so pick a door below.</p>
-  <div class="nf-actions" data-fade="3">
-    <a href="/" class="btn-red">Back to home</a>
-    <a href="/work" class="btn-outline">See the work</a>
-    <a href="/enquiry" class="btn-outline">Get in touch</a>
+<div class="menu" id="menu" hidden>
+  <div class="menu-photo"><img src="/assets/stills/waterford/waterford-45.jpg" alt="" loading="lazy" /></div>
+  <div class="menu-body">
+    <div><button type="button" class="pill-close" data-menu-close>Close <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 2l12 12M14 2L2 14"/></svg></button></div>
+    <nav class="menu-links" aria-label="Menu">
+      <a href="/work">Work</a>
+      <a href="/#process">How it works</a>
+      <a href="/#campaign">Pricing</a>
+      <a href="/what-to-expect">What to expect</a>
+      <a href="/#faq">Questions</a>
+      <a href="https://onboarding.trigrams.studio" data-portal="resource">Free resources</a>
+      <a href="/enquiry">Enquire</a>
+      <a href="/book-a-call">Book a call</a>
+    </nav>
   </div>
 </div>
 
-<footer>
-  <div class="wrap">
-    <a class="liquid-glass footer-news" id="newsletter" data-substack href="#" target="_blank" rel="noopener" hidden>
-      <div class="footer-news-copy">
-        <img class="ts-icon" src="assets/icons/ts-email.svg" alt="">
-        <span><strong>Read the newsletter on Substack.</strong> Systems, numbers, and what's actually working. Free, and you can leave any time.</span>
-      </div>
-      <span class="btn-red footer-news-go">Read it on Substack</span>
-    </a>
+<main class="lost">
+  <span class="label">404</span>
+  <h1 class="h1">That page isn't here</h1>
+  <p class="sub">It may have moved when the site changed. Everything is a click away from the homepage.</p>
+  <div class="btn-row"><a href="/" class="btn">Back to home</a><a href="/book-a-call" class="btn btn--line">Book a call</a></div>
+</main>
+<footer class="site-footer">
+  <a class="footer-news" id="newsletter" data-substack href="https://substack.com/@trigramsstudio" target="_blank" rel="noopener">
+    <span class="footer-news-copy">
+      <img class="ts-icon" src="/assets/icons/dark/ts-email.svg" alt="" width="16" height="16" />
+      <span><strong>Read the newsletter on Substack.</strong> Systems, numbers, and what's actually working. Free, and you can leave any time.</span>
+    </span>
+    <span class="btn">Read it on Substack <svg width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 6h19M15 1l5 5-5 5"/></svg></span>
+  </a>
 
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-logo"><video autoplay loop muted playsinline preload="none" src="assets/logo-rotate.mp4"></video></div>
-        <p class="footer-desc">More of the right people finding you, and fewer of them slipping away.</p>
-      </div>
-      <div class="footer-nav">
-        <div>
-          <div class="footer-col-lbl"><img class="ts-icon" src="assets/icons/ts-build.svg" alt="">The system</div>
-          <div class="footer-links">
-            <a href="/system#attention">Attention</a>
-            <a href="/system#traffic">Traffic</a>
-            <a href="/system#conversion">Conversion</a>
-            <a href="/system#follow-up">Follow up</a>
-          </div>
-        </div>
-        <div>
-          <div class="footer-col-lbl"><img class="ts-icon" src="assets/icons/ts-search.svg" alt="">Explore</div>
-          <div class="footer-links">
-            <a href="/work">Work</a>
-            <a href="/about">About</a>
-            <a href="/how-it-works">How it works</a>
-          </div>
-        </div>
-        <div>
-          <div class="footer-col-lbl"><img class="ts-icon" src="assets/icons/ts-chat.svg" alt="">Talk</div>
-          <div class="footer-links">
-            <a href="/enquiry">Get a quote</a>
-            <a href="mailto:hello@trigrams.studio">hello@trigrams.studio</a>
-            <a href="https://www.instagram.com/trigramsstudio/" target="_blank" rel="noopener">Instagram</a>
-          </div>
-        </div>
-      </div>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="logo"><video autoplay loop muted playsinline disablepictureinpicture disableremoteplayback preload="metadata" src="/assets/logo-rotate.mp4" aria-hidden="true"></video></span>
+      <p>More of the right people finding you, and fewer of them slipping away.</p>
     </div>
-    <div class="footer-bottom">
-      <span>&copy; 2026 TRIGRAMS Studio &middot; ABN 85 714 298 118 &middot; 130 Burswood Rd, Burswood WA 6100 &middot; <span lang="zh">東西之間</span></span>
-      <span class="footer-legal"><a href="/privacy">Privacy</a> &middot; <a href="/disclaimer">Disclaimer</a></span>
-      <span>Built to keep working.</span>
+    <div class="socials">
+      <a href="https://www.instagram.com/trigramsstudio/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+      <a href="https://substack.com/@trigramsstudio" target="_blank" rel="noopener" aria-label="Substack"><svg width="18" height="20" viewBox="0 0 24 27" fill="currentColor" aria-hidden="true"><path d="M1 0h22v3H1zM1 6h22v3H1zM1 12h22v15l-11-6-11 6z"/></svg></a>
+      <a href="mailto:hello@trigrams.studio" aria-label="Email hello@trigrams.studio"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
     </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; 2026 TRIGRAMS Studio &middot; ABN 85 714 298 118 &middot; <span lang="zh">東西之間</span></span>
+    <span class="footer-legal"><a href="/privacy">Privacy</a><a href="/disclaimer">Disclaimer</a><a href="https://client.trigrams.studio/admin" data-portal="client" rel="noopener">Client login</a></span>
   </div>
 </footer>
 
-<script src="site.js"></script>
+<script src="/site.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

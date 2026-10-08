@@ -1,1731 +1,619 @@
-/* The intro mark flies to where the nav logo actually is. styles.css carries a
-   calc() fallback good enough for a no-JS load; this pins it exactly. It runs
-   long before the flight begins at ~1.1s of the 2.15s sequence. */
+/* TRIGRAMS Studio, October 2026 rebuild. One offer, one price.
+   Everything here is progressive: the pages read fine with no JavaScript. */
 (function () {
-  var intro = document.getElementById('intro');
-  var logo = document.querySelector('.nav-logo');
-  if (!intro || !logo) return;
-  function pin() {
-    var r = logo.getBoundingClientRect();
-    var de = document.documentElement;
-    /* Measured against clientWidth, not 100vw: vw units include the scrollbar,
-       which is what the CSS fallback is out by. */
-    de.style.setProperty('--intro-dx', ((r.left + r.width / 2) - de.clientWidth / 2) + 'px');
-    de.style.setProperty('--intro-dy', ((r.top + r.height / 2) - de.clientHeight / 2) + 'px');
+'use strict';
+
+/* ---------- Analytics (Vercel Web Analytics custom events) ---------- */
+window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+function track(name, data) {
+  try { window.va('event', { name: name, data: data || {} }); } catch (e) {}
+}
+var PAGE = location.pathname || '/';
+
+/* ---------- Price ----------
+   The campaign price lives here and nowhere else. The HTML ships the default
+   so crawlers and no-JS visitors see it too.
+
+   Split test: point each ad set at a different URL, e.g.
+     https://www.trigrams.studio/?p=2500
+     https://www.trigrams.studio/?p=3000
+     https://www.trigrams.studio/?p=4000
+   The visitor keeps that price on every page and on return visits, and the
+   forms send it as "price_seen", so every enquiry shows which price it saw. */
+var PRICES = [2500, 3000, 4000];
+var DEFAULT_PRICE = 4000;
+
+function readPrice() {
+  var fromUrl = parseInt(new URLSearchParams(location.search).get('p'), 10);
+  if (PRICES.indexOf(fromUrl) !== -1) {
+    try { localStorage.setItem('ts-price', String(fromUrl)); } catch (e) {}
+    return fromUrl;
   }
-  pin();
-  window.addEventListener('resize', pin);
-})();
+  try {
+    var saved = parseInt(localStorage.getItem('ts-price'), 10);
+    if (PRICES.indexOf(saved) !== -1) return saved;
+  } catch (e) {}
+  return DEFAULT_PRICE;
+}
+var PRICE = readPrice();
+var PRICE_TEXT = '$' + PRICE.toLocaleString('en-AU');
+document.querySelectorAll('[data-price]').forEach(function (el) { el.textContent = PRICE_TEXT; });
+document.querySelectorAll('[data-price-field]').forEach(function (el) { el.value = PRICE_TEXT; });
+if (PRICE !== DEFAULT_PRICE) track('Price Variant', { price: PRICE_TEXT, page: PAGE });
 
-/* `build: false` marks a client Alex works with on content but whose website
-   he did not build. They belong in the logo marquee, and the marquee links to
-   their real site, but they are kept out of the live-sites carousel so that
-   section never claims work that isn't his. */
-var CLIENTS = [
-  { name: 'Studio 187 Tattoo', logo: 'assets/clients/studio187tattoo_logo.png', initials: '', url: 'https://www.studio187tattoo.com/', shot: 'assets/studio187.jpg' },
-  { name: 'MXF Athlete', logo: 'assets/clients/mxf_logo.jpg', initials: '', url: 'https://www.mxfathlete.com/', shot: 'assets/mxf.jpg' },
-  { name: 'Pulse Property Group', logo: 'assets/clients/ppg_logo.png', initials: '', url: 'https://www.pulsepropertygroup.com.au/', shot: 'assets/ppg.jpg' },
-  { name: 'UP Dietitian', logo: 'assets/clients/updietitian_logo.png', initials: '', url: 'https://www.updietitian.com/', shot: 'assets/upd.jpg' },
-  { name: 'NLPSC', logo: 'assets/clients/nlpsc_logo.png', initials: '', url: 'https://www.nlpsc.com/', shot: 'assets/nlpsc.jpg' },
-  { name: 'West Coast Allied Health', logo: '', initials: 'WC', url: 'https://wcah-website.vercel.app/', shot: 'assets/wcah.jpg' },
-  { name: 'Speed With Style', logo: 'assets/clients/sws_logo.jpg', initials: '', url: 'https://www.speedwithstyle.com.au/', shot: 'assets/sws.jpg' },
-  { name: 'AccuGuard', logo: 'assets/clients/acg_logo.jpg', initials: '', url: '#', shot: '', build: false },
-  { name: 'Waterford Wellness', logo: 'assets/clients/waterford_logo.jpg', initials: '', url: '#', shot: '', build: false },
-  { name: 'WA Sports Performance', logo: 'assets/clients/wasp_logo.png', initials: '', url: '#', shot: '', build: false },
-  { name: 'Matt & Mates', logo: 'assets/clients/mattandmates_logo.jpg', initials: '', url: '#', shot: '' },
-  { name: 'Coffee Bean House', logo: 'assets/clients/cbh_logo.png', initials: '', url: '#', shot: '' }
-];
-
-/* Case studies. Every figure here is a verified number from Alex's own
-   analytics or form submissions, with the window it was measured over. The
-   `caveat` is published on the card: stating the limits is what makes the
-   rest believable. `sources` drives the traffic bar and is emphasis-coloured,
-   the lead channel in red and the rest receding, never a rainbow. */
-var CASE_STUDIES = [
-  {
-    name: 'Studio 187 Tattoo', line: 'Tattoo studio, Maylands', url: 'https://www.studio187tattoo.com/',
-    logo: 'assets/clients/studio187tattoo_logo.png', initials: '', shot: 'assets/studio187.jpg',
-    kind: 'Website',
-    window: '21 Jul \u2013 25 Aug 2026',
-    before: 'The website worked, but the owner still had to text people back and forth before anything happened.',
-    now: 'An enquiry flow that pre-qualifies: design, placement, size, budget band and preferred artist by name, so the first reply can be a real answer on price and availability.',
-    hero: { value: '73', label: 'booking enquiries', note: 'about 2 a day, every day' },
-    stats: [ { value: '2,074', label: 'visitors' }, { value: '36', label: 'days measured' } ],
-    sources: { total: 2074, segments: [ { label: 'Direct', value: 895 }, { label: 'Google', value: 564 }, { label: 'Other', value: 615 } ],
-               note: 'Direct means word of mouth and people coming back. The rest came from YouTube, Instagram and The Urban List.' },
-    caveat: 'These are enquiries. Confirmed bookings are a separate number.'
-  },
-  {
-    name: 'NLPSC', line: 'Gym, Perth', url: 'https://www.nlpsc.com/',
-    logo: 'assets/clients/nlpsc_logo.png', initials: '', shot: 'assets/nlpsc.jpg',
-    kind: 'Meta ads',
-    window: '30 days, people who had never heard of them',
-    before: 'The gym had only ever grown by word of mouth. They had no way to bring in new enquiries when they wanted them.',
-    now: 'A free trial offer running as ads on Facebook and Instagram. Every enquiry lands in their login, explained in plain English.',
-    hero: { value: '54', label: 'enquiries in 30 days', note: '$6.28 each, from people who had never heard of them' },
-    stats: [ { value: '166%', label: 'more clicks than the industry average' }, { value: '7,393', label: 'accounts reached' } ],
-    sources: null,
-    caveat: 'These are the real numbers from the campaign. Your results will be different.',
-    more: { href: '/meta-ads', label: 'Read the full case study' }
-  },
-  {
-    name: 'Speed With Style', line: 'Learn-to-swim school, Bateman', url: 'https://www.speedwithstyle.com.au/',
-    logo: 'assets/clients/sws_logo.jpg', initials: '', shot: 'assets/sws.jpg',
-    kind: 'Website',
-    window: '4 \u2013 23 Aug 2026',
-    before: 'Enquiries came in from all over the place, with no single list showing who had been replied to.',
-    now: 'A rebuilt site: parents pick an age band and a program and leave a number, and every enquiry lands in a portal the school ticks off as replied.',
-    hero: { value: '13', label: 'families enquired', note: 'in the first 3 weeks' },
-    stats: [ { value: '825', label: 'visitors, first full month' }, { value: '57%', label: 'came from their own social' } ],
-    sources: { total: 842, segments: [ { label: 'Their Facebook and Instagram', value: 481 }, { label: 'Everything else', value: 361 } ],
-               note: 'Out of 842 visits over the dates shown.' },
-    caveat: 'These are first-month numbers, over the dates shown. A launch month is always busier than a normal one, so expect a normal month to be lower.'
-  },
-  {
-    name: 'UP Dietitian', line: 'Performance dietitian, private practice', url: 'https://www.updietitian.com/',
-    logo: 'assets/clients/updietitian_logo.png', initials: '', shot: 'assets/upd.jpg',
-    kind: 'Website',
-    window: '2 \u2013 18 Aug 2026',
-    before: 'Bookings went through an Instagram link and a lot of back-and-forth email. Enquiries were easy to lose.',
-    now: 'Separate general and seminar forms feeding a portal where Lauren ticks each enquiry as emailed and writes a note against it. She asked for that tick box, and it shipped.',
-    hero: { value: '5', label: 'new-client enquiries', note: 'and none of them lost' },
-    stats: [ { value: '195', label: 'visitors in August' }, { value: '36%', label: 'came from her Instagram' } ],
-    sources: { total: 249, segments: [ { label: 'Instagram', value: 90 }, { label: 'Everything else', value: 159 } ],
-               note: 'Out of 249 visits over the dates shown.' },
-    caveat: 'A small number over 17 days. 5 enquiries came through the website. A 6th came by word of mouth, so we have not counted it.'
-  },
-  {
-    name: 'Pulse Property Group', line: 'Real estate, Perth', url: 'https://www.pulsepropertygroup.com.au/',
-    logo: 'assets/clients/ppg_logo.png', initials: '', shot: 'assets/ppg.jpg',
-    kind: 'In progress',
-    inProgress: true,
-    window: '15 Jun \u2013 24 Aug 2026',
-    before: 'Their listings only appeared on the big property portals. The agency had no proper website of its own.',
-    now: 'A new website with blog posts, enquiry forms and automatic follow-up emails. It connects to VaultRE, so their live listings appear on the site on their own. 2 client videos are still being edited.',
-    hero: { value: '1,214', label: 'visitors', note: '264 of them found the agency by searching Google' },
-    stats: [ { value: '8 months', label: 'working together so far' }, { value: '3', label: 'parts being built' } ],
-    sources: { total: 1214, segments: [ { label: 'Google search', value: 264 }, { label: 'Everything else', value: 950 } ],
-               note: 'Out of 1,214 visits over the dates shown.' },
-    caveat: 'Still being built. These numbers only show how many people visited. The listings feed and the videos are not finished yet.'
-  }
-];
-
-/* Video work. `src` is a short silent preview for the carousel; `full` is the
-   complete ad with sound, loaded only when a card is opened. `kind` splits the
-   paid-ad creative from the broader brand work. */
-var REELS = [
-  { id: 'nlpsc-conditioning',       client: 'NLPSC',            label: 'Conditioning ad',        kind: 'ad',    accent: '#0F1E32' },
-  { id: 'nlpsc-december',           client: 'NLPSC',            label: 'December ad',            kind: 'ad',    accent: '#0F1E32' },
-  { id: 'sportiesfc-v1',            client: 'SportiesFC',       label: 'Video ad, cut one',      kind: 'ad',    accent: '#1A2E1A' },
-  { id: 'sportiesfc-v2',            client: 'SportiesFC',       label: 'Video ad, cut two',      kind: 'ad',    accent: '#1A2E1A' },
-  { id: 'sportiesfc-v3',            client: 'SportiesFC',       label: 'Video ad, cut three',    kind: 'ad',    accent: '#1A2E1A' },
-  { id: 'timely-reel-1-coffee',     client: 'Timely Coffee',    label: 'Coffee you can be proud of', kind: 'brand', accent: '#3B2210' },
-  { id: 'timely-reel-2-roasting',   client: 'Timely Coffee',    label: 'Roasting 101',           kind: 'brand', accent: '#3B2210' },
-  { id: 'timely-reel-3-qc',         client: 'Timely Coffee',    label: 'QC taste tests',         kind: 'brand', accent: '#3B2210' },
-  { id: 'timely-reel-4-packing',    client: 'Timely Coffee',    label: 'Packing orders',         kind: 'brand', accent: '#3B2210' },
-  { id: 'timely-coffee-window',     client: 'Timely Coffee',    label: 'The coffee window',      kind: 'brand', accent: '#3B2210' },
-  { id: 'timely-finishing-touches', client: 'Timely Coffee',    label: 'Finishing touches',      kind: 'brand', accent: '#3B2210' },
-  { id: 'timely-pour-over',         client: 'Timely Coffee',    label: 'Pour over',              kind: 'brand', accent: '#3B2210' },
-  { id: 'drawon-founder-interview', client: 'Drawon',           label: 'Founder interview',      kind: 'brand', accent: '#1E1A2E' },
-  { id: 'abbey-loading-principle',  client: 'Abbey',            label: 'The loading principle',  kind: 'brand', accent: '#1A1A2E' },
-  { id: 'studio-187',               client: 'Studio 187 Tattoo',label: 'Studio film',            kind: 'brand', accent: '#1E1E1E' },
-  { id: 'trigg-training',           client: 'Trigg Training',   label: 'Montage',                kind: 'brand', accent: '#1A2A1E' },
-  { id: 'allan-intro',              client: 'Allan Wryneck',    label: 'Intro',                  kind: 'brand', accent: '#1E2A18' },
-  { id: 'allan-wryneck',            client: 'Allan Wryneck',    label: 'Feature',                kind: 'brand', accent: '#1E2A18' },
-  { id: 'announcement',             client: 'TRIGRAMS Studio',  label: 'Announcement',           kind: 'brand', accent: '#1A1A1A' }
-];
-
-/* Stills from the same shoots. Thumbnails drive the strip and the grid; the
-   full-size file only loads when a photo is opened in the lightbox. */
-var STILLS = [
-  { client: 'Timely Coffee', dir: 'timely', files: ['dsc02265.jpg','dsc02293.jpg','dsc02297.jpg','dsc02307.jpg','dsc02332.jpg','dsc02366.jpg','dsc02485.jpg','dsc03704-2.jpg'] },
-  { client: 'UP Dietitian', dir: 'up-dietitian', files: ['upd-1.jpg','upd-51.jpg','upd-82.jpg','upd-109.jpg','upd-57.jpg','up-3.jpg','upd-28.jpg','upd-31.jpg','upd-52.jpg','upd-55.jpg','upd-56.jpg','upd-71.jpg','upd-86.jpg','upd-87.jpg','upd-94.jpg','upd-96.jpg','upd-101.jpg','upd-104.jpg','upd-107.jpg','upd-113.jpg','up-12.jpg','up-15.jpg','up-31.jpg'] },
-  { client: 'Waterford', dir: 'waterford', files: ['waterford-38.jpg','waterford-39.jpg','waterford-41.jpg','waterford-42.jpg','waterford-43.jpg','waterford-44.jpg','waterford-45.jpg'] }
-];
-
-/* The four layers. They are the product, in order, and they are not a menu:
-   nothing here is individually purchasable and nothing carries a price. Each
-   layer answers the same three questions, because that is what makes the
-   connection between them legible. `outcome` is what the client gets; `name`
-   is the layer; `breaks` is the cost of skipping it. */
-var SERVICE_STEPS = [
-  {
-    n: '01', outcome: 'People find you', name: 'Attention', icon: 'ts-video',
-    desc: 'Photos, video and posts, planned around 1 offer and published to a schedule you can see.',
-    breaks: 'Without it, only the people who already know you ever hear from you.',
-    get: 'A content plan, the photo and video shoots that feed it, and a calendar you approve before anything goes out.',
-    trigger: 'Once people notice you, they need somewhere to go.'
-  },
-  {
-    n: '02', outcome: 'The right people arrive', name: 'Traffic', icon: 'ts-launch',
-    desc: 'Facebook and Instagram ads built around 1 clear goal, with different versions tested against each other.',
-    breaks: 'Without it you only reach the people Facebook and Instagram give you for free.',
-    get: 'The ad campaigns, the photos and video in them, and a plain report telling you what each enquiry cost.',
-    trigger: 'Sending people to a page that does not work is wasted money.'
-  },
-  {
-    n: '03', outcome: 'Visitors become enquiries', name: 'Conversion', icon: 'ts-website',
-    desc: 'The website and landing pages people arrive on, built to load fast, say what you do, and make it easy to get in touch.',
-    breaks: 'Without it you pay to bring people to your site and then watch them leave.',
-    get: 'The pages, the enquiry forms, and tracking that shows you where each enquiry came from.',
-    trigger: 'An enquiry is only worth something if someone replies to it.'
-  },
-  {
-    n: '04', outcome: 'Nothing goes cold', name: 'Follow up', icon: 'ts-email',
-    desc: 'Automatic emails and 1 shared list of every enquiry, so people who are not ready to buy yet still hear from you.',
-    breaks: 'Without it, the enquiries the first 3 parts paid for go nowhere.',
-    get: 'The emails, the system that sends them, and a login showing you which enquiries have been answered.',
-    trigger: null
-  }
-];
-/* The ladder renders as an ascending staircase: each rung sits higher than the
-   last, on a rail that fills as you scroll. Selecting a rung swaps the detail
-   panel underneath rather than expanding in place, because the rung columns
-   are too narrow for body copy on desktop.
-
-   Two modes. "Climb in order" is the staircase. "Pick one" flattens the rungs
-   to equal height and gives each its own CTA, so the optionality is something
-   you can see and click instead of a line of small print. */
-/* The System page: each layer written out in full, anchored by its own name so
-   the footer and any deep link can land on it. Reuses the ladder data, so the
-   staircase and the long form can never drift apart. */
-function renderLayerList() {
-  var el = document.getElementById('layer-list');
-  if (!el) return;
-  el.innerHTML = SERVICE_STEPS.map(function (step) {
-    var slug = step.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    return '' +
-      '<article class="liquid-glass layer-card stagger-item" id="' + slug + '">' +
-        '<div class="layer-head">' +
-          '<span class="layer-n">' + step.n + '</span>' +
-          '<img class="ts-icon layer-icon" src="assets/icons/' + step.icon + '.svg" alt="">' +
-          '<div>' +
-            '<h3 class="layer-name">' + step.name + '</h3>' +
-            '<p class="layer-outcome">' + step.outcome + '</p>' +
-          '</div>' +
-        '</div>' +
-        '<p class="layer-desc">' + step.desc + '</p>' +
-        '<div class="layer-qs">' +
-          '<div><span class="detail-q-lbl">What breaks without it</span><p>' + step.breaks + '</p></div>' +
-          '<div><span class="detail-q-lbl">What you get</span><p>' + step.get + '</p></div>' +
-        '</div>' +
-      '</article>';
-  }).join('');
+/* ---------- Menu ---------- */
+var menu = document.getElementById('menu');
+var opener = document.querySelector('[data-menu-open]');
+function setMenu(open) {
+  if (!menu) return;
+  menu.hidden = !open;
+  document.documentElement.style.overflow = open ? 'hidden' : '';
+  if (opener) opener.setAttribute('aria-expanded', open ? 'true' : 'false');
+  if (open) { var c = menu.querySelector('[data-menu-close]'); if (c) c.focus(); }
+  else if (opener) opener.focus({ preventScroll: true });
+}
+if (menu && opener) {
+  opener.addEventListener('click', function () { setMenu(true); });
+  menu.querySelector('[data-menu-close]').addEventListener('click', function () { setMenu(false); });
+  menu.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) setMenu(false); });
 }
 
-function renderLadder() {
-  var el = document.getElementById('ladder-list');
-  if (!el) return;
-
-  var rungs = SERVICE_STEPS.map(function (step, i) {
-    return '' +
-      '<button type="button" class="ladder-rung" data-i="' + i + '" style="--i:' + i + ';"' +
-        ' role="tab" aria-selected="' + (i === 0 ? 'true' : 'false') + '"' +
-        ' aria-controls="ladder-detail" id="rung-' + i + '" tabindex="' + (i === 0 ? '0' : '-1') + '">' +
-        '<span class="rung-stem" aria-hidden="true"></span>' +
-        '<span class="liquid-glass rung-card">' +
-          '<span class="rung-top">' +
-            '<span class="rung-num">' + step.n + '</span>' +
-            '<img class="ts-icon rung-icon" src="assets/icons/' + step.icon + '.svg" alt="">' +
-          '</span>' +
-          '<span class="rung-outcome">' + step.outcome + '</span>' +
-          '<span class="rung-name">' + step.name + '</span>' +
-          '<span class="rung-layer">Layer ' + step.n.replace(/^0/, '') + '</span>' +
-        '</span>' +
-      '</button>';
-  }).join('');
-
-  el.innerHTML = '' +
-    '<div class="ladder-climb" data-reveal>' +
-      '<div class="ladder-rail" aria-hidden="true"><span class="ladder-rail-fill"></span></div>' +
-      '<div class="ladder-rungs" role="tablist" aria-label="The four layers">' + rungs + '</div>' +
-    '</div>' +
-    '<div class="liquid-glass ladder-detail" id="ladder-detail" role="tabpanel" aria-live="polite"></div>';
-
-  var detail = el.querySelector('#ladder-detail');
-  var rungEls = Array.prototype.slice.call(el.querySelectorAll('.ladder-rung'));
-  var climb = el.querySelector('.ladder-climb');
-  var railFill = el.querySelector('.ladder-rail-fill');
-  var active = 0;
-
-  function paint(i) {
-    var step = SERVICE_STEPS[i];
-    active = i;
-    rungEls.forEach(function (r, n) {
-      r.classList.toggle('is-active', n === i);
-      r.classList.toggle('is-climbed', n <= i);
-      r.setAttribute('aria-selected', n === i ? 'true' : 'false');
-      r.tabIndex = n === i ? 0 : -1;
-    });
-    detail.setAttribute('aria-labelledby', 'rung-' + i);
-    detail.innerHTML = '' +
-      '<div class="detail-head">' +
-        '<span class="detail-num">' + step.n + '</span>' +
-        '<div>' +
-          '<h3 class="detail-outcome">' + step.outcome + '</h3>' +
-          '<p class="detail-name">Layer ' + step.n.replace(/^0/, '') + ', ' + step.name.toLowerCase() + '</p>' +
-        '</div>' +
-      '</div>' +
-      '<p class="detail-desc">' + step.desc + '</p>' +
-      '<div class="detail-qs">' +
-        '<div class="detail-q"><span class="detail-q-lbl">What breaks without it</span><p>' + step.breaks + '</p></div>' +
-        '<div class="detail-q"><span class="detail-q-lbl">What you get</span><p>' + step.get + '</p></div>' +
-      '</div>' +
-      (step.trigger
-        ? '<p class="detail-next"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' + step.trigger + '</p>'
-        : '') +
-      '';
-    if (railFill) railFill.style.setProperty('--fill', ((i + 1) / SERVICE_STEPS.length * 100) + '%');
-  }
-
-  rungEls.forEach(function (r, i) {
-    r.addEventListener('click', function () {
-      paint(i);
-      climb.dataset.userPicked = '1';
-    });
-    /* Left/right (and up/down on the stacked layout) walk the rungs. */
-    r.addEventListener('keydown', function (e) {
-      var next = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? i + 1
-        : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? i - 1 : null;
-      if (next === null) return;
-      e.preventDefault();
-      next = (next + rungEls.length) % rungEls.length;
-      paint(next);
-      climb.dataset.userPicked = '1';
-      rungEls[next].focus();
-    });
-  });
-
-  /* Deep link: how-it-works.html#phase-2 (or #never-lose-an-enquiry) opens
-     that phase directly, so a service card can point straight at its phase. */
-  function slugOf(step) {
-    return step.outcome.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-  }
-  function indexFromHash() {
-    var h = (location.hash || '').replace(/^#/, '').toLowerCase();
-    if (!h) return -1;
-    var m = h.match(/^phase-(\d+)$/);
-    if (m) {
-      var n = parseInt(m[1], 10) - 1;
-      return n >= 0 && n < SERVICE_STEPS.length ? n : -1;
-    }
-    for (var i = 0; i < SERVICE_STEPS.length; i++) {
-      if (slugOf(SERVICE_STEPS[i]) === h) return i;
-    }
-    return -1;
-  }
-
-  var start = indexFromHash();
-  paint(start > -1 ? start : 0);
-  if (start > -1) {
-    climb.dataset.userPicked = '1';
-    el.scrollIntoView({ block: 'start' });
-  }
-  window.addEventListener('hashchange', function () {
-    var i = indexFromHash();
-    if (i > -1) { paint(i); climb.dataset.userPicked = '1'; el.scrollIntoView({ block: 'start' }); }
-  });
-
-  /* Climb the rungs as the section scrolls past, until the visitor takes over. */
-  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        var i = +entry.target.dataset.i;
-        if (!climb.dataset.userPicked && i > active) paint(i);
-      });
-    }, { threshold: 0.9 });
-    rungEls.forEach(function (r) { io.observe(r); });
-  }
-}
-
-function hostOf(url) {
-  try { return new URL(url).hostname.replace(/^www\./, ''); } catch (e) { return ''; }
-}
-
-function avatarInner(item) {
-  if (item.logo) return '<img src="' + item.logo + '" alt="' + item.name + '" loading="lazy" decoding="async">';
-  return '<span>' + item.initials + '</span>';
-}
-
-function renderMarquee() {
-  var el = document.getElementById('clients-marquee');
-  if (!el) return;
-  var tile = function(item, hidden) {
-    return '<a href="' + item.url + '" target="_blank" rel="noopener" title="' + item.name + '" class="client-tile"' + (hidden ? ' aria-hidden="true" tabindex="-1"' : '') + '>' + avatarInner(item) + '</a>';
+/* ---------- How it works: hover or tap a step, the photo and line change ---------- */
+var stepsEl = document.querySelector('[data-steps]');
+if (stepsEl) {
+  var steps = stepsEl.querySelectorAll('[data-step]');
+  var photos = document.querySelectorAll('[data-step-photo]');
+  var line = document.querySelector('[data-step-line]');
+  var count = document.querySelector('[data-step-count]');
+  stepsEl.classList.add('is-live');
+  var show = function (i) {
+    steps.forEach(function (s, n) { s.classList.toggle('is-on', n === i); });
+    photos.forEach(function (p, n) { p.classList.toggle('is-on', n === i); });
+    if (line) line.textContent = steps[i].getAttribute('data-line');
+    if (count) count.textContent = '0' + (i + 1) + ' / 0' + steps.length;
   };
-  var setA = CLIENTS.map(function (c) { return tile(c, false); }).join('');
-  var setB = CLIENTS.map(function (c) { return tile(c, true); }).join('');
-  el.innerHTML = setA + setB;
-}
-
-function renderExamples() {
-  var el = document.getElementById('examples-grid');
-  if (!el) return;
-  var examples = CLIENTS.filter(function (c) { return c.url && c.url !== '#' && c.build !== false; });
-  el.innerHTML = examples.map(function (ex) {
-    var shot = ex.shot
-      ? '<img src="' + ex.shot + '" alt="' + ex.name + ' full page screenshot" loading="lazy" decoding="async">'
-      : '<div class="example-placeholder"><span>Full-page preview coming soon</span></div>';
-    var chrome = '' +
-      '<div class="example-chrome" aria-hidden="true">' +
-        '<span class="example-chrome-dots"><i></i><i></i><i></i></span>' +
-        '<span class="example-chrome-url">' + hostOf(ex.url) + '</span>' +
-      '</div>';
-    return '' +
-      '<div class="liquid-glass example-card stagger-item">' +
-        chrome +
-        '<a href="' + ex.url + '" target="_blank" rel="noopener" class="example-shot" aria-label="Open ' + ex.name + ' in a new tab">' + shot +
-          '<span class="example-shot-hint">Open live site' +
-            '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></span>' +
-        '</a>' +
-        '<a href="' + ex.url + '" target="_blank" rel="noopener" class="example-meta">' +
-          '<span class="example-meta-top"><span class="example-name">' + ex.name + '</span>' +
-            '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:rgba(239,238,234,0.55);"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></span>' +
-        '</a>' +
-      '</div>';
-  }).join('');
-}
-
-function initExamplesCarousel() {
-  var track = document.getElementById('examples-grid');
-  var prevBtn = document.getElementById('examples-prev');
-  var nextBtn = document.getElementById('examples-next');
-  var dotsEl = document.getElementById('examples-dots');
-  if (!track || !track.children.length) return;
-
-  var count = track.children.length;
-  dotsEl.innerHTML = Array.from({ length: count }).map(function (_, i) {
-    return '<button type="button" class="carousel-dot' + (i === 0 ? ' is-active' : '') + '" data-idx="' + i + '" aria-label="Go to build ' + (i + 1) + '"></button>';
-  }).join('');
-  var dots = dotsEl.querySelectorAll('.carousel-dot');
-
-  function cardStep() {
-    var card = track.children[0];
-    var style = window.getComputedStyle(track);
-    return card.getBoundingClientRect().width + parseFloat(style.gap || 20);
-  }
-
-  function activeIndex() {
-    return Math.round(track.scrollLeft / cardStep());
-  }
-
-  function updateUI() {
-    var idx = Math.min(count - 1, Math.max(0, activeIndex()));
-    dots.forEach(function (d, i) { d.classList.toggle('is-active', i === idx); });
-    prevBtn.disabled = track.scrollLeft <= 4;
-    nextBtn.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
-  }
-
-  prevBtn.addEventListener('click', function () { pauseAuto(); track.scrollBy({ left: -cardStep(), behavior: 'smooth' }); });
-  nextBtn.addEventListener('click', function () { pauseAuto(); track.scrollBy({ left: cardStep(), behavior: 'smooth' }); });
-  dots.forEach(function (dot) {
-    dot.addEventListener('click', function () { pauseAuto(); track.scrollTo({ left: cardStep() * parseInt(dot.dataset.idx, 10), behavior: 'smooth' }); });
+  steps.forEach(function (s, i) {
+    s.addEventListener('mouseenter', function () { show(i); });
+    s.addEventListener('focus', function () { show(i); });
+    s.addEventListener('click', function () { show(i); });
   });
-
-  /* Slow auto-advance: next card every 6s, loop back to the start.
-     Pauses while hovered/touched and after any manual control, and
-     stays off entirely for reduced-motion visitors. */
-  var AUTO_MS = 6000;
-  var autoTimer = null;
-  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function autoAdvance() {
-    var atEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
-    if (atEnd) track.scrollTo({ left: 0, behavior: 'smooth' });
-    else track.scrollBy({ left: cardStep(), behavior: 'smooth' });
-  }
-  function startAuto() {
-    if (reducedMotion || autoTimer) return;
-    autoTimer = setInterval(autoAdvance, AUTO_MS);
-  }
-  function stopAuto() {
-    clearInterval(autoTimer);
-    autoTimer = null;
-  }
-  var resumeTimer;
-  function pauseAuto() {
-    stopAuto();
-    clearTimeout(resumeTimer);
-    resumeTimer = setTimeout(startAuto, AUTO_MS * 2);
-  }
-
-  var carousel = track.closest('.examples-carousel') || track;
-  carousel.addEventListener('mouseenter', stopAuto);
-  carousel.addEventListener('mouseleave', function () { pauseAuto(); });
-  track.addEventListener('touchstart', pauseAuto, { passive: true });
-  track.addEventListener('wheel', pauseAuto, { passive: true });
-
-  /* Only cycle while the section is on screen */
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) startAuto(); else stopAuto();
-      });
-    }, { threshold: 0.3 }).observe(carousel);
-  } else {
-    startAuto();
-  }
-
-  var scrollTick;
-  track.addEventListener('scroll', function () {
-    clearTimeout(scrollTick);
-    scrollTick = setTimeout(updateUI, 60);
-  }, { passive: true });
-  window.addEventListener('resize', updateUI);
-  updateUI();
 }
 
-function renderCaseStudies() {
-  var el = document.getElementById('cs-grid');
-  if (!el) return;
-  var limit = parseInt(el.dataset.limit || '0', 10);
-  var list = limit > 0 ? CASE_STUDIES.slice(0, limit) : CASE_STUDIES;
+var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var finePointer = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-  /* Emphasis, never a rainbow: the lead channel takes the one brand accent and
-     the rest recede. Steps are validated for separation against both surfaces. */
-  function sourceBar(src) {
-    if (!src) return '';
-    var segs = src.segments;
-    var bars = segs.map(function (sg, i) {
-      var pct = (sg.value / src.total) * 100;
-      return '<span class="cs-seg cs-seg--' + i + '" style="width:' + pct.toFixed(1) + '%;" ' +
-             'title="' + sg.label + ': ' + sg.value.toLocaleString() + '"></span>';
-    }).join('');
-    var keys = segs.map(function (sg, i) {
-      var pct = Math.round((sg.value / src.total) * 100);
-      return '<span class="cs-key"><i class="cs-seg--' + i + '"></i>' + sg.label +
-             ' <b>' + pct + '%</b></span>';
-    }).join('');
-    return '' +
-      '<div class="cs-sources">' +
-        '<div class="cs-srcbar" role="img" aria-label="Where visitors came from: ' +
-          segs.map(function (sg) { return sg.label + ' ' + sg.value; }).join(', ') + '">' + bars + '</div>' +
-        '<div class="cs-keys">' + keys + '</div>' +
-        (src.note ? '<p class="cs-srcnote">' + src.note + '</p>' : '') +
-      '</div>';
-  }
+/* ---------- Motif: once the header scrolls away, the nav folds into the logo ----------
+   A small round mark with a red ring that fills as you scroll. Hover (or tap) it and the
+   links unfold out of it. Built from the header's own links, so every page gets it. */
+var siteNav = document.querySelector('.site-nav');
+if (siteNav && 'IntersectionObserver' in window) {
+  document.documentElement.classList.add('has-motif');
 
-  el.innerHTML = list.map(function (cs) {
-    var shot = cs.shot
-      ? '<img src="' + cs.shot + '" alt="' + cs.name + ' website" loading="lazy" decoding="async">'
-      : '<div class="example-placeholder"><span>Preview coming soon</span></div>';
-    var stats = cs.stats.map(function (st) {
-      return '<div><div class="cs-stat-val">' + st.value + '</div><div class="cs-stat-lbl">' + st.label + '</div></div>';
-    }).join('');
-    return '' +
-      '<div class="liquid-glass cs-card stagger-item' + (cs.inProgress ? ' cs-card--wip' : '') + '">' +
-        '<div class="cs-shot">' + shot + '</div>' +
-        '<div class="cs-body">' +
-          '<div class="cs-head">' +
-            '<span class="cs-logo">' + avatarInner(cs) + '</span>' +
-            '<div style="flex:1;min-width:0;"><div class="cs-name">' + cs.name + '</div><div class="cs-line">' + cs.line + '</div></div>' +
-            '<a href="' + cs.url + '" target="_blank" rel="noopener" title="Open the live site" class="cs-visit">Visit ' +
-              '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a>' +
-          '</div>' +
-          '<div class="cs-tags">' +
-            '<span class="cs-kind' + (cs.inProgress ? ' cs-kind--wip' : '') + '">' + cs.kind + '</span>' +
-            '<span class="cs-window"><img class="ts-icon" src="assets/icons/ts-turnaround.svg" alt="">' + cs.window + '</span>' +
-          '</div>' +
-          '<div class="cs-hero">' +
-            '<div class="cs-hero-val">' + cs.hero.value + '</div>' +
-            '<div class="cs-hero-meta"><span class="cs-hero-lbl">' + cs.hero.label + '</span>' +
-              '<span class="cs-hero-note">' + cs.hero.note + '</span></div>' +
-          '</div>' +
-          '<div style="display:flex;flex-direction:column;gap:12px;">' +
-            '<div class="cs-baseline"><span class="cs-baseline-label">Before</span><span class="cs-baseline-val">' + cs.before + '</span></div>' +
-            '<div class="cs-baseline"><span class="cs-baseline-label">Now</span><span class="cs-baseline-val cs-baseline-val--now">' + cs.now + '</span></div>' +
-          '</div>' +
-          sourceBar(cs.sources) +
-          '<div class="cs-stats">' + stats + '</div>' +
-          '<p class="cs-caveat">' + cs.caveat + '</p>' +
-          (cs.more
-            ? '<a class="cs-more" href="' + cs.more.href + '">' + cs.more.label +
-                '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a>'
-            : '') +
-        '</div>' +
-      '</div>';
-  }).join('');
-}
+  var motif = document.createElement('nav');
+  motif.className = 'motif';
+  motif.setAttribute('aria-label', 'Sections');
+  var tray = document.createElement('div');
+  tray.className = 'motif-tray';
+  siteNav.querySelectorAll('.nav-mid a, .nav-end a').forEach(function (a) {
+    var link = a.cloneNode(true);
+    link.className = a.classList.contains('btn') ? 'motif-cta' : 'motif-link';
+    link.addEventListener('click', function () { setMotif(false); });
+    tray.appendChild(link);
+  });
+  var mark = document.createElement('button');
+  mark.type = 'button';
+  mark.className = 'motif-mark';
+  mark.tabIndex = -1;
+  mark.setAttribute('aria-expanded', 'false');
+  mark.setAttribute('aria-label', 'Show sections');
+  mark.innerHTML = '<svg class="motif-ring" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="26" pathLength="1"/></svg>' +
+    '<video autoplay loop muted playsinline disablepictureinpicture disableremoteplayback preload="metadata" src="/assets/logo-rotate.mp4" aria-hidden="true"></video>';
+  motif.appendChild(tray);
+  motif.appendChild(mark);
+  document.body.appendChild(motif);
 
-var PROCESS_STEPS = [
-  { label: 'Initial contact', time: 'Day 0', assets: [], pill: 'New enquiry', stage: 'chat' },
-  { label: 'Files & goals in', time: 'Day 1', assets: ['Logo', 'Brand colours', 'Photos & goals'], pill: 'Assets received', stage: 'mood' },
-  { label: 'Draft built', time: 'Day 5', assets: ['Logo', 'Brand colours', 'Photos & goals'], pill: 'Draft ready', stage: 'content' },
-  { label: 'Your review', time: 'Day 6–10', assets: ['Logo', 'Brand colours', 'Photos & goals'], pill: 'In review', stage: 'content', review: true },
-  { label: 'Live', time: 'By day 14', assets: ['Logo', 'Brand colours', 'Photos & goals'], pill: 'Live', stage: 'content', badge: true, live: true }
-];
-
-function renderBuildDemo() {
-  var root = document.getElementById('build-demo');
-  if (!root) return;
-
-  root.innerHTML = '' +
-    '<div class="build-titlebar">' +
-      '<div class="build-dots"><span style="background:#ff5f57;"></span><span style="background:#febc2e;"></span><span style="background:#28c840;"></span></div>' +
-      '<span class="build-titlebar-label">updietitian.com, brief to live</span>' +
-    '</div>' +
-    '<div class="build-body">' +
-      '<div class="build-sidebar">' +
-        '<div class="build-sidebar-label"><img class="ts-icon" src="assets/icons/ts-build.svg" alt="">The work</div>' +
-        '<div class="build-steps" id="build-steps"></div>' +
-        '<div class="build-sidebar-label" style="margin-top:20px;"><img class="ts-icon" src="assets/icons/ts-files.svg" alt="">Your assets</div>' +
-        '<div class="build-assets" id="build-assets"></div>' +
-      '</div>' +
-      '<div class="build-preview" id="build-preview">' +
-        '<div class="build-preview-top">' +
-          '<span class="build-preview-brand"><img src="assets/clients/updietitian_logo.png" alt="">UP Dietitian</span>' +
-          '<nav class="bp-navlinks" aria-hidden="true"><span>Services</span><span>About</span><span>Pricing</span><span>Contact</span></nav>' +
-          '<span class="build-preview-pill" id="build-pill">New enquiry</span>' +
-        '</div>' +
-        '<div class="build-preview-stage">' +
-
-          '<div class="build-stage build-stage--chat" id="stage-chat">' +
-            '<div class="chat-bubble chat-bubble--client" style="--d:0.15s;">Hi, I’m a dietitian in Perth. I need a website that takes bookings.</div>' +
-            '<div class="chat-bubble chat-bubble--studio" style="--d:0.9s;">Can do. Send your logo, photos and prices, whatever you’ve got.</div>' +
-            '<div class="chat-bubble chat-bubble--studio" style="--d:1.6s;">Send that through and we\u2019ll map it out.</div>' +
-          '</div>' +
-
-          '<div class="build-stage build-stage--mood" id="stage-mood">' +
-            '<div class="mood-grid">' +
-              '<div class="mood-tile mood-tile--logo" style="--d:0.1s;"><img src="assets/clients/updietitian_logo.png" alt="UP Dietitian logo"></div>' +
-              '<div class="mood-tile mood-tile--swatch1" style="--d:0.25s;"><span>#7A9B76</span></div>' +
-              '<div class="mood-tile mood-tile--swatch2" style="--d:0.4s;"><span>#F4EFE6</span></div>' +
-              '<div class="mood-tile mood-tile--type" style="--d:0.55s;"><span class="mood-aa">Aa</span><span>Fraunces</span></div>' +
-              '<div class="mood-tile mood-tile--photo" style="--d:0.7s;"><img src="assets/upd.jpg" alt="UP Dietitian site photography"></div>' +
-              '<div class="mood-tile mood-tile--note" style="--d:0.85s;"><span>Goal: more initial consults, less email back-and-forth</span></div>' +
-            '</div>' +
-          '</div>' +
-
-          '<div class="build-stage build-stage--content" id="stage-content">' +
-            '<div class="bp-cols">' +
-              '<div class="bp-text">' +
-                '<div class="build-preview-eyebrow bp-el" style="--i:0;">Dietitian, private practice, Perth</div>' +
-                '<div class="build-preview-h bp-el" style="--i:1;">Feel good about <em>food</em> again.</div>' +
-                '<p class="bp-para bp-el" style="--i:2;">Evidence-based nutrition support, tailored to you. Initial consults available this week, in the clinic or over telehealth.</p>' +
-                '<div class="bp-cta-row bp-el" style="--i:3;"><span class="bp-btn" id="bp-btn">Book a consult</span><span class="bp-link">View services</span></div>' +
-                '<div class="bp-chips bp-el" style="--i:4;"><span>Gut health</span><span>Sports nutrition</span><span>Meal planning</span><span>Telehealth</span></div>' +
-                '<div class="build-annotation" id="build-annotation">' +
-                  '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>' +
-                  'Make the button pop' +
-                '</div>' +
-              '</div>' +
-              '<div class="bp-photo bp-el" style="--i:5;"><img src="assets/upd.jpg" alt="UP Dietitian website preview"><span class="bp-photo-tag">Initial consult · 60 min</span></div>' +
-            '</div>' +
-            '<div class="bp-statbar bp-el" style="--i:6;">' +
-              '<div><b>500+</b><span>clients helped</span></div>' +
-              '<div><b>HICAPS</b><span>rebates on the spot</span></div>' +
-              '<div><b>Perth</b><span>clinic + telehealth</span></div>' +
-            '</div>' +
-          '</div>' +
-
-        '</div>' +
-        '<div class="build-badge" id="build-badge">' +
-          '<img src="assets/logo-mark-transparent.png" alt="" loading="lazy" decoding="async" style="width:20px;height:20px;flex:none;">' +
-          '<div>' +
-            '<div style="font-family:var(--font-body);font-size:12px;font-weight:600;color:#EFEEEA;">Site is live</div>' +
-            '<div style="font-family:var(--font-body);font-size:11px;color:rgba(239,238,234,0.5);">Brief to live</div>' +
-          '</div>' +
-        '</div>' +
-      '</div>' +
-    '</div>';
-
-  var stepsEl = document.getElementById('build-steps');
-  var assetsEl = document.getElementById('build-assets');
-  var pillEl = document.getElementById('build-pill');
-  var stageEls = {
-    chat: document.getElementById('stage-chat'),
-    mood: document.getElementById('stage-mood'),
-    content: document.getElementById('stage-content')
+  var motifOpen = false;
+  var setMotif = function (open) {
+    motifOpen = open;
+    motif.classList.toggle('is-open', open);
+    mark.setAttribute('aria-expanded', open ? 'true' : 'false');
+    mark.setAttribute('aria-label', open ? 'Hide sections' : 'Show sections');
   };
-  var annotationEl = document.getElementById('build-annotation');
-  var badgeEl = document.getElementById('build-badge');
-  var previewEl = document.getElementById('build-preview');
-
-  var DURATION = 4200;
-  var active = 0;
-  var timer = null;
-
-  function render() {
-    stepsEl.innerHTML = PROCESS_STEPS.map(function (step, i) {
-      var isActive = i === active;
-      var bar = isActive ? '<span class="build-step-bar"><i style="animation-duration:' + DURATION + 'ms"></i></span>' : '';
-      return '<button type="button" class="build-step' + (isActive ? ' build-step--active' : '') + '" data-idx="' + i + '"><span>' + step.label + '</span><span>' + step.time + '</span>' + bar + '</button>';
-    }).join('');
-
-    var current = PROCESS_STEPS[active];
-    assetsEl.innerHTML = current.assets.length
-      ? current.assets.map(function (a, i) { return '<div class="build-asset" style="animation-delay:' + (i * 110) + 'ms;"><span class="build-asset-check">✓</span>' + a + '</div>'; }).join('')
-      : '<div class="build-asset-empty">Waiting on your files…</div>';
-
-    pillEl.textContent = current.pill;
-    pillEl.classList.toggle('is-live', !!current.live);
-    Object.keys(stageEls).forEach(function (key) {
-      stageEls[key].classList.toggle('is-active', current.stage === key);
-    });
-    previewEl.classList.toggle('is-review', !!current.review);
-    previewEl.classList.toggle('is-live', !!current.live);
-    annotationEl.classList.toggle('is-active', !!current.review);
-    badgeEl.classList.toggle('is-active', !!current.badge);
-
-    stepsEl.querySelectorAll('.build-step').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        stop();
-        active = parseInt(btn.dataset.idx, 10);
-        render();
-      });
-    });
-  }
-
-  function tick() { active = (active + 1) % PROCESS_STEPS.length; render(); }
-  function start() { stop(); timer = setInterval(tick, DURATION); }
-  function stop() { if (timer) { clearInterval(timer); timer = null; } }
-
-  render();
-  start();
-
-  root.addEventListener('mouseenter', stop);
-  root.addEventListener('mouseleave', start);
-}
-
-/* ─── REEL CAROUSEL ──────────────────────────────────────────────────────────
-   Phone-framed 9:16 cards. The card plays a short silent preview on hover
-   (desktop) or when tapped into view (touch); opening a card loads the full
-   ad with sound in a lightbox. Nothing but the poster loads until asked. */
-
-function reelCardHTML(reel, hidden) {
-  return '' +
-    '<button type="button" class="reel-card" data-reel="' + reel.id + '"' + (hidden ? ' aria-hidden="true" tabindex="-1"' : '') +
-      ' style="--accent:' + reel.accent + ';" aria-label="Play ' + reel.client + ' · ' + reel.label + '">' +
-      '<span class="reel-notch" aria-hidden="true"></span>' +
-      '<video class="reel-video" preload="none" muted loop playsinline poster="assets/reels/' + reel.id + '-poster.jpg" src="assets/reels/' + reel.id + '.mp4"></video>' +
-      '<span class="reel-vignette" aria-hidden="true"></span>' +
-      '<span class="reel-play" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg></span>' +
-      '<span class="reel-meta"><span class="reel-client">' + reel.client + '</span><span class="reel-label">' + reel.label + '</span></span>' +
-    '</button>';
-}
-
-/* One shared lightbox for every carousel on the page. */
-function reelLightbox() {
-  var el = document.getElementById('reel-lightbox');
-  if (el) return el;
-  el = document.createElement('div');
-  el.id = 'reel-lightbox';
-  el.className = 'reel-lightbox';
-  el.innerHTML = '' +
-    '<div class="reel-lightbox-backdrop"></div>' +
-    '<div class="reel-lightbox-inner">' +
-      '<video class="reel-lightbox-video" controls playsinline preload="auto"></video>' +
-      '<div class="reel-lightbox-cap"></div>' +
-    '</div>' +
-    '<button type="button" class="reel-lightbox-close" aria-label="Close video">' +
-      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
-    '</button>';
-  document.body.appendChild(el);
-
-  var vid = el.querySelector('.reel-lightbox-video');
-  function close() {
-    el.classList.remove('is-open');
-    vid.pause();
-    vid.removeAttribute('src');
-    vid.load();
-    document.body.style.overflow = '';
-  }
-  el.querySelector('.reel-lightbox-close').addEventListener('click', close);
-  el.querySelector('.reel-lightbox-backdrop').addEventListener('click', close);
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && el.classList.contains('is-open')) close();
-  });
-  return el;
-}
-
-function openReel(reel) {
-  var el = reelLightbox();
-  var vid = el.querySelector('.reel-lightbox-video');
-  vid.poster = 'assets/reels/' + reel.id + '-poster.jpg';
-  vid.src = 'assets/reels/full/' + reel.id + '.mp4';
-  el.querySelector('.reel-lightbox-cap').innerHTML =
-    '<strong>' + reel.client + '</strong><span>' + reel.label + '</span>';
-  el.classList.add('is-open');
-  document.body.style.overflow = 'hidden';
-  vid.play().catch(function () {});
-}
-
-/* Wires hover-preview + click-to-open onto every card inside a container. */
-function initReelCards(root) {
-  var byId = {};
-  REELS.forEach(function (r) { byId[r.id] = r; });
-  var canHover = window.matchMedia && window.matchMedia('(hover: hover)').matches;
-
-  root.querySelectorAll('.reel-card').forEach(function (card) {
-    var vid = card.querySelector('.reel-video');
-    var reel = byId[card.dataset.reel];
-
-    function play() {
-      if (!vid.getAttribute('src')) return;
-      vid.play().then(function () { card.classList.add('is-playing'); }).catch(function () {});
-    }
-    function stop() {
-      vid.pause();
-      vid.currentTime = 0;
-      card.classList.remove('is-playing');
-    }
-
-    if (canHover) {
-      card.addEventListener('mouseenter', play);
-      card.addEventListener('mouseleave', stop);
-    }
-    card.addEventListener('click', function () { openReel(reel); });
-  });
-
-  /* On touch, previews play only while the card is actually on screen —
-     otherwise 19 videos fight for bandwidth the moment the page loads. */
-  if (!canHover && 'IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        var v = entry.target.querySelector('.reel-video');
-        if (entry.isIntersecting) {
-          v.play().then(function () { entry.target.classList.add('is-playing'); }).catch(function () {});
-        } else {
-          v.pause();
-          entry.target.classList.remove('is-playing');
-        }
-      });
-    }, { threshold: 0.6 });
-    root.querySelectorAll('.reel-card').forEach(function (c) { io.observe(c); });
-  }
-}
-
-/* Tiered carousel: two rows drifting at different speeds so they never align.
-   `data-reels` picks the subset — "ad", "brand" or omitted for everything.
-   `data-rows="1"` renders a single row (used on the Meta ads page). */
-function renderReelCarousels() {
-  var mounts = document.querySelectorAll('[data-reels]');
-  if (!mounts.length) return;
-  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  mounts.forEach(function (mount) {
-    var kind = mount.dataset.reels;
-    var list = kind === 'all' ? REELS : REELS.filter(function (r) { return r.kind === kind; });
-    if (!list.length) return;
-    var singleRow = mount.dataset.rows === '1' || list.length <= 6;
-
-    var rows;
-    if (singleRow) {
-      rows = [list];
-    } else {
-      var mid = Math.ceil(list.length / 2);
-      rows = [list.slice(0, mid), list.slice(mid)];
-    }
-
-    mount.innerHTML = rows.map(function (row, i) {
-      var cards = row.map(function (r) { return reelCardHTML(r, false); }).join('') +
-                  row.map(function (r) { return reelCardHTML(r, true); }).join('');
-      return '<div class="reel-row" data-row="' + i + '"><div class="reel-row-track">' + cards + '</div></div>';
-    }).join('') +
-    '<div class="reel-hint"><button type="button" class="carousel-btn" data-reel-nav="-1" aria-label="Scroll left">' +
-      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>' +
-      '<span>Drag to browse &middot; tap a card for the full ad</span>' +
-      '<button type="button" class="carousel-btn" data-reel-nav="1" aria-label="Scroll right">' +
-      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div>';
-
-    initReelCards(mount);
-
-    var rowEls = mount.querySelectorAll('.reel-row');
-    mount.querySelectorAll('[data-reel-nav]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var dir = parseInt(btn.dataset.reelNav, 10);
-        rowEls.forEach(function (r) { r.scrollBy({ left: dir * 320, behavior: 'smooth' }); });
-      });
-    });
-
-    if (reduced) return;
-
-    /* Continuous drift. Each row loops by resetting once it passes the
-       halfway point, which is where the duplicated set begins. */
-    var paused = false;
-    var speeds = [0.35, 0.2];
-    var started = [true, false];
-    setTimeout(function () { started[1] = true; }, 1000);
-
-    mount.addEventListener('mouseenter', function () { paused = true; });
-    mount.addEventListener('mouseleave', function () { paused = false; });
-    mount.addEventListener('touchstart', function () { paused = true; }, { passive: true });
-
-    var onScreen = true;
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) { onScreen = e.isIntersecting; });
-      }, { threshold: 0.05 }).observe(mount);
-    }
-
-    (function tick() {
-      if (!paused && onScreen) {
-        rowEls.forEach(function (row, i) {
-          if (!started[i]) return;
-          row.scrollLeft += speeds[i] || 0.3;
-          if (row.scrollLeft >= row.scrollWidth / 2) row.scrollLeft -= row.scrollWidth / 2;
-        });
-      }
-      requestAnimationFrame(tick);
-    })();
-  });
-}
-
-/* ─── STILLS: strip → grid modal → lightbox ─────────────────────────────── */
-
-function allStills() {
-  var out = [];
-  STILLS.forEach(function (g) {
-    g.files.forEach(function (f) {
-      out.push({ client: g.client, full: 'assets/stills/' + g.dir + '/' + f, thumb: 'assets/stills/' + g.dir + '/thumb/' + f });
-    });
-  });
-  return out;
-}
-
-function renderStills() {
-  var mount = document.getElementById('stills-strip');
-  if (!mount) return;
-  var all = allStills();
-  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* Preview strip: an even spread across clients rather than the first N. */
-  var strip = [];
-  STILLS.forEach(function (g) {
-    var step = Math.max(1, Math.floor(g.files.length / 4));
-    for (var i = 0; i < g.files.length && strip.length < 14; i += step) {
-      strip.push({ client: g.client, thumb: 'assets/stills/' + g.dir + '/thumb/' + g.files[i], full: 'assets/stills/' + g.dir + '/' + g.files[i] });
-    }
-  });
-
-  var tile = function (p, hidden) {
-    return '<button type="button" class="still-tile" data-full="' + p.full + '"' + (hidden ? ' aria-hidden="true" tabindex="-1"' : '') +
-      ' aria-label="Open photo from the ' + p.client + ' shoot">' +
-      '<img src="' + p.thumb + '" alt="" loading="lazy"><span class="still-tile-client">' + p.client + '</span></button>';
-  };
-  mount.innerHTML = '<div class="stills-track">' +
-    strip.map(function (p) { return tile(p, false); }).join('') +
-    strip.map(function (p) { return tile(p, true); }).join('') + '</div>';
-
-  var track = mount.querySelector('.stills-track');
-  var paused = false;
-  mount.addEventListener('mouseenter', function () { paused = true; });
-  mount.addEventListener('mouseleave', function () { paused = false; });
-  mount.addEventListener('touchstart', function () { paused = true; }, { passive: true });
-
-  if (!reduced) {
-    (function tick() {
-      if (!paused) {
-        mount.scrollLeft += 0.3;
-        if (mount.scrollLeft >= track.scrollWidth / 2) mount.scrollLeft -= track.scrollWidth / 2;
-      }
-      requestAnimationFrame(tick);
-    })();
-  }
-
-  mount.querySelectorAll('.still-tile').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var idx = all.findIndex(function (p) { return p.full === btn.dataset.full; });
-      openStillsGrid(idx < 0 ? 0 : idx);
-    });
-  });
-
-  var openAll = document.getElementById('stills-open');
-  if (openAll) {
-    openAll.textContent = 'View all ' + all.length + ' photos';
-    openAll.addEventListener('click', function () { openStillsGrid(-1); });
-  }
-}
-
-/* Full-screen grid with client filters, plus a lightbox over the top. */
-function openStillsGrid(lightboxIndex) {
-  var all = allStills();
-  var modal = document.getElementById('stills-modal');
-
-  if (!modal) {
-    modal = document.createElement('div');
-    modal.id = 'stills-modal';
-    modal.className = 'stills-modal';
-    modal.innerHTML = '' +
-      '<div class="stills-modal-head">' +
-        '<div class="stills-modal-title"><strong>Stills from set</strong><span id="stills-count"></span></div>' +
-        '<div class="stills-filters" id="stills-filters"></div>' +
-        '<button type="button" class="stills-close" aria-label="Close gallery">' +
-          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
-        '</button>' +
-      '</div>' +
-      '<div class="stills-scroll"><div class="stills-grid" id="stills-grid"></div></div>' +
-      '<div class="stills-light" id="stills-light">' +
-        '<button type="button" class="stills-light-prev" aria-label="Previous photo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>' +
-        '<img alt="">' +
-        '<button type="button" class="stills-light-next" aria-label="Next photo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>' +
-        '<div class="stills-light-count"></div>' +
-      '</div>';
-    document.body.appendChild(modal);
-
-    var filtersEl = modal.querySelector('#stills-filters');
-    var clients = ['All'].concat(STILLS.map(function (g) { return g.client; }));
-    filtersEl.innerHTML = clients.map(function (c, i) {
-      return '<button type="button" class="stills-filter' + (i === 0 ? ' is-active' : '') + '" data-client="' + c + '">' + c + '</button>';
-    }).join('');
-
-    modal.querySelector('.stills-close').addEventListener('click', function () { closeStillsGrid(); });
-    filtersEl.querySelectorAll('.stills-filter').forEach(function (b) {
-      b.addEventListener('click', function () {
-        filtersEl.querySelectorAll('.stills-filter').forEach(function (x) { x.classList.remove('is-active'); });
-        b.classList.add('is-active');
-        paintStillsGrid(b.dataset.client);
-      });
-    });
-
-    var light = modal.querySelector('#stills-light');
-    light.querySelector('.stills-light-prev').addEventListener('click', function (e) { e.stopPropagation(); stepStill(-1); });
-    light.querySelector('.stills-light-next').addEventListener('click', function (e) { e.stopPropagation(); stepStill(1); });
-    light.addEventListener('click', function (e) { if (e.target === light || e.target.tagName === 'IMG') light.classList.remove('is-open'); });
-
-    document.addEventListener('keydown', function (e) {
-      if (!modal.classList.contains('is-open')) return;
-      var lightOpen = light.classList.contains('is-open');
-      if (e.key === 'Escape') { lightOpen ? light.classList.remove('is-open') : closeStillsGrid(); }
-      if (lightOpen && e.key === 'ArrowLeft') stepStill(-1);
-      if (lightOpen && e.key === 'ArrowRight') stepStill(1);
-    });
-  }
-
-  modal.classList.add('is-open');
-  document.body.style.overflow = 'hidden';
-  paintStillsGrid('All');
-  if (lightboxIndex >= 0) openStillLight(lightboxIndex);
-}
-
-function closeStillsGrid() {
-  var modal = document.getElementById('stills-modal');
-  if (!modal) return;
-  modal.classList.remove('is-open');
-  modal.querySelector('#stills-light').classList.remove('is-open');
-  document.body.style.overflow = '';
-}
-
-function paintStillsGrid(client) {
-  var modal = document.getElementById('stills-modal');
-  var all = allStills();
-  var list = client === 'All' ? all : all.filter(function (p) { return p.client === client; });
-  modal.querySelector('#stills-count').textContent = list.length + ' photos';
-  modal.querySelector('#stills-grid').innerHTML = list.map(function (p) {
-    return '<button type="button" class="stills-cell" data-full="' + p.full + '"><img src="' + p.thumb + '" alt="" loading="lazy"></button>';
-  }).join('');
-  modal.querySelectorAll('.stills-cell').forEach(function (cell) {
-    cell.addEventListener('click', function () {
-      openStillLight(all.findIndex(function (p) { return p.full === cell.dataset.full; }));
-    });
-  });
-}
-
-function openStillLight(index) {
-  var modal = document.getElementById('stills-modal');
-  if (!modal) return;
-  var all = allStills();
-  if (index < 0 || index >= all.length) return;
-  var light = modal.querySelector('#stills-light');
-  light.dataset.index = index;
-  light.querySelector('img').src = all[index].full;
-  light.querySelector('.stills-light-count').textContent = (index + 1) + ' / ' + all.length;
-  light.classList.add('is-open');
-}
-
-function stepStill(dir) {
-  var light = document.querySelector('#stills-light');
-  if (!light) return;
-  var next = parseInt(light.dataset.index, 10) + dir;
-  var total = allStills().length;
-  openStillLight((next + total) % total);
-}
-
-/* Published case-study deck: snap carousel with dots. */
-function initDeck() {
-  var track = document.getElementById('deck-track');
-  var dotsEl = document.getElementById('deck-dots');
-  if (!track || !dotsEl) return;
-  var slides = track.children.length;
-
-  dotsEl.innerHTML = Array.from({ length: slides }).map(function (_, i) {
-    return '<button type="button" class="carousel-dot' + (i === 0 ? ' is-active' : '') + '" data-idx="' + i + '" aria-label="Slide ' + (i + 1) + '"></button>';
-  }).join('');
-  var dots = dotsEl.querySelectorAll('.carousel-dot');
-
-  function step() {
-    var first = track.children[0];
-    return first.getBoundingClientRect().width + parseFloat(window.getComputedStyle(track).gap || 16);
-  }
-  function update() {
-    var idx = Math.min(slides - 1, Math.max(0, Math.round(track.scrollLeft / step())));
-    dots.forEach(function (d, i) { d.classList.toggle('is-active', i === idx); });
-    document.getElementById('deck-prev').disabled = track.scrollLeft <= 4;
-    document.getElementById('deck-next').disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
-  }
-
-  document.getElementById('deck-prev').addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
-  document.getElementById('deck-next').addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
-  dots.forEach(function (d) {
-    d.addEventListener('click', function () { track.scrollTo({ left: step() * parseInt(d.dataset.idx, 10), behavior: 'smooth' }); });
-  });
-
-  var t;
-  track.addEventListener('scroll', function () { clearTimeout(t); t = setTimeout(update, 60); }, { passive: true });
-  window.addEventListener('resize', update);
-  update();
-}
-
-renderBuildDemo();
-renderReelCarousels();
-initDeck();
-renderStills();
-renderMarquee();
-renderExamples();
-initExamplesCarousel();
-renderCaseStudies();
-renderLadder();
-renderLayerList();
-
-/* The 4 objections that apply whatever the service. Rendered into any page
-   carrying [data-faq-short], so the service pages answer them without the
-   homepage FAQ being copied 5 times. Must run before the accordion below
-   binds its listeners. */
-var FAQ_SHORT = [
-  { q: "What if it doesn't work?",
-    a: "You'll know early. Your portal shows the numbers live, and a weekly email gives you 2 of them: are you growing, or not. There's no lock-in, so you can stop after any phase." },
-  { q: 'How much of my time will this take?',
-    a: "About 20 minutes to start: a short brief, your logo, and whatever photos you've got. I chase you for what I need, so you can forget about it in between." },
-  { q: 'Do I own what you build?',
-    a: 'Yes. The domain, the content and the code are all yours. If you ever want to walk, it walks with you and keeps running.' },
-  { q: 'Is this a one person operation?',
-    a: "You deal with one person the whole way through, and that person is responsible for the results. The building is done by specialists we bring in for each part. So there's only ever one person to call, and a lot more gets done than one person could manage alone." }
-];
-
-(function () {
-  var mount = document.querySelector('[data-faq-short]');
-  if (!mount) return;
-  var plus = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>';
-  mount.innerHTML = FAQ_SHORT.map(function (f) {
-    return '' +
-      '<div class="liquid-glass faq-item stagger-item">' +
-        '<button type="button" class="faq-q" aria-expanded="false">' + f.q + plus + '</button>' +
-        '<div class="faq-a-wrap"><div class="faq-a"><p>' + f.a + '</p></div></div>' +
-      '</div>';
-  }).join('');
-})();
-
-/* Enquiry service picker: preselects from ?service=, reveals the fields that
-   match, and sets the Formspree subject so the inbox sorts itself. Fields in
-   hidden blocks are disabled so they never post as empty noise. */
-(function () {
-  var picker = document.getElementById('svc-picker');
-  if (!picker) return;
-
-  var SLUGS = {
-    'attention': 'Attention',
-    'traffic': 'Traffic',
-    'conversion': 'Conversion',
-    'follow-up': 'Follow up',
-    'followup': 'Follow up',
-    'not-sure': 'Not sure',
-    /* Legacy service slugs still land on the layer that covers them, so old
-       links and anything already indexed keeps working. */
-    'website': 'Conversion',
-    'meta-ads': 'Traffic',
-    'ads': 'Traffic',
-    'video': 'Attention',
-    'videography': 'Attention',
-    'content': 'Attention',
-    'content-marketing': 'Attention',
-    'creative-direction': 'Not sure'
-  };
-  var SUBJECTS = {
-    'Attention': 'Attention enquiry \u00b7 trigrams.studio',
-    'Traffic': 'Traffic enquiry \u00b7 trigrams.studio',
-    'Conversion': 'Conversion enquiry \u00b7 trigrams.studio',
-    'Follow up': 'Follow-up enquiry \u00b7 trigrams.studio',
-    'Not sure': 'New enquiry \u00b7 trigrams.studio'
-  };
-
-  var radios = picker.querySelectorAll('input[name="service"]');
-  var extras = document.querySelectorAll('.svc-extra');
-  var subject = document.getElementById('enquiry-subject');
-  var submit = document.getElementById('enquiry-submit');
-
-  function apply(value) {
-    extras.forEach(function (block) {
-      var on = block.dataset.for === value;
-      block.classList.toggle('is-open', on);
-      block.querySelectorAll('input, textarea').forEach(function (f) { f.disabled = !on; });
-    });
-    if (subject) subject.value = SUBJECTS[value] || SUBJECTS['Not sure'];
-    if (submit) submit.textContent = 'Send enquiry';
-  }
-
-  radios.forEach(function (r) {
-    r.addEventListener('change', function () { if (r.checked) apply(r.value); });
-  });
-
-  var wanted = SLUGS[(new URLSearchParams(location.search).get('service') || '').toLowerCase()];
-  if (wanted) {
-    radios.forEach(function (r) { r.checked = (r.value === wanted); });
-  }
-  var current = document.querySelector('input[name="service"]:checked');
-  apply(current ? current.value : 'Attention');
-})();
-
-/* Entrance. On a first load the intro veil is still up for ~1.5s, so the hero
-   would otherwise play its entrance behind a covered screen and be sitting
-   still by the time anyone saw it. Offsetting by the veil's lift keeps the two
-   sequences reading as one. */
-(function () {
-  var els = document.querySelectorAll('[data-fade]');
-  if (!els.length) return;
-  var delays = [80, 250, 450, 650, 850];
-  var intro = document.getElementById('intro');
-  var offset = (intro && !document.documentElement.classList.contains('intro-done')) ? 1150 : 0;
-  els.forEach(function (el) {
-    var i = parseInt(el.dataset.fade || '0', 10);
-    var d = (delays[i] === undefined ? 80 : delays[i]) + offset;
-    requestAnimationFrame(function () {
-      setTimeout(function () { el.classList.add('in'); }, d);
-    });
-  });
-})();
-
-/* Scroll reveals */
-(function () {
-  var STAGGER_MS = 90;
-  var els = document.querySelectorAll('[data-reveal]');
-  var staggerEls = document.querySelectorAll('[data-stagger]');
-  var revealStagger = function (el) {
-    var children = el.querySelectorAll(':scope > .stagger-item');
-    children.forEach(function (c, i) { setTimeout(function () { c.classList.add('in'); }, i * STAGGER_MS); });
-  };
-  if (!('IntersectionObserver' in window)) {
-    els.forEach(function (el) { el.classList.add('in'); });
-    staggerEls.forEach(revealStagger);
-    return;
-  }
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (!entry.isIntersecting) return;
-      if (entry.target.hasAttribute('data-stagger')) {
-        /* A container carrying data-reveal as well is still held at opacity 0
-           by that rule, which would hide the children no matter how many of
-           them get `in`. Reveal the container too rather than only its rows. */
-        if (entry.target.hasAttribute('data-reveal')) entry.target.classList.add('in');
-        revealStagger(entry.target);
-        io.unobserve(entry.target);
-        return;
-      }
-      var delay = parseInt(entry.target.dataset.revealDelay || '0');
-      setTimeout(function () { entry.target.classList.add('in'); }, delay);
-      io.unobserve(entry.target);
-    });
-  }, { threshold: 0.08, rootMargin: '0px 0px -48px 0px' });
-  els.forEach(function (el) { io.observe(el); });
-  staggerEls.forEach(function (el) { io.observe(el); });
-})();
-
-/* Sticky nav: scrolled shadow + mobile menu toggle */
-(function () {
-  var bar = document.getElementById('nav-bar');
-  var toggle = document.getElementById('nav-toggle');
-  var links = document.getElementById('nav-links');
-  if (bar) {
-    var tick = function () { bar.classList.toggle('scrolled', window.scrollY > 8); };
-    window.addEventListener('scroll', tick, { passive: true });
-    tick();
-  }
-  if (toggle && links) {
-    var closeMenu = function () {
-      links.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
-    };
-    var openMenu = function () {
-      links.classList.add('open');
-      toggle.setAttribute('aria-expanded', 'true');
-    };
-    toggle.addEventListener('click', function (e) {
-      e.stopPropagation();
-      if (links.classList.contains('open')) closeMenu(); else openMenu();
-    });
-    links.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', closeMenu);
-    });
-    document.addEventListener('click', function (e) {
-      if (!links.contains(e.target) && e.target !== toggle) closeMenu();
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeMenu();
-    });
-    window.addEventListener('resize', function () {
-      if (window.innerWidth >= 860) closeMenu();
-    });
-  }
-})();
-
-/* Theme toggle. The theme itself is applied before first paint by the inline
-   snippet in <head> — this only builds the control and handles switching.
-
-   Pixel icons have a hardcoded light fill, so CSS can't recolour them and a
-   filter would invert their chrome chip too. Dark variants get swapped in. */
-(function () {
-  var KEY = 'ts-theme';
-  var root = document.documentElement;
-
-  function swapIcons(theme) {
-    document.querySelectorAll('.ts-icon').forEach(function (img) {
-      var src = img.getAttribute('src') || '';
-      if (src.indexOf('/icons/') === -1) return;
-      var wantDark = theme === 'light';
-      var isDark = src.indexOf('/icons/dark/') !== -1;
-      if (wantDark && !isDark) img.setAttribute('src', src.replace('/icons/', '/icons/dark/'));
-      if (!wantDark && isDark) img.setAttribute('src', src.replace('/icons/dark/', '/icons/'));
-    });
-  }
-
-  function apply(theme, persist) {
-    root.setAttribute('data-theme', theme);
-    swapIcons(theme);
-    if (persist) { try { localStorage.setItem(KEY, theme); } catch (e) {} }
-    var btns = document.querySelectorAll('.theme-toggle button');
-    btns.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.theme === theme ? 'true' : 'false'); });
-  }
-
-  var current = root.getAttribute('data-theme') || 'dark';
-  swapIcons(current);
-
-  var sun = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>';
-  var moon = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>';
-
-  var wrap = document.createElement('div');
-  wrap.className = 'theme-toggle';
-  wrap.setAttribute('role', 'group');
-  wrap.setAttribute('aria-label', 'Colour theme');
-  wrap.innerHTML =
-    '<button type="button" data-theme="dark" aria-label="Dark theme" title="Dark">' + moon + '</button>' +
-    '<button type="button" data-theme="light" aria-label="Light theme" title="Light">' + sun + '</button>';
-  document.body.appendChild(wrap);
-
-  wrap.querySelectorAll('button').forEach(function (b) {
-    b.addEventListener('click', function () { apply(b.dataset.theme, true); });
-  });
-  apply(current, false);
-
-  /* Follow the OS only while the visitor hasn't made an explicit choice. */
-  if (window.matchMedia) {
-    var mq = window.matchMedia('(prefers-color-scheme: light)');
-    var onChange = function (e) {
-      var saved = null;
-      try { saved = localStorage.getItem(KEY); } catch (err) {}
-      if (!saved) apply(e.matches ? 'light' : 'dark', false);
-    };
-    if (mq.addEventListener) mq.addEventListener('change', onChange);
-  }
-})();
-
-/* Scroll progress under the nav. */
-(function () {
-  var bar = document.createElement('div');
-  bar.className = 'scroll-progress';
-  document.body.appendChild(bar);
-  var ticking = false;
-  function update() {
+  mark.addEventListener('click', function () { setMotif(!motifOpen); });
+  motif.addEventListener('mouseleave', function () { setMotif(false); });
+  document.addEventListener('pointerdown', function (e) { if (motifOpen && !motif.contains(e.target)) setMotif(false); });
+  document.addEventListener('keydown', function (e) { if (motifOpen && e.key === 'Escape') setMotif(false); });
+
+  /* show the mark only once the real header is off screen */
+  new IntersectionObserver(function (entries) {
+    var gone = !entries[0].isIntersecting;
+    motif.classList.toggle('is-visible', gone);
+    mark.tabIndex = gone ? 0 : -1;
+    if (!gone) setMotif(false);
+  }).observe(siteNav);
+
+  /* the ring runs down like a reel as you scroll */
+  var onMotifScroll = function () {
     var max = document.documentElement.scrollHeight - window.innerHeight;
-    var pct = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
-    bar.style.transform = 'scaleX(' + pct + ')';
-    ticking = false;
+    motif.style.setProperty('--progress', max > 0 ? Math.min(1, window.scrollY / max) : 0);
+  };
+  window.addEventListener('scroll', onMotifScroll, { passive: true });
+  window.addEventListener('resize', onMotifScroll);
+  onMotifScroll();
+
+  /* dot beside the link for the page or section you're on */
+  var targets = [];
+  tray.querySelectorAll('a').forEach(function (link) {
+    var url = new URL(link.href, location.href);
+    if (url.origin !== location.origin || url.pathname !== location.pathname) return;
+    var section = url.hash && document.getElementById(url.hash.slice(1));
+    if (section) targets.push({ link: link, section: section });
+    else if (!url.hash) link.classList.add('is-active');
+  });
+  if (targets.length) {
+    var sectionObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        targets.forEach(function (t) { if (t.section === e.target) t.link.classList.toggle('is-active', e.isIntersecting); });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    targets.forEach(function (t) { sectionObserver.observe(t.section); });
   }
-  window.addEventListener('scroll', function () {
-    if (!ticking) { ticking = true; requestAnimationFrame(update); }
-  }, { passive: true });
-  window.addEventListener('resize', update);
-  update();
-})();
+}
 
-/* Nav "More" dropdown. Opens on hover where hovering exists, and on click
-   everywhere — click also drives keyboard use, so it works without a mouse. */
-(function () {
-  var wrap = document.getElementById('nav-more');
-  var btn = document.getElementById('nav-more-btn');
-  if (!wrap || !btn) return;
-  var canHover = window.matchMedia && window.matchMedia('(hover: hover) and (min-width: 860px)').matches;
+/* ---------- 3D tilt toward the pointer (hero phones, Cutting Room preview) ---------- */
+if (finePointer && !reduceMotion) {
+  document.querySelectorAll('[data-tilt]').forEach(function (el) {
+    var raf = 0;
+    el.addEventListener('pointermove', function (e) {
+      var r = el.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(function () {
+        el.style.setProperty('--ry', (x * 14).toFixed(2) + 'deg');
+        el.style.setProperty('--rx', (y * -10).toFixed(2) + 'deg');
+      });
+    });
+    el.addEventListener('pointerleave', function () {
+      el.style.setProperty('--ry', '0deg');
+      el.style.setProperty('--rx', '0deg');
+    });
+  });
+}
 
-  function open() { wrap.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true'); }
-  function close() { wrap.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); }
+/* ---------- Count up the comparison numbers when they come into view ---------- */
+var counters = document.querySelectorAll('[data-count]');
+if (counters.length && 'IntersectionObserver' in window && !reduceMotion) {
+  var co = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      co.unobserve(en.target);
+      var el = en.target, end = parseInt(el.getAttribute('data-count'), 10), n = 0;
+      var t = setInterval(function () { el.textContent = ++n; if (n >= end) clearInterval(t); }, 90);
+      el.textContent = '0';
+    });
+  }, { threshold: 0.8 });
+  counters.forEach(function (c) { co.observe(c); });
+}
 
-  if (canHover) {
-    /* Pointer opens and closes it. Click must not also toggle here, or moving
-       the mouse onto the button opens it and the click immediately shuts it. */
-    wrap.addEventListener('mouseenter', open);
-    wrap.addEventListener('mouseleave', close);
-    /* Keyboard path: tabbing to the button opens the menu. */
-    btn.addEventListener('focus', open);
-    btn.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); });
-  } else {
-    btn.addEventListener('click', function (e) {
-      e.stopPropagation();
-      wrap.classList.contains('is-open') ? close() : open();
+/* ---------- What's included: a timeline that plays itself until you touch it ---------- */
+var tl = document.querySelector('[data-timeline]');
+if (tl) {
+  var nodes = tl.querySelectorAll('[data-tl]');
+  var panels = tl.querySelectorAll('[data-tl-panel]');
+  var fill = tl.querySelector('[data-tl-fill]');
+  var cur = 0, timer = 0, inView = false, held = false;
+  var go = function (i, focus) {
+    cur = i;
+    nodes.forEach(function (n, k) {
+      n.classList.toggle('is-on', k === i);
+      n.classList.toggle('is-done', k < i);
+      n.setAttribute('aria-selected', k === i ? 'true' : 'false');
+      n.tabIndex = k === i ? 0 : -1;
+    });
+    panels.forEach(function (p, k) {
+      p.hidden = k !== i;
+      /* The edit scene's video only loads and plays while its part is showing. */
+      var v = p.querySelector('video[data-src]');
+      if (!v) return;
+      if (k === i) { if (!v.src) v.src = v.getAttribute('data-src'); var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
+      else v.pause();
+    });
+    if (fill) fill.parentNode.style.setProperty('--fill', (i / (nodes.length - 1) * 100) + '%');
+    if (focus) nodes[i].focus();
+  };
+  var tick = function () {
+    clearTimeout(timer);
+    if (reduceMotion || held || !inView) return;
+    timer = setTimeout(function () { go((cur + 1) % nodes.length); tick(); }, 5200);
+  };
+  nodes.forEach(function (n, i) {
+    n.addEventListener('click', function () { held = true; clearTimeout(timer); go(i); });
+    n.addEventListener('keydown', function (e) {
+      var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (d) { e.preventDefault(); held = true; clearTimeout(timer); go((cur + d + nodes.length) % nodes.length, true); }
+    });
+  });
+  tl.querySelectorAll('[data-tl-prev], [data-tl-next]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      held = true; clearTimeout(timer);
+      go((cur + (b.hasAttribute('data-tl-next') ? 1 : -1) + nodes.length) % nodes.length);
+    });
+  });
+  tl.addEventListener('pointerenter', function () { clearTimeout(timer); });
+  tl.addEventListener('pointerleave', tick);
+  if ('IntersectionObserver' in window) {
+    /* .tl is display: contents on desktop, so watch the rail, which has a box. */
+    new IntersectionObserver(function (en) { inView = en[0].isIntersecting; tick(); }, { threshold: 0.4 }).observe(tl.querySelector('.tl-rail') || tl);
+  }
+  go(0);
+}
+
+/* ---------- Ad budget slider ---------- */
+var meter = document.querySelector('[data-meter]');
+if (meter) {
+  var input = meter.querySelector('[data-meter-input]');
+  var TIERS = [
+    { max: 30, tier: 'low', title: 'Too low to test properly', note: 'Under $35 a day, Meta can’t gather enough data to find who responds. Wait until you can spend a bit more.' },
+    { max: 45, tier: 'min', title: 'The minimum', note: 'Enough for Meta to find your first leads on 1 audience. Most of the first 2 weeks is testing.' },
+    { max: 95, tier: 'rec', title: 'Recommended', note: 'Room to test 2 to 3 versions of the ad and put the money behind the one that works.' },
+    { max: 999, tier: 'fast', title: 'Faster answers', note: 'More areas, offers or audiences tested at the same time.' }
+  ];
+  var money = function (n) { return '$' + n.toLocaleString('en-AU'); };
+  var paint = function () {
+    var d = parseInt(input.value, 10);
+    var min = parseInt(input.min, 10), max = parseInt(input.max, 10);
+    var t = TIERS.filter(function (x) { return d <= x.max; })[0];
+    meter.querySelector('[data-meter-day]').textContent = money(d) + (d >= max ? '+' : '');
+    meter.querySelector('[data-meter-month]').textContent = 'about ' + money(Math.round(d * 30.4 / 50) * 50);
+    var v = meter.querySelector('[data-meter-verdict]');
+    v.setAttribute('data-tier', t.tier);
+    meter.querySelector('[data-meter-title]').textContent = t.title;
+    meter.querySelector('[data-meter-note]').textContent = t.note;
+    input.style.setProperty('--pct', ((d - min) / (max - min) * 100) + '%');
+  };
+  input.addEventListener('input', paint);
+  paint();
+}
+
+/* ---------- The Cutting Room preview: tabs scroll the screenshot ---------- */
+var resTabs = document.querySelectorAll('[data-res]');
+var shot = document.querySelector('[data-res-shot]');
+if (resTabs.length && shot) {
+  /* Image units: the screenshot is 960 wide, the window shows a 16:10 slice. */
+  var IMG_H = parseInt(shot.getAttribute('height'), 10) || 2820, VIEW_H = 600;
+  var showAt = function (y) {
+    var clamped = Math.min(Math.max(y, 0), IMG_H - VIEW_H);
+    shot.style.setProperty('--shot-y', (-clamped / IMG_H * 100) + '%');
+  };
+  var resAt = 0;
+  resTabs.forEach(function (b) {
+    var pick = function () {
+      resAt = parseInt(b.getAttribute('data-res'), 10);
+      resTabs.forEach(function (o) { o.classList.toggle('is-on', o === b); o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+      showAt(resAt);
+    };
+    b.addEventListener('click', pick);
+    if (finePointer) b.addEventListener('mouseenter', pick);
+  });
+  /* Hovering the window itself takes a slow scroll through the whole page. */
+  var browser = shot.closest('.browser');
+  if (browser && finePointer && !reduceMotion) {
+    browser.addEventListener('mouseenter', function () { shot.style.transitionDuration = '7s'; showAt(IMG_H); });
+    browser.addEventListener('mouseleave', function () { shot.style.transitionDuration = ''; showAt(resAt); });
+  }
+}
+
+/* ---------- FAQ: filter by topic, one answer open at a time ---------- */
+var faqList = document.querySelector('[data-faq]');
+if (faqList) {
+  var items = faqList.querySelectorAll('.faq-item');
+  items.forEach(function (d) {
+    d.addEventListener('toggle', function () {
+      if (d.open) items.forEach(function (o) { if (o !== d) o.open = false; });
+    });
+  });
+  var filter = document.querySelector('[data-faq-filter]');
+  if (filter) {
+    filter.hidden = false;
+    filter.querySelectorAll('button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var cat = b.getAttribute('data-cat');
+        filter.querySelectorAll('button').forEach(function (o) { o.classList.toggle('is-on', o === b); });
+        var first = null;
+        items.forEach(function (d) {
+          var show = cat === 'all' || d.getAttribute('data-cat') === cat;
+          d.hidden = !show;
+          if (show && !first) first = d;
+          if (!show) d.open = false;
+        });
+        if (first) first.open = true;
+      });
     });
   }
+}
 
-  document.addEventListener('click', function (e) {
-    if (!wrap.contains(e.target)) close();
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && wrap.classList.contains('is-open')) { close(); btn.focus(); }
-  });
-  /* Close when focus leaves the group entirely, so tabbing past it tidies up. */
-  wrap.addEventListener('focusout', function () {
-    setTimeout(function () { if (!wrap.contains(document.activeElement)) close(); }, 0);
-  });
-})();
+/* ---------- Client carousel: drifts on its own, drag or use the arrows ---------- */
+var rail = document.querySelector('[data-rail]');
+if (rail) {
+  var railTrack = rail.querySelector('.logo-track');
+  var half = function () { return railTrack.scrollWidth / 2; };
+  var paused = false, dragging = false, moved = 0, startX = 0, startLeft = 0, last = 0, pos = 0;
+  var wrap = function () {
+    if (rail.scrollLeft >= half()) rail.scrollLeft -= half();
+    else if (rail.scrollLeft <= 0) rail.scrollLeft += half();
+  };
+  rail.scrollLeft = 1;
+  pos = rail.scrollLeft;
+  var drift = function (t) {
+    var dt = last ? Math.min(t - last, 50) : 16;
+    last = t;
+    /* Keep a float position: scrollLeft rounds to whole pixels, so adding
+       half a pixel to it each frame would never move. */
+    if (Math.abs(rail.scrollLeft - pos) > 2) pos = rail.scrollLeft; /* user scrolled */
+    if (!paused && !dragging && !reduceMotion) {
+      pos += dt * 0.03;
+      if (pos >= half()) pos -= half();
+      rail.scrollLeft = pos;
+    }
+    requestAnimationFrame(drift);
+  };
+  requestAnimationFrame(drift);
+  ['mouseenter', 'focusin', 'touchstart'].forEach(function (ev) { rail.addEventListener(ev, function () { paused = true; }, { passive: true }); });
+  ['mouseleave', 'focusout'].forEach(function (ev) { rail.addEventListener(ev, function () { paused = false; }); });
+  rail.addEventListener('touchend', function () { setTimeout(function () { paused = false; }, 2500); }, { passive: true });
+  rail.addEventListener('scroll', wrap, { passive: true });
 
-/* Menu bar clock */
-(function () {
-  var el = document.getElementById('menubar-clock');
-  if (!el) return;
-  var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  function tick() {
-    var d = new Date();
-    var h = d.getHours();
-    var ampm = h >= 12 ? 'PM' : 'AM';
-    h = h % 12 || 12;
-    var m = String(d.getMinutes()).padStart(2, '0');
-    el.textContent = days[d.getDay()] + ' ' + months[d.getMonth()] + ' ' + d.getDate() + ' ' + h + ':' + m + ' ' + ampm;
+  /* Mouse drag. A drag of more than a few pixels doesn't count as a click. */
+  rail.addEventListener('pointerdown', function (e) {
+    if (e.pointerType !== 'mouse') return;
+    dragging = true; moved = 0; startX = e.clientX; startLeft = rail.scrollLeft;
+  });
+  window.addEventListener('pointermove', function (e) {
+    if (!dragging) return;
+    moved = Math.abs(e.clientX - startX);
+    if (moved > 4) rail.classList.add('is-dragging');
+    rail.scrollLeft = startLeft - (e.clientX - startX);
+  });
+  window.addEventListener('pointerup', function () {
+    if (!dragging) return;
+    dragging = false;
+    setTimeout(function () { rail.classList.remove('is-dragging'); }, 0);
+  });
+  rail.addEventListener('click', function (e) { if (moved > 4) { e.preventDefault(); moved = 0; } }, true);
+
+  var hold = 0;
+  var step = function (dir) {
+    paused = true; clearTimeout(hold);
+    hold = setTimeout(function () { paused = false; }, 1400);
+    var tile = railTrack.querySelector('.logo-tile');
+    var w = tile ? tile.getBoundingClientRect().width + 14 : 240;
+    rail.scrollBy({ left: dir * w * 2, behavior: 'smooth' });
+  };
+  var pb = document.querySelector('[data-rail-prev]'), nb = document.querySelector('[data-rail-next]');
+  if (pb) pb.addEventListener('click', function () { step(-1); });
+  if (nb) nb.addEventListener('click', function () { step(1); });
+  rail.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+  });
+  rail.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a.logo-tile');
+    if (a) track('Client Click', { client: (a.querySelector('.logo-info b') || {}).textContent || '', from: PAGE });
+  });
+}
+
+/* ---------- Ad cards: silent preview in view, full video with sound on tap ---------- */
+var cards = document.querySelectorAll('.card[data-video]');
+if (cards.length) {
+  var reduce = reduceMotion;
+  var preview = function (v, on) {
+    if (on) {
+      if (!v.src) v.src = v.getAttribute('data-preview');
+      var p = v.play(); if (p && p.catch) p.catch(function () {});
+    } else v.pause();
+  };
+  if (!reduce && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { preview(en.target, en.isIntersecting); });
+    }, { threshold: 0.6 });
+    cards.forEach(function (c) { io.observe(c.querySelector('video')); });
   }
-  tick();
-  setInterval(tick, 30000);
-})();
 
-/* Enquiry form */
-(function () {
-  var form = document.getElementById('enquiry-form');
-  if (!form) return;
-  var note = document.getElementById('enquiry-note');
-  var submitBtn = document.getElementById('enquiry-submit');
-  var ENDPOINT = 'https://formspree.io/f/meewzagj';
+  var viewer = document.getElementById('viewer');
+  if (viewer && viewer.showModal) {
+    var full = viewer.querySelector('video');
+    var close = function () { full.pause(); full.removeAttribute('src'); full.load(); if (viewer.open) viewer.close(); };
+    cards.forEach(function (c) {
+      c.addEventListener('click', function () {
+        full.src = c.getAttribute('data-video');
+        viewer.showModal();
+        var p = full.play(); if (p && p.catch) p.catch(function () {});
+        track('Video Open', { video: c.getAttribute('data-video').split('/').pop(), page: PAGE });
+      });
+    });
+    viewer.querySelector('[data-viewer-close]').addEventListener('click', close);
+    viewer.addEventListener('click', function (e) { if (e.target === viewer) close(); });
+    viewer.addEventListener('close', function () { full.pause(); });
+  } else {
+    /* No <dialog>: open the file itself. */
+    cards.forEach(function (c) { c.addEventListener('click', function () { location.href = c.getAttribute('data-video'); }); });
+  }
+}
+
+/* ---------- Qualifying form (Book a call + Enquire) ----------
+   Same questions on both pages. Every submission reaches the inbox, tagged
+   "fit: yes" or "fit: no". A "no" is anyone under $1,000 a month in ad spend
+   or anyone who said losing the first month would hurt; they get pointed to
+   the free resources instead of the calendar. */
+var CALENDLY = 'https://calendly.com/alex-trigrams/30min';
+var ENDPOINT = 'https://formspree.io/f/meewzagj';
+
+document.querySelectorAll('form[data-qualify]').forEach(function (form) {
+  var kind = form.getAttribute('data-qualify');
+  var err = form.querySelector('[data-form-error]');
+  var btn = form.querySelector('button[type="submit"]');
+  var btnText = btn.textContent;
+
+  function fail(msg, el) {
+    err.textContent = msg;
+    err.hidden = false;
+    if (el) el.focus();
+  }
+
+  function missing(scope) {
+    var first = null;
+    (scope || form).querySelectorAll('input[required]').forEach(function (el) {
+      if (first) return;
+      if (el.type === 'radio') {
+        if (!form.querySelector('input[name="' + el.name + '"]:checked')) first = el;
+      } else if (el.type === 'checkbox') {
+        if (!el.checked) first = el;
+      } else if (!el.value.trim() || (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim()))) {
+        first = el;
+      }
+    });
+    return first;
+  }
+
+  /* Steps: one group of questions at a time, with a progress bar. */
+  var stepEls = form.querySelectorAll('[data-form-step]');
+  var at = 0, showStep = null;
+  if (stepEls.length > 1) {
+    form.classList.add('js-steps');
+    var prog = document.createElement('div');
+    prog.className = 'form-progress';
+    prog.innerHTML = '<div class="form-progress-row"><b data-step-name></b><span data-step-of></span></div><div class="form-progress-bar"><i></i></div>';
+    stepEls[0].parentNode.insertBefore(prog, stepEls[0]);
+    var navEl = document.createElement('div');
+    navEl.className = 'form-nav';
+    navEl.innerHTML = '<button type="button" class="btn btn--line" data-step-back>Back</button><button type="button" class="btn" data-step-next>Next</button>';
+    stepEls[stepEls.length - 1].parentNode.insertBefore(navEl, stepEls[stepEls.length - 1].nextSibling);
+    stepEls[stepEls.length - 1].parentNode.insertBefore(err, navEl);
+    var back = navEl.querySelector('[data-step-back]'), next = navEl.querySelector('[data-step-next]');
+    showStep = function (i, focus) {
+      at = i;
+      stepEls.forEach(function (st, k) { st.hidden = k !== i; });
+      prog.querySelector('[data-step-name]').textContent = stepEls[i].getAttribute('data-step-title');
+      prog.querySelector('[data-step-of]').textContent = 'Step ' + (i + 1) + ' of ' + stepEls.length;
+      prog.querySelector('i').style.setProperty('--p', ((i + 1) / stepEls.length * 100) + '%');
+      back.hidden = i === 0;
+      next.hidden = i === stepEls.length - 1;
+      if (focus) { var f = stepEls[i].querySelector('input, textarea'); if (f) f.focus({ preventScroll: true }); }
+      track('Form Step', { form: kind, step: i + 1 });
+    };
+    next.addEventListener('click', function () {
+      err.hidden = true;
+      var gap = missing(stepEls[at]);
+      if (gap) { fail(gap.type === 'radio' ? 'Please pick an answer for each question.' : gap.type === 'email' ? 'Please add a valid email address.' : 'Please fill in the fields marked with a star.', gap); return; }
+      showStep(at + 1, true);
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    back.addEventListener('click', function () { err.hidden = true; showStep(at - 1, true); });
+    showStep(0);
+  }
+
+  function stage(result) {
+    document.querySelectorAll('[data-stage="questions"]').forEach(function (el) { el.hidden = true; });
+    var panel = document.querySelector('[data-result="' + result + '"]');
+    if (panel) panel.hidden = false;
+    var title = document.querySelector('[data-stage-title]');
+    var copy = document.querySelector('[data-stage-copy]');
+    if (result === 'fit' && kind === 'call') {
+      if (title) title.textContent = 'Pick a time';
+      if (copy) copy.textContent = 'Thanks. Choose a time that suits and you’ll get a calendar invite straight away.';
+      document.querySelectorAll('[data-progress]').forEach(function (p) { p.classList.toggle('is-on', p.getAttribute('data-progress') === '2'); });
+    } else if (result === 'unfit') {
+      if (title) title.hidden = true;
+      if (copy) copy.hidden = true;
+      document.querySelectorAll('.progress').forEach(function (p) { p.hidden = true; });
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function openCalendar() {
+    var frame = document.querySelector('[data-calendar]');
+    if (!frame) return;
+    var q = new URLSearchParams({
+      embed_type: 'Inline', hide_gdpr_banner: '1',
+      background_color: 'ffffff', text_color: '15171a', primary_color: 'd92b1b',
+      name: form.elements.name.value.trim(), email: form.elements.email.value.trim()
+    });
+    frame.src = CALENDLY + '?' + q.toString();
+  }
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Sending…';
-    note.className = 'enquiry-note';
-    note.textContent = '';
-
-    fetch(ENDPOINT, {
-      method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
-    }).then(function (res) {
-      if (res.ok) {
-        form.reset();
-        note.classList.add('is-success');
-        note.textContent = 'Sent. I’ll reply within 24 hours with a time to talk.';
-        submitBtn.textContent = 'Send enquiry';
-      } else {
-        throw new Error('Request failed');
-      }
-    }).catch(function () {
-      note.classList.add('is-error');
-      note.textContent = 'Something went wrong. Email hello@trigrams.studio directly.';
-      submitBtn.textContent = 'Send enquiry';
-    }).finally(function () {
-      submitBtn.disabled = false;
-    });
-  });
-})();
-
-/* Newsletter. The built-in Formspree signup was retired on 2026-08-30 in favour
-   of Alex's Substack. Set SUBSTACK_URL below and the footer panel reveals
-   itself on every page; while it is empty the panel stays hidden rather than
-   shipping a dead link. */
-var SUBSTACK_URL = 'https://substack.com/@trigramsstudio';
-
-(function () {
-  var panels = document.querySelectorAll('[data-substack]');
-  if (!panels.length || !SUBSTACK_URL) return;
-  panels.forEach(function (el) {
-    el.href = SUBSTACK_URL;
-    el.hidden = false;
-  });
-})();
-
-/* FAQ accordion */
-(function () {
-  var items = document.querySelectorAll('.faq-item');
-  if (!items.length) return;
-  items.forEach(function (item) {
-    var btn = item.querySelector('.faq-q');
-    btn.addEventListener('click', function () {
-      var open = item.classList.toggle('open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  });
-})();
-
-/* Portal links (Client Login + Free Resource) + analytics events.
-   One place for all pages — links are injected into the nav and footer,
-   and interactions are reported to Vercel Web Analytics as custom events. */
-(function () {
-  var CLIENT_URL = 'https://client.trigrams.studio/admin';
-  var RESOURCE_URL = 'https://onboarding.trigrams.studio';
-
-  // Vercel Analytics queue guard — safe to call before the script loads.
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-  function track(name, data) {
-    try { window.va('event', { name: name, data: data || {} }); } catch (e) {}
-  }
-  var PAGE = location.pathname.replace(/\/index\.html$/, '/') || '/';
-
-  /* --- Free Resource sits in the "More" dropdown. Client Login is footer-only,
-         so the top bar stays down to three links plus the CTA. --- */
-  var moreMenu = document.getElementById('nav-more-menu');
-  if (moreMenu && !moreMenu.querySelector('[data-portal="resource"]')) {
-    var res = document.createElement('a');
-    res.href = RESOURCE_URL;
-    res.textContent = 'Free Resource';
-    res.setAttribute('data-portal', 'resource');
-    res.rel = 'noopener';
-    moreMenu.appendChild(res);
-  }
-
-  /* --- Inject both into the footer "Talk" column --- */
-  var footerCols = document.querySelectorAll('.footer-links');
-  if (footerCols.length) {
-    var talk = footerCols[footerCols.length - 1];
-    if (!talk.querySelector('[data-portal]')) {
-      var fRes = document.createElement('a');
-      fRes.href = RESOURCE_URL; fRes.textContent = 'Free Resource';
-      fRes.setAttribute('data-portal', 'resource'); fRes.rel = 'noopener';
-      var fLogin = document.createElement('a');
-      fLogin.href = CLIENT_URL; fLogin.textContent = 'Client Login';
-      fLogin.setAttribute('data-portal', 'client'); fLogin.rel = 'noopener';
-      talk.appendChild(fRes);
-      talk.appendChild(fLogin);
-    }
-  }
-
-  /* --- Track clicks to the portals (delegated, catches all copies) --- */
-  document.addEventListener('click', function (e) {
-    var a = e.target.closest && e.target.closest('a[data-portal]');
-    if (!a) return;
-    track('Portal Click', {
-      portal: a.getAttribute('data-portal') === 'client' ? 'Client Login' : 'Free Resource',
-      from: PAGE
-    });
-  });
-
-  /* --- Track key CTA / button clicks --- */
-  document.addEventListener('click', function (e) {
-    var el = e.target.closest && e.target.closest('a, button');
-    if (!el || el.hasAttribute('data-portal')) return;
-    var href = el.getAttribute('href') || '';
-    var label = (el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60);
-    var kind = null;
-    if (el.id === 'enquiry-submit' || /^\/?enquiry(\.html)?([?#]|$)/.test(href)) kind = 'Enquiry';
-    else if (el.classList.contains('nav-cta') || el.classList.contains('liquid-glass') || /start your build|get started/i.test(label)) kind = 'CTA';
-    if (kind) track('CTA Click', { kind: kind, label: label, from: PAGE });
-  });
-
-  /* --- Scroll depth: 25 / 50 / 75 / 100% (once each per page) --- */
-  var marks = [25, 50, 75, 100];
-  var hit = {};
-  function onScrollDepth() {
-    var doc = document.documentElement;
-    var scrollable = doc.scrollHeight - window.innerHeight;
-    if (scrollable <= 0) return;
-    var pct = Math.round(((window.scrollY) / scrollable) * 100);
-    marks.forEach(function (m) {
-      if (pct >= m && !hit[m]) { hit[m] = true; track('Scroll Depth', { depth: m + '%', page: PAGE }); }
-    });
-    if (Object.keys(hit).length === marks.length) window.removeEventListener('scroll', onScrollDepth);
-  }
-  window.addEventListener('scroll', onScrollDepth, { passive: true });
-
-  /* --- Section views: fire once when a section scrolls into view --- */
-  var sections = document.querySelectorAll('section[id]');
-  if (sections.length && 'IntersectionObserver' in window) {
-    var seen = {};
-    var so = new IntersectionObserver(function (entries) {
-      entries.forEach(function (ent) {
-        if (!ent.isIntersecting) return;
-        var id = ent.target.id;
-        if (seen[id]) return;
-        seen[id] = true;
-        track('Section View', { section: id, page: PAGE });
-      });
-    }, { threshold: 0.4 });
-    sections.forEach(function (s) { so.observe(s); });
-  }
-})();
-
-/* Enquiry modal. Any link to enquiry.html opens this instead of navigating, so
-   the form is reachable from anywhere without losing the visitor's place. The
-   page still exists and still works: this is progressive enhancement, and a
-   middle-click or a no-JS visitor gets the real page. Deliberately shorter than
-   the full form (no per-service extra fields) to keep it low-friction, with a
-   link through for anyone who wants to say more. */
-(function () {
-  var ENDPOINT = 'https://formspree.io/f/meewzagj';
-  var SUBJECTS = {
-    'Attention': 'Attention enquiry \u00b7 trigrams.studio',
-    'Traffic': 'Traffic enquiry \u00b7 trigrams.studio',
-    'Conversion': 'Conversion enquiry \u00b7 trigrams.studio',
-    'Follow up': 'Follow-up enquiry \u00b7 trigrams.studio',
-    'Not sure': 'New enquiry \u00b7 trigrams.studio'
-  };
-  var SERVICES = [
-    { value: 'Attention', label: 'Attention' },
-    { value: 'Traffic', label: 'Traffic' },
-    { value: 'Conversion', label: 'Conversion' },
-    { value: 'Follow up', label: 'Follow up' },
-    { value: 'Not sure', label: 'Not sure yet' }
-  ];
-  /* Deep links use slugs; the pills use labels. Same map as the full page,
-     legacy service slugs included so old links keep resolving. */
-var SLUGS = {
-    'attention': 'Attention',
-    'traffic': 'Traffic',
-    'conversion': 'Conversion',
-    'follow-up': 'Follow up',
-    'followup': 'Follow up',
-    'not-sure': 'Not sure',
-    /* Legacy service slugs still land on the layer that covers them, so old
-       links and anything already indexed keeps working. */
-    'website': 'Conversion',
-    'meta-ads': 'Traffic',
-    'ads': 'Traffic',
-    'video': 'Attention',
-    'videography': 'Attention',
-    'content': 'Attention',
-    'content-marketing': 'Attention',
-    'creative-direction': 'Not sure'
-  };
-  var pop, lastFocus;
-
-  function build() {
-    pop = document.createElement('div');
-    pop.className = 'enq-pop';
-    pop.innerHTML =
-      '<div class="enq-pop-backdrop"></div>' +
-      '<div class="enq-pop-card" role="dialog" aria-modal="true" aria-labelledby="enq-pop-title">' +
-        '<button type="button" class="enq-pop-close" aria-label="Close">' +
-          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
-        '</button>' +
-        '<div class="enq-pop-title" id="enq-pop-title">Tell me about the <em>business</em>.</div>' +
-        '<p class="enq-pop-sub">Two minutes, plain answers. I reply within 24 hours with a time to talk.</p>' +
-        '<form class="enq-pop-form" id="enq-pop-form">' +
-          '<fieldset class="enq-pop-pills"><legend>What\u2019s not working?</legend><div>' +
-            SERVICES.map(function (svc, i) {
-              return '<label class="svc-pill"><input type="radio" name="service" value="' + svc.value + '"' + (i === 0 ? ' checked' : '') + '><span>' + svc.label + '</span></label>';
-            }).join('') +
-          '</div></fieldset>' +
-          '<input type="text" name="name" placeholder="Your name" autocomplete="name" required aria-label="Your name">' +
-          '<input type="email" name="email" placeholder="you@yourbusiness.com" autocomplete="email" required aria-label="Email address">' +
-          '<input type="text" name="business" placeholder="Business name (optional)" autocomplete="organization" aria-label="Business name">' +
-          '<textarea name="message" rows="3" placeholder="What do you need? A sentence or two is plenty." required aria-label="What do you need?"></textarea>' +
-          '<input type="hidden" name="_subject" id="enq-pop-subject" value="' + SUBJECTS.Attention + '">' +
-          '<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">' +
-          '<button type="submit" class="btn-red enq-pop-submit">Send enquiry</button>' +
-          '<p class="enq-pop-note" id="enq-pop-note" role="status" aria-live="polite"></p>' +
-          '<p class="enq-pop-alt">Prefer the full form? <a href="/enquiry">Open the enquiry page</a>.</p>' +
-        '</form>' +
-      '</div>';
-    document.body.appendChild(pop);
-
-    pop.querySelector('.enq-pop-close').addEventListener('click', close);
-    pop.querySelector('.enq-pop-backdrop').addEventListener('click', close);
-
-    /* Keep the emailed subject line matched to the chosen service. */
-    pop.querySelectorAll('input[name="service"]').forEach(function (r) {
-      r.addEventListener('change', function () {
-        pop.querySelector('#enq-pop-subject').value = SUBJECTS[r.value] || SUBJECTS['Not sure'];
-      });
-    });
-
-    var form = pop.querySelector('#enq-pop-form');
-    var note = pop.querySelector('#enq-pop-note');
-    var btn = pop.querySelector('.enq-pop-submit');
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      btn.disabled = true;
-      btn.textContent = 'Sending…';
-      note.className = 'enq-pop-note';
-      note.textContent = '';
-      fetch(ENDPOINT, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
-        .then(function (res) {
-          if (!res.ok) throw new Error('failed');
-          form.reset();
-          note.classList.add('is-success');
-          note.textContent = 'Sent. I’ll reply within 24 hours with a time to talk.';
-        })
-        .catch(function () {
-          note.classList.add('is-error');
-          note.textContent = 'Something went wrong. Email hello@trigrams.studio directly.';
-        })
-        .finally(function () { btn.disabled = false; btn.textContent = 'Send enquiry'; });
-    });
-  }
-
-  function open(service) {
-    if (!pop) build();
-    lastFocus = document.activeElement;
-    if (service) {
-      var hit = pop.querySelector('input[name="service"][value="' + service + '"]');
-      if (hit) { hit.checked = true; pop.querySelector('#enq-pop-subject').value = SUBJECTS[service] || SUBJECTS['Not sure']; }
-    }
-    pop.classList.add('show');
-    document.body.style.overflow = 'hidden';
-    setTimeout(function () { pop.querySelector('input[name="name"]').focus(); }, 60);
-  }
-
-  function close() {
-    if (!pop) return;
-    pop.classList.remove('show');
-    document.body.style.overflow = '';
-    if (lastFocus && lastFocus.focus) lastFocus.focus();
-  }
-
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && pop && pop.classList.contains('show')) close();
-  });
-
-  /* Keep the modal inside itself while it is open. */
-  document.addEventListener('keydown', function (e) {
-    if (e.key !== 'Tab' || !pop || !pop.classList.contains('show')) return;
-    var f = pop.querySelectorAll('button, input:not([type="hidden"]), textarea, a[href]');
-    var list = Array.prototype.filter.call(f, function (el) { return el.offsetParent !== null; });
-    if (!list.length) return;
-    var first = list[0], last = list[list.length - 1];
-    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-  });
-
-  /* Intercept enquiry links everywhere. Modified clicks fall through so
-     "open in new tab" still reaches the real page. */
-  document.addEventListener('click', function (e) {
-    var a = e.target.closest && e.target.closest('a[href^="/enquiry"], a[href^="enquiry"], [data-enquiry]');
-    if (!a) return;
-    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-    if (a.closest && a.closest('.enq-pop')) return;
-    /* Already on the enquiry page: go to the form rather than reload the page. */
-    var onPage = document.getElementById('enquiry-form');
-    if (onPage) {
-      e.preventDefault();
-      onPage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    err.hidden = true;
+    if (showStep && at < stepEls.length - 1) {
+      /* Enter on an early step means "next". */
+      form.querySelector('[data-step-next]').click();
       return;
     }
-    e.preventDefault();
-    var svc = a.getAttribute('data-enquiry');
-    var m = (a.getAttribute('href') || '').match(/service=([^&]+)/);
-    var raw = svc && svc !== 'true' ? svc : (m ? decodeURIComponent(m[1]) : null);
-    open(raw ? (SLUGS[raw.toLowerCase()] || raw) : null);
-  });
-})();
+    var gap = missing();
+    if (gap && showStep) {
+      for (var k = 0; k < stepEls.length; k++) { if (stepEls[k].contains(gap)) { showStep(k); break; } }
+    }
+    if (gap) {
+      var msg = gap.type === 'checkbox' ? 'Please tick the box to confirm you’ve read how it works and the price.'
+        : gap.type === 'radio' ? 'Please answer every question. They help me make the call worth your time.'
+        : gap.type === 'email' ? 'Please add a valid email address.'
+        : 'Please fill in the fields marked with a star.';
+      fail(msg, gap);
+      return;
+    }
 
+    var unfit = !!form.querySelector('input[data-unfit]:checked');
+    form.querySelector('[data-fit-field]').value = unfit ? 'no' : 'yes';
+    var subject = form.querySelector('input[name="_subject"]');
+    subject.value = (unfit ? '[Not a fit yet] ' : '') + (kind === 'call' ? 'Call request' : 'Enquiry') + ' · ' + PRICE_TEXT + ' · trigrams.studio';
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    fetch(ENDPOINT, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Formspree ' + res.status);
+        track(kind === 'call' ? 'Call Qualifier' : 'Enquiry', { fit: unfit ? 'no' : 'yes', price: PRICE_TEXT });
+        if (!unfit && kind === 'call') openCalendar();
+        stage(unfit ? 'unfit' : 'fit');
+      })
+      .catch(function () {
+        fail('Something went wrong sending that. Please email hello@trigrams.studio and I’ll reply within 24 hours.');
+        btn.disabled = false;
+        btn.textContent = btnText;
+      });
+  });
+});
+
+/* ---------- Click tracking ---------- */
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a');
+  if (!a) return;
+  var href = a.getAttribute('href') || '';
+  var label = (a.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60);
+  if (a.hasAttribute('data-portal')) {
+    track('Portal Click', { portal: a.getAttribute('data-portal') === 'client' ? 'Client Login' : 'Free Resource', from: PAGE });
+  } else if (/^\/book-a-call/.test(href)) {
+    track('CTA Click', { kind: 'Book a call', label: label, from: PAGE });
+  } else if (/^\/enquiry/.test(href)) {
+    track('CTA Click', { kind: 'Enquiry', label: label, from: PAGE });
+  }
+});
+
+/* ---------- Scroll depth: 25 / 50 / 75 / 100%, once each ---------- */
+var marks = [25, 50, 75, 100], hit = {};
+function onScroll() {
+  var doc = document.documentElement;
+  var scrollable = doc.scrollHeight - window.innerHeight;
+  if (scrollable <= 0) return;
+  var pct = Math.round((window.scrollY / scrollable) * 100);
+  marks.forEach(function (m) {
+    if (pct >= m && !hit[m]) { hit[m] = true; track('Scroll Depth', { depth: m + '%', page: PAGE }); }
+  });
+  if (Object.keys(hit).length === marks.length) window.removeEventListener('scroll', onScroll);
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+
+})();
