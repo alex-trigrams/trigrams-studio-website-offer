@@ -1,62 +1,67 @@
-# TRIGRAMS Studio — offer site
+# TRIGRAMS Studio — marketing site
 
-Marketing site for TRIGRAMS Studio (Alex Oliver, Perth WA). Marketing systems for small businesses, in four phases: get found (website, from $500, live in 14 days) → never lose an enquiry (follow-up) → stay in front of them (content marketing) → reach more people (Meta ads).
+Marketing site for TRIGRAMS Studio (Alex Oliver, Perth WA). One offer: Meta (Facebook and Instagram) ad campaigns done start to finish, from $4,000 + GST.
 
-**Live:** www.trigrams.studio (Vercel project `trigrams-studio-website-offer`)
+**Live:** www.trigrams.studio (Vercel project `trigrams-studio-website-offer`, team `trigramsstudio`)
 
 ## Stack
 
-Plain static HTML/CSS/JS — no framework, no build step. Deployed on Vercel.
+Plain static HTML/CSS/JS. No framework, no build step. Deployed on Vercel.
 
 | File | Purpose |
 |---|---|
-| `index.html` | Conversion landing page (hero → build demo → ladder → proof → FAQ → founder → blog/newsletter → CTA) |
-| `clients.html`, `case-studies.html`, `how-it-works.html`, `about.html`, `enquiry.html` | Dedicated pages |
-| `privacy.html`, `disclaimer.html`, `404.html` | Legal + error pages (ABN 85 714 298 118) |
-| `styles.css` | All styles, shared across pages. Brand tokens in `:root` |
-| `site.js` | All data + behaviour. Content lives in data blocks at the top: `CLIENTS`, `CASE_STUDIES`, `SERVICE_STEPS`, `PROCESS_STEPS` |
-| `vercel.json` | Security headers (CSP, HSTS, frame denial, etc.) |
+| `index.html` | Homepage: hero, clients, how it works, the campaign and price, what's included, ad budget, ads, about, free resources, FAQ |
+| `work.html`, `what-to-expect.html` | The ads and NLPSC case study; how a campaign runs |
+| `book-a-call.html`, `enquiry.html` | The qualifying form (same questions on both), then Calendly or a written enquiry |
+| `join.html` | Job applications |
+| `portfolio.html` | **Unlisted, link only.** Photo and video gallery. Generated, see below |
+| `privacy.html`, `disclaimer.html`, `404.html` | Legal and error pages (ABN 85 714 298 118) |
+| `styles.css` | All styles. Brand tokens in `:root` |
+| `site.js` | All behaviour. Pages read fine with no JavaScript |
+| `vercel.json` | Security headers (CSP, HSTS, etc.), cache headers, redirects from old URLs |
+| `sitemap.xml`, `robots.txt`, `llms.txt` | Search and AI crawler files. Add new public pages to the sitemap |
 
 ## Editing content
 
-- **Client list / case studies / pricing ladder / build-demo steps** — edit the arrays at the top of `site.js`. Markup renders from them.
-- **Page copy** — directly in each HTML file.
-- **Blog posts** — placeholder cards in `index.html` (`#blog` section); swap text + add links when real posts exist.
-- **Forms** — all three (enquiry, newsletter bar, popup) post to Formspree `meewzagj` with honeypot spam protection. Popup shows once per 7 days per visitor (localStorage), never after subscribing, never on enquiry/legal/404 pages.
+- **Page copy:** directly in each HTML file.
+- **Price:** `PRICES` / `DEFAULT_PRICE` in `site.js`. `?p=2500|3000|4000` on ad links tests other prices.
+- **Structured data (JSON-LD):** generated. Run `node scripts/prerender.mjs` after changing a page title, description, the homepage FAQ or the business facts in that script. `--check` reports pages that are out of date.
+- **Forms:** post to Formspree `meewzagj` with a honeypot field.
+
+## The portfolio page (`/portfolio`)
+
+Not linked anywhere on the site, not in the sitemap, and marked noindex (meta tag plus an `X-Robots-Tag` header). Share the link directly.
+
+```bash
+scripts/add-photos.sh "<folder of photos>" <set-slug>   # web-size copies into assets/stills/<set-slug>/
+# add the set (and any reels) to scripts/portfolio.json
+node scripts/portfolio.mjs                              # rebuilds portfolio.html
+```
+
+In `portfolio.json`, `featured` puts photos first in a set, `hide` leaves them out, `show` sets how many show before "Show all", and `highlights` picks the big photos under the hero.
+
+## Media
+
+- `assets/reels/<id>.mp4`: silent 8-second previews (autoplay in view). `assets/reels/full/<id>.mp4`: 540p with sound, loaded only when tapped. `<id>-poster.jpg`: the first frame.
+- `assets/stills/<set>/` full size (1600px long edge), `thumb/` for grids (700px).
+- Re-encode before adding any video with ffmpeg. Never commit originals. `assets/` is cached for a year, so give a changed file a new name if visitors must see the new version straight away.
+- `assets/signature/` and `assets/email-icons/` are not used by pages. They are hosted for email signatures and HTML emails. Keep them.
 
 ## Deploying
 
 ```bash
-vercel          # preview
-vercel --prod   # production
+vercel deploy --prod --yes
 ```
 
-`vercel.json` sets the CSP — **if you add a new external script/font/media host, add it to the CSP or it will be blocked.**
+`vercel.json` sets the CSP. **If you add a new external script, font or media host, add it to the CSP or it will be blocked.**
 
-## Next phases / roadmap
+## To do
 
-### Phase: client portal (planned)
-Login-protected portal where clients see reports, live data, and stats.
+- **Meta Pixel ID:** paste it into `META_PIXEL_ID` at the top of `site.js`, then deploy. The loader, the `Lead` event, the CSP and the privacy policy are already in place. No cookie banner on purpose (Australian law only needs notice and opt-out, which the policy gives).
+- Case study numbers: check them now and then. The disclaimer covers "results vary".
+- Legal pages: get a solicitor to review them as revenue grows.
+- Favicon: `assets/favicon.svg` is a circular-masked wrapper around `Logo.png`. Regenerate it if the logo changes.
 
-Recommended approach when the time comes:
-- **Keep this site as-is** (static marketing site is fast and simple). Build the portal as a **separate app** on a subdomain, e.g. `portal.trigrams.studio` — separate Vercel project, no risk to the marketing site.
-- **Stack suggestion:** Next.js (App Router) on Vercel + **Clerk** for auth (native Vercel Marketplace integration, magic-link/email login suits non-technical clients) + a Marketplace Postgres (Neon) for data.
-- **Data sources to pipe in:** Vercel Analytics per client site, MailerLite/ConvertKit campaign stats (both have APIs), form submission counts, uptime.
-- **MVP scope:** login → one dashboard page per client → monthly report (the same numbers currently emailed), auto-refreshed. Ship that before building anything fancier.
-- Session context already includes Vercel guidance for auth (`vercel:auth` skill) and storage (`vercel:vercel-storage`) when starting this.
+## Voice
 
-### Smaller backlog
-- **Meta Pixel ID (to do):** paste it into `META_PIXEL_ID` at the top of `site.js`, then deploy. Everything else is ready: the loader, a `Lead` event on qualified enquiries/call requests, the CSP, and the privacy policy. No cookie banner on purpose (Australian law only needs notice + opt-out, which the policy gives).
-- Real blog posts to replace the three placeholder cards (`#blog`), possibly a `/blog/` folder with one HTML page per post.
-- UP Dietitian brand colours in the build demo moodboard are guesses (`#7A9B76`, `#F4EFE6`) — replace with her real hexes.
-- Case-study stats: verify/update numbers periodically; disclaimer already covers "results vary".
-- Newsletter: currently collects emails via Formspree — migrate to MailerLite form/API when sequences are set up, so subscribers land directly in the platform.
-- Consider OG image (currently the logo) — a proper 1200×630 card would improve link previews.
-- Favicon: `assets/favicon.svg` is a circular-masked wrapper around `Logo.png`; regenerate if the logo changes.
-- Legal pages are solid templates but get a solicitor review as revenue grows.
-
-## Notes
-
-- Prices on-site are "from $300" (deliberately not $200) — pricing under review.
-- Never position as videography; systems consultant only.
-- Voice: plain, direct, confident, human. Short sentences. Talk to "you". Concrete numbers over adjectives.
+Plain, direct, human. Short sentences. Talk to "you". Concrete numbers over adjectives. Say "1 point of contact", never "one person".

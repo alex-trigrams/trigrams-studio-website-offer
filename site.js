@@ -413,6 +413,21 @@ if (rail) {
   });
 }
 
+/* ---------- Footer mark: only fetch the video once it scrolls into view ---------- */
+var lazyVids = document.querySelectorAll('.site-footer video[data-src]');
+if (lazyVids.length && !reduceMotion && 'IntersectionObserver' in window) {
+  var lazyIO = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      var v = en.target;
+      v.src = v.getAttribute('data-src');
+      var p = v.play(); if (p && p.catch) p.catch(function () {});
+      lazyIO.unobserve(v);
+    });
+  }, { rootMargin: '200px' });
+  lazyVids.forEach(function (v) { lazyIO.observe(v); });
+}
+
 /* ---------- Ad cards: silent preview in view, full video with sound on tap ---------- */
 var cards = document.querySelectorAll('.card[data-video]');
 if (cards.length) {
