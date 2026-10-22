@@ -1,6 +1,16 @@
-assets/vsl-raw.mov
+# Allowlist: only the public site is uploaded to Vercel. Anything not listed
+# below (the brief, build scripts, README, .claude, editor files) stays local.
+/*
+!/*.html
+!/assets
+!/.well-known
+!/site.js
+!/styles.css
+!/robots.txt
+!/sitemap.xml
+!/llms.txt
+!/vercel.json
+
+# Never upload these, even inside allowed folders
 .DS_Store
-# Internal: the positioning brief and build scripts are not part of the site
-context/
-scripts/
-README.md
+assets/vsl-raw.mov
