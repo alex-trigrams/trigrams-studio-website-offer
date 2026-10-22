@@ -1,0 +1,49 @@
+{
+  "_readme": "Content for /portfolio (unlisted, link only). Edit this file, then run: node scripts/portfolio.mjs. Reels play in the order listed. kind is ad, brand or bts (the filter buttons). Each photo set reads every .jpg in assets/stills/<slug>/ (add new folders with scripts/add-photos.sh). 'featured' file names go first in that set; 'hide' file names are left out; 'show' is how many show before 'Show all'. 'highlights' are the big photos in the strip under the hero, as <slug>/<file name without .jpg>.",
+
+  "highlights": [
+    "up-dietitian-merch/upd-0357",
+    "timely/dsc02293",
+    "up-dietitian/upd-96",
+    "waterford/waterford-45",
+    "up-dietitian-merch/upd-0441",
+    "timely/dsc02366",
+    "up-dietitian/up-31",
+    "up-dietitian-merch/upd-0508"
+  ],
+
+  "reels": [
+    { "id": "nlpsc-conditioning",       "client": "NLPSC",             "label": "Conditioning ad",            "kind": "ad", "stat": ["54", "enquiries in 30 days"] },
+    { "id": "nlpsc-december",           "client": "NLPSC",             "label": "December ad",                "kind": "ad", "stat": ["$6.28", "per enquiry"] },
+    { "id": "upd-nice-nick",            "client": "UP Dietitian",      "label": "Merch drop",                 "kind": "brand" },
+    { "id": "sportiesfc-v1",            "client": "SportiesFC",        "label": "Video ad, cut one",          "kind": "ad" },
+    { "id": "sportiesfc-v2",            "client": "SportiesFC",        "label": "Video ad, cut two",          "kind": "ad" },
+    { "id": "sportiesfc-v3",            "client": "SportiesFC",        "label": "Video ad, cut three",        "kind": "ad" },
+    { "id": "studio-187",               "client": "Studio 187 Tattoo", "label": "Studio film",                "kind": "brand" },
+    { "id": "timely-coffee-window",     "client": "Timely Coffee",     "label": "The coffee window",          "kind": "brand" },
+    { "id": "drawon-founder-interview", "client": "Drawon",            "label": "Founder interview",          "kind": "brand" },
+    { "id": "timely-reel-1-coffee",     "client": "Timely Coffee",     "label": "Coffee you can be proud of", "kind": "brand" },
+    { "id": "timely-reel-2-roasting",   "client": "Timely Coffee",     "label": "Roasting 101",               "kind": "brand" },
+    { "id": "timely-reel-3-qc",         "client": "Timely Coffee",     "label": "QC taste tests",             "kind": "brand" },
+    { "id": "timely-reel-4-packing",    "client": "Timely Coffee",     "label": "Packing orders",             "kind": "brand" },
+    { "id": "timely-finishing-touches", "client": "Timely Coffee",     "label": "Finishing touches",          "kind": "brand" },
+    { "id": "timely-pour-over",         "client": "Timely Coffee",     "label": "Pour over",                  "kind": "brand" },
+    { "id": "trigg-training",           "client": "Trigg Training",    "label": "Montage",                    "kind": "brand" },
+    { "id": "abbey-loading-principle",  "client": "Abbey",             "label": "The loading principle",      "kind": "brand" },
+    { "id": "allan-intro",              "client": "Allan Wryneck",     "label": "Intro",                      "kind": "brand" },
+    { "id": "allan-wryneck",            "client": "Allan Wryneck",     "label": "Feature",                    "kind": "brand" },
+    { "id": "announcement",             "client": "TRIGRAMS Studio",   "label": "Announcement",               "kind": "brand" },
+    { "id": "upd-merch-bts-1",          "client": "UP Dietitian",      "label": "Merch shoot, on set",        "kind": "bts" },
+    { "id": "upd-merch-bts-2",          "client": "UP Dietitian",      "label": "Merch shoot, on set",        "kind": "bts" },
+    { "id": "upd-merch-bts-3",          "client": "UP Dietitian",      "label": "Merch shoot, on set",        "kind": "bts" },
+    { "id": "upd-merch-bts-4",          "client": "UP Dietitian",      "label": "Merch shoot, on set",        "kind": "bts" },
+    { "id": "upd-merch-bts-5",          "client": "UP Dietitian",      "label": "Merch shoot, on set",        "kind": "bts" }
+  ],
+
+  "sets": [
+    { "slug": "up-dietitian-merch", "client": "UP Dietitian",  "title": "Merch shoot",  "when": "October 2026", "show": 12, "featured": [], "hide": [] },
+    { "slug": "up-dietitian",       "client": "UP Dietitian",  "title": "Brand shoot",  "when": "",             "show": 12, "featured": [], "hide": [] },
+    { "slug": "timely",             "client": "Timely Coffee", "title": "The roastery", "when": "",             "show": 12, "featured": [], "hide": [] },
+    { "slug": "waterford",          "client": "Waterford",     "title": "On location",  "when": "",             "show": 12, "featured": [], "hide": [] }
+  ]
+}

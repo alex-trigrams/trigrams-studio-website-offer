@@ -451,6 +451,84 @@ if (cards.length) {
   }
 }
 
+/* ---------- Portfolio: video filter, "Show all", photo lightbox ---------- */
+var pfFilter = document.querySelector('.pf-filter');
+if (pfFilter) {
+  pfFilter.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-filter]');
+    if (!b) return;
+    var kind = b.getAttribute('data-filter');
+    pfFilter.querySelectorAll('[data-filter]').forEach(function (x) {
+      x.classList.toggle('is-on', x === b);
+      x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
+    });
+    document.querySelectorAll('[data-filterable] .card').forEach(function (c) {
+      c.hidden = kind !== 'all' && c.getAttribute('data-kind') !== kind;
+    });
+  });
+}
+
+document.querySelectorAll('[data-show-all]').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var set = b.closest('.pf-set');
+    set.removeAttribute('data-collapsed');
+    var first = set.querySelector('.pf-tile[data-more]');
+    if (first) first.focus({ preventScroll: true });
+    track('Portfolio Show All', { set: set.id });
+  });
+});
+
+var pv = document.getElementById('photo-viewer');
+var galleries = document.querySelectorAll('[data-gallery]');
+if (pv && pv.showModal && galleries.length) {
+  var pvImg = pv.querySelector('img');
+  var pvCount = pv.querySelector('[data-photo-count]');
+  var list = [], at = 0;
+  var showPhoto = function (i) {
+    at = (i + list.length) % list.length;
+    pvImg.classList.add('is-loading');
+    pvImg.onload = function () { pvImg.classList.remove('is-loading'); };
+    pvImg.src = list[at].getAttribute('data-full');
+    pvCount.textContent = (at + 1) + ' / ' + list.length;
+    /* Fetch the next one so arrowing through feels instant. */
+    new Image().src = list[(at + 1) % list.length].getAttribute('data-full');
+  };
+  galleries.forEach(function (g) {
+    g.addEventListener('click', function (e) {
+      var item = e.target.closest('[data-full]');
+      if (!item) return;
+      list = Array.prototype.slice.call(g.querySelectorAll('[data-full]'));
+      showPhoto(list.indexOf(item));
+      pv.showModal();
+      track('Photo Open', { set: g.id || 'selected', photo: item.getAttribute('data-full').split('/').pop() });
+    });
+  });
+  pv.querySelector('[data-photo-prev]').addEventListener('click', function () { showPhoto(at - 1); });
+  pv.querySelector('[data-photo-next]').addEventListener('click', function () { showPhoto(at + 1); });
+  pv.querySelector('[data-photo-close]').addEventListener('click', function () { pv.close(); });
+  pv.addEventListener('click', function (e) { if (e.target === pv) pv.close(); });
+  pv.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') { e.preventDefault(); showPhoto(at + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); showPhoto(at - 1); }
+  });
+  var x0 = null;
+  pv.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+  pv.addEventListener('touchend', function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 40) showPhoto(at + (dx < 0 ? 1 : -1));
+  });
+  pv.addEventListener('close', function () { pvImg.removeAttribute('src'); });
+} else {
+  /* No <dialog>: open the photo itself. */
+  galleries.forEach(function (g) {
+    g.addEventListener('click', function (e) {
+      var item = e.target.closest('[data-full]');
+      if (item) location.href = item.getAttribute('data-full');
+    });
+  });
+}
+
 /* ---------- Qualifying form (Book a call + Enquire) ----------
    Same questions on both pages. Every submission reaches the inbox, tagged
    "fit: yes" or "fit: no". A "no" is anyone under $1,000 a month in ad spend
