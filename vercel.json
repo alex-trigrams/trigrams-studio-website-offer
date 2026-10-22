@@ -161,11 +161,6 @@
       "permanent": true
     },
     {
-      "source": "/portfolio",
-      "destination": "/work",
-      "permanent": false
-    },
-    {
       "source": "/showreel",
       "destination": "/work",
       "permanent": false
