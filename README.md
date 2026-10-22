@@ -57,7 +57,21 @@ vercel deploy --prod --yes
 
 ## To do
 
-- **Meta Pixel ID:** paste it into `META_PIXEL_ID` at the top of `site.js`, then deploy. The loader, the `Lead` event, the CSP and the privacy policy are already in place. No cookie banner on purpose (Australian law only needs notice and opt-out, which the policy gives).
+Saved 22 October 2026, after the security review.
+
+**Soon**
+- [ ] **Merge the portal security updates.** Branch `security-updates-2026-10` in `trigrams-client-portal` and `trigrams-onboarding-portal`: Next.js 16.4.2 (critical fixes), Slack escaping, login code rate limit, onboarding headers. Previews are tested. The client portal deploys from `main` to real clients, so log in once afterwards to check.
+- [ ] **Meta Pixel ID:** paste it into `META_PIXEL_ID` at the top of `site.js`, then deploy. The loader, the `Lead` event, the CSP and the privacy policy are already in place. No cookie banner on purpose (Australian law only needs notice and opt-out, which the policy gives).
+- [ ] **DMARC (Cloudflare DNS):** `_dmarc.trigrams.studio` is `p=none`, which only monitors, so spoofed @trigrams.studio mail isn't blocked. Check the Cloudflare DMARC reports show Outlook, Google, MailerLite and Resend passing, then change it to `p=quarantine` (later `p=reject`).
+
+**When there's time**
+- [ ] **CAA record (Cloudflare DNS):** limits which certificate authorities can issue for the domain. List both Vercel's (Let's Encrypt) and Cloudflare's issuers, or certificates will fail to renew.
+- [ ] **Vercel Firewall rate limit** on `open.trigrams.studio/api/signup`, as a hard cap on top of the per-address limit in code.
+- [ ] **Portfolio labels:** check the guessed ones in `scripts/portfolio.json` ("Merch drop", "On location", "The roastery"), then run `node scripts/portfolio.mjs`.
+- [ ] **Old Vercel CLI copy:** Homebrew still has 53.3.1 (`brew uninstall vercel-cli`). The active one is 65.1.0 in `~/.local`. npm also left a stale `~/.local/lib/node_modules/.vercel-2MHBCWGH` folder that breaks future `npm i -g vercel` updates; delete it.
+
+**Ongoing**
+- [ ] **security.txt** expires 22 October 2027. Renew the `Expires` date in `.well-known/security.txt` before then.
 - Case study numbers: check them now and then. The disclaimer covers "results vary".
 - Legal pages: get a solicitor to review them as revenue grows.
 - Favicon: `assets/favicon.svg` is a circular-masked wrapper around `Logo.png`. Regenerate it if the logo changes.
