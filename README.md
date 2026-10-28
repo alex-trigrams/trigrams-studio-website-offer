@@ -60,7 +60,7 @@ vercel deploy --prod --yes
 Saved 22 October 2026, after the security review.
 
 **Soon**
-- [ ] **Merge the portal security updates.** Branch `security-updates-2026-10` in `trigrams-client-portal` and `trigrams-onboarding-portal`: Next.js 16.4.2 (critical fixes), Slack escaping, login code rate limit, onboarding headers. Previews are tested. The client portal deploys from `main` to real clients, so log in once afterwards to check.
+- [x] **Merge the portal security updates.** (Both done and live 28 Oct.) Branch `security-updates-2026-10` in `trigrams-client-portal` and `trigrams-onboarding-portal`: Next.js 16.4.2 (critical fixes), Slack escaping, login code rate limit, onboarding headers. Previews are tested. The client portal deploys from `main` to real clients, so log in once afterwards to check.
 - [ ] **Meta Pixel ID:** paste it into `META_PIXEL_ID` at the top of `site.js`, then deploy. The loader, the `Lead` event, the CSP and the privacy policy are already in place. No cookie banner on purpose (Australian law only needs notice and opt-out, which the policy gives).
 - [ ] **DMARC (Cloudflare DNS):** `_dmarc.trigrams.studio` is `p=none`, which only monitors, so spoofed @trigrams.studio mail isn't blocked. Check the Cloudflare DMARC reports show Outlook, Google, MailerLite and Resend passing, then change it to `p=quarantine` (later `p=reject`).
 
