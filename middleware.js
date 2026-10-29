@@ -7,7 +7,7 @@
    trigrams-ads-preview.vercel.app is an alias for testing a preview build as
    the ads site before it goes live (vercel alias set <preview> <that>). */
 export const config = {
-  matcher: ['/', '/work', '/what-to-expect', '/book-a-call', '/enquiry', '/robots.txt', '/sitemap.xml', '/llms.txt']
+  matcher: ['/', '/work', '/what-to-expect', '/book-a-call', '/enquiry', '/thank-you', '/robots.txt', '/sitemap.xml', '/llms.txt']
 };
 
 const ADS_HOSTS = ['ads.trigrams.studio', 'trigrams-ads-preview.vercel.app'];

@@ -576,6 +576,26 @@ document.querySelectorAll('form[data-qualify]').forEach(function (form) {
   var btn = form.querySelector('button[type="submit"]');
   var btnText = btn.textContent;
 
+  /* Started vs finished. "Enquiry Started" fires the first time someone types
+     or picks an answer; "Enquiry Abandoned" fires if they then leave the page
+     without sending, with the step they got to. Finished enquiries land on
+     /thank-you, so its page views are the finishers. */
+  var started = false, sent = false, left = false;
+  function onStart() {
+    if (started) return;
+    started = true;
+    track('Enquiry Started', { form: kind, site: HOST, from: PAGE });
+  }
+  form.addEventListener('input', onStart);
+  form.addEventListener('change', onStart);
+  function onLeave() {
+    if (!started || sent || left) return;
+    left = true;
+    track('Enquiry Abandoned', { form: kind, site: HOST, step: showStep ? at + 1 : 1 });
+  }
+  window.addEventListener('pagehide', onLeave);
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') onLeave(); });
+
   function fail(msg, el) {
     err.textContent = msg;
     err.hidden = false;
@@ -697,7 +717,13 @@ document.querySelectorAll('form[data-qualify]').forEach(function (form) {
         if (!res.ok) throw new Error('Formspree ' + res.status);
         track(kind === 'call' ? 'Call Qualifier' : 'Enquiry', ADS ? { fit: unfit ? 'no' : 'yes', price: PRICE_TEXT, site: HOST } : { site: HOST });
         if (!unfit) pixel('Lead', ADS ? { content_name: kind === 'call' ? 'Call request' : 'Enquiry', value: PRICE, currency: 'AUD' } : { content_name: kind === 'call' ? 'Call request' : 'Enquiry' });
+        sent = true;
         if (!unfit && kind === 'call') openCalendar();
+        if (!unfit && kind !== 'call') {
+          /* A short pause so the events above get out before the page changes. */
+          setTimeout(function () { location.href = '/thank-you'; }, 300);
+          return;
+        }
         stage(unfit ? 'unfit' : 'fit');
       })
       .catch(function () {
