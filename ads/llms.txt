@@ -1,0 +1,15 @@
+# TRIGRAMS Studio
+
+> This is the Meta ads site of TRIGRAMS Studio (www.trigrams.studio). TRIGRAMS Studio makes and runs Meta (Facebook and Instagram) ads for small businesses. It is run by Alex Oliver at 130 Burswood Rd, Burswood WA 6100 (Perth, Western Australia), open 10am to 3pm, Monday to Friday. This site sells one thing: a complete ad campaign, from $4,000 plus GST, covering planning, scripts, a half-day shoot, editing (1 main video and 2 to 3 vertical cuts), audience and tracking set-up, ad copy and test versions, running the ads, sending every lead straight to the client, and an end-of-campaign report. Ad spend is separate and paid to Meta directly; the recommended minimum is $35 a day. To start, answer a few questions and book a call at https://ads.trigrams.studio/book-a-call, or email hello@trigrams.studio. ABN 85 714 298 118.
+
+## Pages
+
+- [Home](https://ads.trigrams.studio/): the offer, how it works, the price, ad budget guidance and common questions
+- [Work](https://ads.trigrams.studio/work): the ads, and a Perth gym campaign with 54 enquiries in 30 days at $6.28 each
+- [What to expect](https://ads.trigrams.studio/what-to-expect): how a campaign runs, how much to spend on ads, what's needed from the client
+- [Book a call](https://ads.trigrams.studio/book-a-call): a few questions, then a calendar to book a 30 minute call
+- [Enquire](https://ads.trigrams.studio/enquiry): the written enquiry form
+
+## Free resources
+
+- [The Cutting Room](https://open.trigrams.studio): short films, templates and an occasional email on running ads and shooting, free

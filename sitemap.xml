@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Every public page. Add new pages here and bump lastmod when a page changes.
+<!-- Every public page on www.trigrams.studio. Add new pages here and bump lastmod when a page changes.
+     The ads site has its own list in ads/sitemap.xml.
      URLs are the clean form (vercel.json has cleanUrls on). -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.trigrams.studio/</loc><lastmod>2026-10-08</lastmod><priority>1.0</priority></url>
-  <url><loc>https://www.trigrams.studio/work</loc><lastmod>2026-10-08</lastmod><priority>0.8</priority></url>
-  <url><loc>https://www.trigrams.studio/what-to-expect</loc><lastmod>2026-10-08</lastmod><priority>0.7</priority></url>
-  <url><loc>https://www.trigrams.studio/book-a-call</loc><lastmod>2026-10-08</lastmod><priority>0.7</priority></url>
-  <url><loc>https://www.trigrams.studio/enquiry</loc><lastmod>2026-10-08</lastmod><priority>0.6</priority></url>
-  <url><loc>https://www.trigrams.studio/join</loc><lastmod>2026-10-08</lastmod><priority>0.4</priority></url>
-  <url><loc>https://www.trigrams.studio/privacy</loc><lastmod>2026-10-08</lastmod><priority>0.2</priority></url>
-  <url><loc>https://www.trigrams.studio/disclaimer</loc><lastmod>2026-10-08</lastmod><priority>0.2</priority></url>
+  <url><loc>https://www.trigrams.studio/</loc><lastmod>2026-10-29</lastmod><priority>1.0</priority></url>
+  <url><loc>https://www.trigrams.studio/work</loc><lastmod>2026-10-29</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.trigrams.studio/book-a-call</loc><lastmod>2026-10-29</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.trigrams.studio/enquiry</loc><lastmod>2026-10-29</lastmod><priority>0.6</priority></url>
+  <url><loc>https://www.trigrams.studio/join</loc><lastmod>2026-10-29</lastmod><priority>0.4</priority></url>
+  <url><loc>https://www.trigrams.studio/privacy</loc><lastmod>2026-10-29</lastmod><priority>0.2</priority></url>
+  <url><loc>https://www.trigrams.studio/disclaimer</loc><lastmod>2026-10-29</lastmod><priority>0.2</priority></url>
 </urlset>

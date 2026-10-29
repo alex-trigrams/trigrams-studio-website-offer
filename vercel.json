@@ -82,6 +82,54 @@
   ],
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.trigrams.studio"
+        },
+        {
+          "type": "query",
+          "key": "p"
+        }
+      ],
+      "destination": "https://ads.trigrams.studio/",
+      "permanent": false
+    },
+    {
+      "source": "/ads",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.trigrams.studio"
+        }
+      ],
+      "destination": "https://ads.trigrams.studio/",
+      "permanent": true
+    },
+    {
+      "source": "/ads/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.trigrams.studio"
+        }
+      ],
+      "destination": "https://ads.trigrams.studio/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/what-to-expect",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.trigrams.studio"
+        }
+      ],
+      "destination": "https://ads.trigrams.studio/what-to-expect",
+      "permanent": true
+    },
+    {
       "source": "/about",
       "destination": "/",
       "permanent": true
@@ -153,12 +201,12 @@
     },
     {
       "source": "/meta-ads",
-      "destination": "/work",
+      "destination": "https://ads.trigrams.studio/",
       "permanent": true
     },
     {
       "source": "/meta-ads.html",
-      "destination": "/work",
+      "destination": "https://ads.trigrams.studio/",
       "permanent": true
     },
     {
@@ -200,6 +248,38 @@
       "source": "/call",
       "destination": "/book-a-call",
       "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "ads.trigrams.studio"
+        }
+      ],
+      "destination": "/ads/index.html"
+    },
+    {
+      "source": "/:page(book-a-call|enquiry|work|what-to-expect)",
+      "has": [
+        {
+          "type": "host",
+          "value": "ads.trigrams.studio"
+        }
+      ],
+      "destination": "/ads/:page.html"
+    },
+    {
+      "source": "/:file(robots.txt|sitemap.xml|llms.txt)",
+      "has": [
+        {
+          "type": "host",
+          "value": "ads.trigrams.studio"
+        }
+      ],
+      "destination": "/ads/:file"
     }
   ]
 }

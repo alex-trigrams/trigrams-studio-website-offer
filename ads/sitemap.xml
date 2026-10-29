@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Every page on ads.trigrams.studio (served from ads/ by the host rewrites in vercel.json).
+     URLs are the clean form (vercel.json has cleanUrls on). -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://ads.trigrams.studio/</loc><lastmod>2026-10-29</lastmod><priority>1.0</priority></url>
+  <url><loc>https://ads.trigrams.studio/work</loc><lastmod>2026-10-29</lastmod><priority>0.8</priority></url>
+  <url><loc>https://ads.trigrams.studio/what-to-expect</loc><lastmod>2026-10-29</lastmod><priority>0.7</priority></url>
+  <url><loc>https://ads.trigrams.studio/book-a-call</loc><lastmod>2026-10-29</lastmod><priority>0.7</priority></url>
+  <url><loc>https://ads.trigrams.studio/enquiry</loc><lastmod>2026-10-29</lastmod><priority>0.6</priority></url>
+</urlset>

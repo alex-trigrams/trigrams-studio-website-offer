@@ -1,8 +1,12 @@
 # TRIGRAMS Studio — marketing site
 
-Marketing site for TRIGRAMS Studio (Alex Oliver, Perth WA). One offer: Meta (Facebook and Instagram) ad campaigns done start to finish, from $4,000 + GST.
+Marketing sites for TRIGRAMS Studio (Alex Oliver, Perth WA). Two sites from one repo and one Vercel project (`trigrams-studio-website-offer`, team `trigramsstudio`):
 
-**Live:** www.trigrams.studio (Vercel project `trigrams-studio-website-offer`, team `trigramsstudio`)
+- **www.trigrams.studio**: the root pages. Landing page, photo and video, lean and quick. Links out to the two offer pages below.
+- **ads.trigrams.studio**: the pages in `ads/`. One offer: Meta (Facebook and Instagram) ad campaigns done start to finish, from $4,000 + GST. Run your own ads to this one.
+- (website.trigrams.studio, the landing page offer, lives in `trigrams-client-portal`, not here.)
+
+**How the ads site is served:** host rewrites in `vercel.json` map `ads.trigrams.studio/`, `/work`, `/what-to-expect`, `/book-a-call`, `/enquiry`, `/robots.txt`, `/sitemap.xml` and `/llms.txt` to the files in `ads/`. Everything else (styles, scripts, assets, privacy, disclaimer, join) is shared. On www, `/ads/*`, `/what-to-expect`, `/meta-ads` and any `/?p=` link redirect to the ads site. `<html data-site="ads">` tells `site.js` which site it's on. `vercel dev` ignores host rules, so test them on a real deployment.
 
 ## Stack
 
@@ -10,21 +14,23 @@ Plain static HTML/CSS/JS. No framework, no build step. Deployed on Vercel.
 
 | File | Purpose |
 |---|---|
-| `index.html` | Homepage: hero, clients, how it works, the campaign and price, what's included, ad budget, ads, about, free resources, FAQ |
-| `work.html`, `what-to-expect.html` | The ads and NLPSC case study; how a campaign runs |
-| `book-a-call.html`, `enquiry.html` | The qualifying form (same questions on both), then Calendly or a written enquiry |
+| `index.html` | www homepage: hero, clients, what you get, how it works, lean and quick, work, about, free resources, FAQ |
+| `work.html` | www work: landing pages, videos, photos |
+| `book-a-call.html`, `enquiry.html` | www forms: what you need, timing, then Calendly or a written enquiry |
+| `ads/` | The ads site: homepage, work + NLPSC case study, what to expect, and its qualifying forms (ad budget questions, "not a fit" path) |
 | `join.html` | Job applications |
 | `portfolio.html` | **Unlisted, link only.** Photo and video gallery. Generated, see below |
 | `privacy.html`, `disclaimer.html`, `404.html` | Legal and error pages (ABN 85 714 298 118) |
 | `styles.css` | All styles. Brand tokens in `:root` |
 | `site.js` | All behaviour. Pages read fine with no JavaScript |
 | `vercel.json` | Security headers (CSP, HSTS, etc.), cache headers, redirects from old URLs |
-| `sitemap.xml`, `robots.txt`, `llms.txt` | Search and AI crawler files. Add new public pages to the sitemap |
+| `sitemap.xml`, `robots.txt`, `llms.txt` | Search and AI crawler files for www. The ads site has its own copies in `ads/`. Add new public pages to the right sitemap |
 
 ## Editing content
 
 - **Page copy:** directly in each HTML file.
-- **Price:** `PRICES` / `DEFAULT_PRICE` in `site.js`. `?p=2500|3000|4000` on ad links tests other prices.
+- **Ads price:** `PRICES` / `DEFAULT_PRICE` in `site.js`. `?p=2500|3000|4000` on ads.trigrams.studio links tests other prices. Only the ads site uses it.
+- **Form subjects** end in `trigrams.studio` or `ads.trigrams.studio`, so the inbox shows which site a lead came from.
 - **Structured data (JSON-LD):** generated. Run `node scripts/prerender.mjs` after changing a page title, description, the homepage FAQ or the business facts in that script. `--check` reports pages that are out of date.
 - **Forms:** post to Formspree `meewzagj` with a honeypot field.
 
@@ -60,6 +66,9 @@ vercel deploy --prod --yes
 Saved 22 October 2026, after the security review.
 
 **Soon**
+- [ ] **ads.trigrams.studio DNS (Cloudflare):** add a CNAME `ads` → `cname.vercel-dns.com`, DNS only (grey cloud), like the other subdomains. Then add the domain to this Vercel project and check the host rewrites live.
+- [ ] **Point your Meta ads at ads.trigrams.studio** (old `www.trigrams.studio/?p=` links redirect there, but direct links are cleaner).
+- [x] **Share images:** `assets/og-home.jpg` ("Marketing sitting on your to-do list?") and `assets/og-ads.jpg` ("Meta ads that bring in leads."), 29 Oct. `/assets/` is cached for a year, so a changed image needs a new filename.
 - [x] **Merge the portal security updates.** (Both done and live 28 Oct.) Branch `security-updates-2026-10` in `trigrams-client-portal` and `trigrams-onboarding-portal`: Next.js 16.4.2 (critical fixes), Slack escaping, login code rate limit, onboarding headers. Previews are tested. The client portal deploys from `main` to real clients, so log in once afterwards to check.
 - [ ] **Meta Pixel ID:** paste it into `META_PIXEL_ID` at the top of `site.js`, then deploy. The loader, the `Lead` event, the CSP and the privacy policy are already in place. No cookie banner on purpose (Australian law only needs notice and opt-out, which the policy gives).
 - [ ] **DMARC (Cloudflare DNS):** `_dmarc.trigrams.studio` is `p=none`, which only monitors, so spoofed @trigrams.studio mail isn't blocked. Check the Cloudflare DMARC reports show Outlook, Google, MailerLite and Resend passing, then change it to `p=quarantine` (later `p=reject`).

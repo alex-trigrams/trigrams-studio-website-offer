@@ -1,5 +1,6 @@
-/* TRIGRAMS Studio, October 2026 rebuild.
-   One offer (Meta ads, start to finish), one price, one look.
+/* TRIGRAMS Studio, October 2026 rebuild. One look for both sites:
+   www.trigrams.studio (landing page, photo and video) and
+   ads.trigrams.studio (Meta ads, start to finish).
    Design source: Claude Design project "TRIGRAMS Home v3" / "Book a Call" /
    "Enquire". White ground, Geist only, square photos, pill buttons, red as the
    accent. Single light theme on purpose: the dark/light toggle is gone.
@@ -226,7 +227,7 @@ button { font: inherit; color: inherit; }
 }
 .phone::before { content: ""; position: absolute; top: 18px; left: 50%; width: 30%; height: 18px; translate: -50% 0; border-radius: 999px; background: #000; z-index: 2; }
 .phone-screen { position: relative; width: 100%; height: 100%; border-radius: 30px; overflow: hidden; background: #000; }
-.phone-screen video { width: 100%; height: 100%; object-fit: cover; }
+.phone-screen video, .phone-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .phone--c { z-index: 3; transform: translate(-50%, -50%) rotateY(var(--ry)) rotateX(var(--rx)); animation: bob 7s ease-in-out infinite; }
 .phone--l { z-index: 2; transform: translate(-112%, -46%) rotate(-9deg) scale(.84) rotateY(calc(var(--ry) * 1.4)); opacity: .9; animation: bob 8s -2s ease-in-out infinite; }
 .phone--r { z-index: 2; transform: translate(12%, -54%) rotate(8deg) scale(.84) rotateY(calc(var(--ry) * 1.4)); opacity: .9; animation: bob 9s -4s ease-in-out infinite; }
@@ -315,6 +316,27 @@ a.logo-tile:hover .logo-info { background: var(--red); }
 .step-photos img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.08); transition: opacity 500ms ease, transform 1200ms var(--ease); }
 .step-photos img.is-on { opacity: 1; transform: scale(1); }
 .step-count { position: absolute; left: 20px; bottom: 20px; z-index: 2; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.92); font-size: 14px; font-weight: 600; box-shadow: var(--shadow-1); }
+
+/* ---------- What you get (main site): 3 cards, then a strip pointing to the ads site ---------- */
+.offer { background: var(--white); }
+.offer-wrap { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(32px, 4vw, 52px); }
+.offer-head { display: flex; flex-direction: column; gap: 18px; }
+.offer-head .h2 { max-width: 20ch; font-size: clamp(36px, 3.8vw, 58px); }
+.offer-head .sub { max-width: 48ch; }
+.offer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+.offer-card { display: flex; flex-direction: column; background: var(--field); }
+.offer-photo { aspect-ratio: 4 / 3; }
+.offer-photo--top > img { object-position: top; }
+.offer-body { flex: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: clamp(22px, 2.4vw, 32px); }
+.offer-n { font-size: 14px; font-weight: 600; color: var(--red); }
+.offer-body h3 { margin: 0; font-size: clamp(26px, 2.2vw, 32px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; }
+.offer-body p { margin: 0; font-size: 17px; line-height: 1.5; color: var(--ink-mid); }
+.offer-body .offer-price { margin-top: auto; padding-top: 8px; color: var(--ink); font-size: 16px; }
+.offer-price b { font-size: 20px; letter-spacing: -0.02em; }
+.offer-price .from { font-size: 1em; vertical-align: 0; color: var(--ink-mid); }
+.offer-ads { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 32px; padding: clamp(24px, 3vw, 36px); background: var(--ink); color: rgba(255,255,255,.75); }
+.offer-ads > div { display: flex; flex-direction: column; gap: 6px; max-width: 52ch; font-size: 17px; line-height: 1.5; }
+.offer-ads b { color: var(--white); font-size: clamp(22px, 2vw, 28px); font-weight: 600; letter-spacing: -0.02em; }
 
 /* ---------- Campaign: the usual way vs TRIGRAMS, one row per "one" ---------- */
 .campaign { background: var(--white); }

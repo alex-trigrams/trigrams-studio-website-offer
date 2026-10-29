@@ -1,4 +1,6 @@
-/* TRIGRAMS Studio, October 2026 rebuild. One offer, one price.
+/* TRIGRAMS Studio. One script for both sites: www.trigrams.studio (landing
+   page, photo and video) and ads.trigrams.studio (the Meta ads offer, the
+   pages in ads/, marked <html data-site="ads">).
    Everything here is progressive: the pages read fine with no JavaScript. */
 (function () {
 'use strict';
@@ -9,6 +11,8 @@ function track(name, data) {
   try { window.va('event', { name: name, data: data || {} }); } catch (e) {}
 }
 var PAGE = location.pathname || '/';
+var ADS = document.documentElement.getAttribute('data-site') === 'ads';
+var HOST = ADS ? 'ads.trigrams.studio' : 'trigrams.studio';
 
 /* ---------- Meta Pixel ----------
    Paste the Pixel ID from Events Manager below. While it's empty nothing from
@@ -34,14 +38,15 @@ function pixel(event, data) {
 }
 loadPixel();
 
-/* ---------- Price ----------
+/* ---------- Price (ads site only) ----------
    The campaign price lives here and nowhere else. The HTML ships the default
    so crawlers and no-JS visitors see it too.
 
    Split test: point each ad set at a different URL, e.g.
-     https://www.trigrams.studio/?p=2500
-     https://www.trigrams.studio/?p=3000
-     https://www.trigrams.studio/?p=4000
+     https://ads.trigrams.studio/?p=2500
+     https://ads.trigrams.studio/?p=3000
+     https://ads.trigrams.studio/?p=4000
+   (Old www.trigrams.studio/?p= links redirect there, see vercel.json.)
    The visitor keeps that price on every page and on return visits, and the
    forms send it as "price_seen", so every enquiry shows which price it saw. */
 var PRICES = [2500, 3000, 4000];
@@ -63,7 +68,7 @@ var PRICE = readPrice();
 var PRICE_TEXT = '$' + PRICE.toLocaleString('en-AU');
 document.querySelectorAll('[data-price]').forEach(function (el) { el.textContent = PRICE_TEXT; });
 document.querySelectorAll('[data-price-field]').forEach(function (el) { el.value = PRICE_TEXT; });
-if (PRICE !== DEFAULT_PRICE) track('Price Variant', { price: PRICE_TEXT, page: PAGE });
+if (ADS && PRICE !== DEFAULT_PRICE) track('Price Variant', { price: PRICE_TEXT, page: PAGE });
 
 /* ---------- Menu ---------- */
 var menu = document.getElementById('menu');
@@ -545,12 +550,25 @@ if (pv && pv.showModal && galleries.length) {
 }
 
 /* ---------- Qualifying form (Book a call + Enquire) ----------
-   Same questions on both pages. Every submission reaches the inbox, tagged
-   "fit: yes" or "fit: no". A "no" is anyone under $1,000 a month in ad spend
-   or anyone who said losing the first month would hurt; they get pointed to
-   the free resources instead of the calendar. */
+   Same questions on both pages of a site. Every submission reaches the inbox,
+   tagged "fit: yes" or "fit: no", with the site in the subject. On the ads
+   site a "no" is anyone under $1,000 a month in ad spend or anyone who said
+   losing the first month would hurt; they get pointed to the free resources
+   instead of the calendar. The main site's forms have no [data-unfit]
+   answers, so everyone there is a fit. */
 var CALENDLY = 'https://calendly.com/alex-trigrams/30min';
 var ENDPOINT = 'https://formspree.io/f/meewzagj';
+
+/* Tick-boxes that share a name post one field each; join them into one line
+   ("Landing page, Video") so the inbox shows every answer. */
+function formBody(form) {
+  var data = new FormData(form), out = new FormData();
+  data.forEach(function (v, k) {
+    if (out.has(k)) out.set(k, out.get(k) + ', ' + v);
+    else out.append(k, v);
+  });
+  return out;
+}
 
 document.querySelectorAll('form[data-qualify]').forEach(function (form) {
   var kind = form.getAttribute('data-qualify');
@@ -659,7 +677,7 @@ document.querySelectorAll('form[data-qualify]').forEach(function (form) {
     }
     if (gap) {
       var msg = gap.type === 'checkbox' ? 'Please tick the box to confirm you’ve read how it works and the price.'
-        : gap.type === 'radio' ? 'Please answer every question. They help me make the call worth your time.'
+        : gap.type === 'radio' ? 'Please answer every question. They help make the call worth your time.'
         : gap.type === 'email' ? 'Please add a valid email address.'
         : 'Please fill in the fields marked with a star.';
       fail(msg, gap);
@@ -669,21 +687,21 @@ document.querySelectorAll('form[data-qualify]').forEach(function (form) {
     var unfit = !!form.querySelector('input[data-unfit]:checked');
     form.querySelector('[data-fit-field]').value = unfit ? 'no' : 'yes';
     var subject = form.querySelector('input[name="_subject"]');
-    subject.value = (unfit ? '[Not a fit yet] ' : '') + (kind === 'call' ? 'Call request' : 'Enquiry') + ' · ' + PRICE_TEXT + ' · trigrams.studio';
+    subject.value = (unfit ? '[Not a fit yet] ' : '') + (kind === 'call' ? 'Call request' : 'Enquiry') + (ADS ? ' · ' + PRICE_TEXT : '') + ' · ' + HOST;
 
     btn.disabled = true;
     btn.textContent = 'Sending…';
 
-    fetch(ENDPOINT, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
+    fetch(ENDPOINT, { method: 'POST', body: formBody(form), headers: { Accept: 'application/json' } })
       .then(function (res) {
         if (!res.ok) throw new Error('Formspree ' + res.status);
-        track(kind === 'call' ? 'Call Qualifier' : 'Enquiry', { fit: unfit ? 'no' : 'yes', price: PRICE_TEXT });
-        if (!unfit) pixel('Lead', { content_name: kind === 'call' ? 'Call request' : 'Enquiry', value: PRICE, currency: 'AUD' });
+        track(kind === 'call' ? 'Call Qualifier' : 'Enquiry', ADS ? { fit: unfit ? 'no' : 'yes', price: PRICE_TEXT, site: HOST } : { site: HOST });
+        if (!unfit) pixel('Lead', ADS ? { content_name: kind === 'call' ? 'Call request' : 'Enquiry', value: PRICE, currency: 'AUD' } : { content_name: kind === 'call' ? 'Call request' : 'Enquiry' });
         if (!unfit && kind === 'call') openCalendar();
         stage(unfit ? 'unfit' : 'fit');
       })
       .catch(function () {
-        fail('Something went wrong sending that. Please email hello@trigrams.studio and I’ll reply within 24 hours.');
+        fail('Something went wrong sending that. Please email hello@trigrams.studio and you’ll get a reply within 24 hours.');
         btn.disabled = false;
         btn.textContent = btnText;
       });
@@ -713,7 +731,7 @@ document.querySelectorAll('form[data-apply]').forEach(function (form) {
     }
     btn.disabled = true;
     btn.textContent = 'Sending…';
-    fetch(ENDPOINT, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
+    fetch(ENDPOINT, { method: 'POST', body: formBody(form), headers: { Accept: 'application/json' } })
       .then(function (res) {
         if (!res.ok) throw new Error('Formspree ' + res.status);
         track('Job Application', {});

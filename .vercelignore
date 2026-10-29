@@ -2,6 +2,7 @@
 # below (the brief, build scripts, README, .claude, editor files) stays local.
 /*
 !/*.html
+!/ads
 !/assets
 !/.well-known
 !/site.js
