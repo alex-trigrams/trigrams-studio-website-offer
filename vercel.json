@@ -249,37 +249,5 @@
       "destination": "/book-a-call",
       "permanent": false
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/",
-      "has": [
-        {
-          "type": "host",
-          "value": "ads.trigrams.studio"
-        }
-      ],
-      "destination": "/ads/index.html"
-    },
-    {
-      "source": "/:page(book-a-call|enquiry|work|what-to-expect)",
-      "has": [
-        {
-          "type": "host",
-          "value": "ads.trigrams.studio"
-        }
-      ],
-      "destination": "/ads/:page.html"
-    },
-    {
-      "source": "/:file(robots.txt|sitemap.xml|llms.txt)",
-      "has": [
-        {
-          "type": "host",
-          "value": "ads.trigrams.studio"
-        }
-      ],
-      "destination": "/ads/:file"
-    }
   ]
 }

@@ -3,6 +3,7 @@
 /*
 !/*.html
 !/ads
+!/middleware.js
 !/assets
 !/.well-known
 !/site.js

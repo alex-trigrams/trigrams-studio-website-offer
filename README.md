@@ -6,7 +6,7 @@ Marketing sites for TRIGRAMS Studio (Alex Oliver, Perth WA). Two sites from one 
 - **ads.trigrams.studio**: the pages in `ads/`. One offer: Meta (Facebook and Instagram) ad campaigns done start to finish, from $4,000 + GST. Run your own ads to this one.
 - (website.trigrams.studio, the landing page offer, lives in `trigrams-client-portal`, not here.)
 
-**How the ads site is served:** host rewrites in `vercel.json` map `ads.trigrams.studio/`, `/work`, `/what-to-expect`, `/book-a-call`, `/enquiry`, `/robots.txt`, `/sitemap.xml` and `/llms.txt` to the files in `ads/`. Everything else (styles, scripts, assets, privacy, disclaimer, join) is shared. On www, `/ads/*`, `/what-to-expect`, `/meta-ads` and any `/?p=` link redirect to the ads site. `<html data-site="ads">` tells `site.js` which site it's on. `vercel dev` ignores host rules, so test them on a real deployment.
+**How the ads site is served:** `middleware.js` (Vercel Routing Middleware) maps `ads.trigrams.studio/`, `/work`, `/what-to-expect`, `/book-a-call`, `/enquiry`, `/robots.txt`, `/sitemap.xml` and `/llms.txt` to the files in `ads/`. Everything else (styles, scripts, assets, privacy, disclaimer, join) is shared. On www, `/ads/*`, `/what-to-expect`, `/meta-ads` and any `/?p=` link redirect to the ads site. `<html data-site="ads">` tells `site.js` which site it's on. It has to be middleware: `vercel.json` rewrites only run when no file matches, and the www pages sit at the same paths. To test a preview as the ads site, `vercel alias set <preview-url> trigrams-ads-preview.vercel.app`.
 
 ## Stack
 
