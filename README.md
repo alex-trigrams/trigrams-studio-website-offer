@@ -16,7 +16,7 @@ Plain static HTML/CSS/JS. No framework, no build step. Deployed on Vercel.
 |---|---|
 | `index.html` | www homepage: hero, clients, what you get, how it works, lean and quick, work, about, free resources, FAQ |
 | `work.html` | www work: landing pages, videos, photos |
-| `book-a-call.html`, `enquiry.html` | www forms: what you need, timing, then Calendly or a written enquiry |
+| `enquiry.html` | www form: what you need and timing, sent by email (Formspree). `book-a-call.html` (Calendly) is parked: `/book-a-call` redirects to `/enquiry` on both sites, from `middleware.js` |
 | `ads/` | The ads site: homepage, work + NLPSC case study, what to expect, and its qualifying forms (ad budget questions, "not a fit" path) |
 | `join.html` | Job applications |
 | `portfolio.html` | **Unlisted, link only.** Photo and video gallery. Generated, see below |

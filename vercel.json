@@ -240,13 +240,18 @@
       "permanent": false
     },
     {
+      "source": "/book-a-call",
+      "destination": "/enquiry",
+      "permanent": false
+    },
+    {
       "source": "/book",
-      "destination": "/book-a-call",
+      "destination": "/enquiry",
       "permanent": false
     },
     {
       "source": "/call",
-      "destination": "/book-a-call",
+      "destination": "/enquiry",
       "permanent": false
     }
   ]

@@ -14,6 +14,10 @@ const ADS_HOSTS = ['ads.trigrams.studio', 'trigrams-ads-preview.vercel.app'];
 
 export default function middleware(request) {
   const url = new URL(request.url);
+  // Booking a call is off for now: both sites send people to the enquiry form.
+  if (url.pathname === '/book-a-call') {
+    return Response.redirect(new URL('/enquiry' + url.search, url), 307);
+  }
   const host = (request.headers.get('host') || url.host).toLowerCase();
   if (!ADS_HOSTS.includes(host)) {
     return new Response(null, { headers: { 'x-middleware-next': '1' } });
